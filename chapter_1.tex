@@ -9,8 +9,6 @@
 \chapter{Introduction}
 \label{sec:intro}    %--note: labels help you with hyperlink editing (using your IDE)
 
-This chapter builds the motivation for the conduct of the research through a description of the background of the study or the current state of technology. This is followed by the research objectives, the scope and limitations, and significance of the research. The chapter ends with the research methodology describing the different activities to be conducted to achieve the goals of this research.
-
 
 %%
 %% --- 1.1 Background of the Study --- %%
@@ -23,89 +21,33 @@ This chapter builds the motivation for the conduct of the research through a des
 %   NOTE: You have to delete/replace the unnecessary paragraphs with your own text.
 %
 
-This section gives the reader an overview of the specific technology or field in the international or local setting. The information regarding the technology or field should be contemporary and not
-based on outdated sources. Discussion must not be too technical or too detailed.
-
-Follow the inverted pyramid to describe each of the following. Allocate one (1) paragraph per level in the pyramid. 
-
 % Describe the research area
 
-Research area ...
+Volcanic eruptions are among the most destructive natural hazards, producing ash plumes, pyroclastic flows, and volcanic gases that threaten nearby communities and critical infrastructure. 
+Effective visualization of these hazards plays an important role in disaster preparedness, scientific communication, and public education.
+Traditionally, volcanic simulations have relied on numerical models that prioritize scientific accuracy for hazard prediction and analysis.
+While these models provide valuable quantitative information, they are often computationally intensive and lack the interactive capabilities necessary for real-time visualization.
 
 % Describe the domain (where will you apply the topic)
 
-Domain of application or specific research sub-field ...
+To overcome these limitations, the sub-field of real-time computer graphics has increasingly been applied to scientific visualization, balancing visual plausibility with high interactive performance.
+Within this domain, a notable localized development is AnitoPlume, a real-time three-dimensional volcanic plume simulator designed specifically for visualizing the complex eruption dynamics of Taal Volcano.
+Developed using C++ and the OpenGL graphics API, this specialized application combines a Lagrangian particle-based plume system with a detailed digital elevation model of the volcano's terrain.
+By maintaining an interactive rendering performance of approximately 30 frames per second, the system successfully demonstrated that computer graphics could bridge the gap between complex geological events and accessible hazard awareness software for local education and planning.
 
 % Give a synthesis of previous work
 
-Synthesis of previous studies...
+Previous efforts in graphics-driven volcanic visualization have heavily relied on traditional higher-level APIs like OpenGL due to their broad driver portability and structural simplicity.
+In these legacy architectures, the graphics API simplifies software development by delegating critical hardware management tasks—such as memory allocation and command scheduling—directly to the vendor's graphics driver.
+However, as visualization workloads scale, this abstraction inevitably introduces massive CPU driver overhead and restricts developers from optimizing how the hardware executes commands.
+Consequently, the computer graphics industry has seen a global shift toward modern, low-level explicit graphics APIs like DirectX, which strip away driver intervention and grant developers granular, direct control over GPU resources, pipeline states, and memory synchronization to maximize hardware efficiency.
 
 % State the problem and the research question
 
-Paragraph containing the Problem Statement or the Research Question.
- 
-This section ends with a discussion on the problem/s faced by or that still exist in the specific technology or field (e.g., limitations of existing software or algorithms). It should not contain your research objectives or goal; instead, the problem statement
-would lead to the research objectives to be stated in 1.2.
-
-\subsection{Figures}
-
-Often times, a graph, illustration, screenshot, or any image can help a reader better understand what we say in text. In academic writing, we call them \textbf{figures}. Please add as many figures as necessary to help build your narrative, but do not go overboard. 
-
-You can add figures in JPG or PNG format as shown in Figure \ref{fig:disneystock}. All figures should also have a descriptive caption. As a general principle, your caption should adequately describe what is shown in the figure, and not just short texts. If we remove all the surrounding text, the reader should still understand what your figure is. 
-
-All figures should be referred to at least once in the surrounding paragraphs. Make sure that you explain what the figure is all about, and that you refer to your figure. You can also use the surround paragraphs to highlight key insights or parts of your figure. For example, \figref{fig:disneystock} shows a graph of the performance of Disney stock from the 1980s to 2012.
-
-%--- the following example shows how to include a figure in PNG format
-\begin{figure}[t]                %-- use [t] to place figure at top, [b] to place at the bottom, [h] for here
-   \centering                    %-- use this to center the figure
-   \includegraphics{DisneyChart.png}      %-- include image file named as "disneychart.png" 
-   \caption{Disney's stock price chart from the 1980s up to 2012. The top chart shows the stock price in each month. The bottom chart shows the change in volume of transactions. The bars are colored based on the type of movement that happened in a month.}
-    \label{fig:disneystock}
-\end{figure}
-
-\subsection{References}
-
-Some notes on citing references. When using APA format, the author-date method of citation is followed. This means that the author's last name and the year of publication for the source should appear in the text, and a complete reference should appear in the reference list.
-
-%
-% Examples:
-%     	Smith (1970) compared reaction times . . .
-%     	In a recent study of reaction times (Smith, 1970), . . .   
-%     	In 1970, Smith compared reaction times . . .
-%	Smith, et al., (1970) compared reaction times . . .
-%     	In a recent study of reaction times (Smith, et al., 1970), . . .  
-%     	In 1970, Smith, et al., compared reaction times . . .
-%
-
-Here are some examples on how to do the referencing (note author's name and years are different from commented examples). For APA citation details, refer
-to \url{http://www.ctan.org/tex-archive/biblio/bibtex/contrib/apacite/}. 
-
-\begin{itemize}
- \item \citeA{kartch:2000:ERA} compared reaction times...
- \item In a recent study of reaction times \cite{kartch:2000:ERA}...
- \item In \citeyearNP{kartch:2000:ERA}, \citeauthor{kartch:2000:ERA} compared reaction times...
- \item \shortciteA{fedkiw:2001:VSO} compared reaction times... 
- \item In a recent study of reaction times \cite{fedkiw:2001:VSO}...
- \item In \citeyearNP{fedkiw:2001:VSO}, \shortciteauthor{fedkiw:2001:VSO}, compared reaction times...
-\end{itemize}
-
-The following are references from journal articles \cite{Park:2006:DSI, Pellacini:2005:LAH, sako:2001:SSB}.  Here's an MS thesis document \cite{yee:2000:SSA}, and this is from a PhD dissertation \cite{kartch:2000:ERA}. For a book, reference is given as \cite{parke:1996:CFA}.  Proceedings from a conference samples are \cite{Jobs95, fedkiw:2001:VSO,levoy:2000:TDM}.  
-
-The sample bibliography file named \textbf{myreferences.bib} is from the
-SIGGRAPH \LaTeX template.  You can use a text editor to view the contents of the bib file. It is your task to create your own bibliography file.  For those who downloaded papers from ACM or IEEE sites, there is a BibTeX link that you can click; thereafter, you just simply need to copy and paste the BibTeX entry into your own bibliography file.
-
-\subsection{Code snippet}
-
-The following shows how to include a program source code (or algorithm). The verbatim environment, as the name suggests, outputs text (including white spaces) as is...
-
-\begin{verbatim}
-               #include <stdio.h>
-               main()
-               {
-                    printf("Hello world!\n");
-               }
-\end{verbatim}
-
+Despite the theoretical performance advantages offered by modern explicit rendering pipelines, a significant challenge remains in the software modernization of established scientific tools.
+High-level visualization platforms like the original AnitoPlume simulator are tightly coupled to OpenGL architectures, creating a rigid barrier to optimization and preventing the integration of advanced, contemporary rendering techniques.
+Transitioning an active simulation system to a low-level framework like DirectX introduces extreme architectural complexity, requiring a complete restructuring of shader programs, command submissions, and memory allocation strategies.
+It remains an open question whether the practical rendering efficiency, resource utilization, and extensibility gains of such a migration justify the steep technical overhead required to port real-time hazard visualization software without altering its underlying scientific behaviors.
 
 %%
 %% --- 1.2 Research Objectives --- %%
@@ -113,12 +55,7 @@ The following shows how to include a program source code (or algorithm). The ver
 
 \section{Research Objectives}
 
-This subsection states the over--all goal that must be achieved to answer the problem. Address the following: Given your research challenge or opportunity, how do you intend to solve it? What is the main outcome of your research? What kind of contribution do you want to achieve?
-
-The \textbf{general objective} is broken down into three or more specific objectives. The \textbf{specific objectives} are relatively smaller objectives that help you attain your general objective. You can formulate your specific objectives based on your running questions about the project. For example, the group does not have a good picture yet of the different conversation patterns between humans that can be mimicked by conversational agents. A specific objective can be "to identify different human-human conversation patterns." These objectives must be specific, measurable, attainable, realistic, and time-bounded.
-
-Reviewing related literature, studying a particular programming language or development tool (e.g., to study Windows/Object-Oriented/Graphics/C++ programming), and documentation to accomplish the general objective is inherent in all thesis projects and, therefore, must not be included here.
-
+The primary aim of this study is to modernize the rendering architecture of the AnitoPlume volcanic plume simulator by porting its OpenGL implementation to DirectX and evaluating the impact of the migration on rendering performance, system architecture, and future extensibility.
 
 \begin{comment}
 %
@@ -178,10 +115,10 @@ Specific Objective:
 
 The specific objectives of this research are as follows:
 \begin{enumerate}
-   \item To identify knowledge representation approaches used by existing story generation systems;
-   \item To identify the different types of storytelling knowledge used in generating stories;
-   \item To build a neural-based model for generating events comprising a story; and
-   \item To define evaluation metrics for evaluating the performance of the event generation model.
+   \item To port the rendering subsystem of the published AnitoPlume simulator from OpenGL to DirectX 12 while strictly preserving its baseline simulation functionality and visual output;
+   \item To identify and document the technical engineering challenges encountered during the migration process, focusing on shader translation, rendering pipeline state adaptation, explicit resource management, and command synchronization.
+   \item To compare the performance of the OpenGL and DirectX 12 implementations under identical hardware environments using empirical metrics, including frame rate (FPS), CPU/GPU resource utilization, and frame rendering times; and
+   \item To assess the architectural maintainability and extensibility of the new DirectX 12 foundation for integrating future hardware-accelerated rendering techniques into the simulator.
 \end{enumerate}
 
 
@@ -192,19 +129,15 @@ The specific objectives of this research are as follows:
 \section{Scope and Limitations of the Research}
 \label{sec:scopelimitations}
 
-This section discusses the boundaries, with respect to the objectives, of the research and the constraints within which the research will be developed. Describe what is and is not included in the scope of your research, supported by your main research question and findings of previous studies. Do not use weak excuses such as the lack of time and/or knowledge to perform the research.
+This study is bounded by the technical objectives of migrating an existing graphics application to a modern architecture, establishing strict constraints to isolate rendering engine efficiency.
 
-A good rule of thumb is to allocate one paragraph for each of your specific objectives that (1) contains a brief overview of the concept/theory and the purpose of doing the associated objective; and (2) includes a description of the scope/limitation of your study, and followed by brief purpose, rationale and/or justification for your decisions.
+The architectural analysis is limited to comparing the state-machine model of OpenGL with the explicit, low-overhead pipeline model of DirectX 12 within real-time scientific visualization frameworks. This evaluation is strictly constrained to the Windows operating system environment. It excludes alternative modern APIs like Vulkan or Metal because the baseline AnitoPlume application is native to Windows, justifying DirectX 12 as the most appropriate target platform for native hardware acceleration.
 
-The following should also be indicated in your Scope and Limitations (in the appropriate paragraphs matching the objectives, or as a stand-alone paragraph):
-\begin{itemize}
-   \item The profile and demographics of your target participants
-   \item Your data sources (i.e., new data, data from previous studies, data to be provided by some experts, data to be retrieved from social networks)
-   \item The specific technology platform to be utilized
-   \item The methods for collecting the data
-   \item The coverage areas or locations
-   \item The duration or time period (e.g., news articles for the year 2016-2017)
-\end{itemize}
+The implementation phase is strictly confined to porting the rendering subsystem of the published AnitoPlume simulator from OpenGL to DirectX 12. The scope includes migrating existing graphics resources, translating shader programs into High-Level Shader Language (HLSL), and rewriting command buffers to accurately reproduce the original terrain and particle rendering. This study explicitly excludes any modifications to the core scientific simulation algorithms, Lagrangian physics math, or the terrain mesh generation developed by Del Gallego et al. This boundary ensures that the physical simulation remains a controlled variable, preventing data contamination during the performance comparison.
+
+The documentation of technical challenges is focused entirely on low-level engineering hurdles native to explicit API migration, such as pipeline state object (PSO) compilation and explicit memory synchronization. The study excludes user-facing software usability, user interface design adjustments, or human participant testing, as application usability was already verified in the baseline study. Instead, data sources are purely technical, derived from automated profiling tools (e.g., PIX or RenderDoc) capturing frame rate (FPS), rendering times, and CPU/GPU utilization during a standardized 180-second simulated eruption sequence. Testing is bounded to standard consumer-grade discrete graphics hardware to reflect the deployment environment of local disaster-response centers.
+
+Finally, the assessment of future extensibility is limited to structural code evaluations and modularity analysis regarding how the new DirectX 12 architecture prepares the simulator to support contemporary rendering pipelines. The actual implementation of advanced features, such as hardware-accelerated ray tracing or compute shaders, is excluded from this study to avoid scope creep while providing a clear architectural roadmap for future researchers.
 
 
 %%
@@ -213,29 +146,10 @@ The following should also be indicated in your Scope and Limitations (in the app
 
 \section{Significance of the Research}
 
-This section explains why research must be done in this area.  It rationalizes the objective of the research with that of the stated problem. Avoid including sentences such as ``This research will be beneficial to the proponent/department/college'' as this is already an inherent requirement of all BS and MS thesis projects.  Focus on the research's contribution to the Computer Science field.
+This study contributes to both computer graphics research and scientific visualization by examining the modernization of an existing real-time simulation system rather than developing an entirely new application. Through the successful migration of AnitoPlume from OpenGL to DirectX, the research provides practical insights into graphics API migration and software modernization for visualization systems.
 
-The following are guide questions that may help your formulate the significance of your research. 
+For researchers in computer graphics, the study offers a detailed case study demonstrating the architectural modifications required when transitioning between two fundamentally different graphics APIs. The comparison between the OpenGL and DirectX implementations contributes empirical evidence regarding rendering performance, implementation complexity, and software maintainability.
 
+For developers of scientific visualization software, the findings may serve as a reference for future projects that require modernization of legacy rendering systems while preserving existing simulation logic. The documented migration process may also assist developers considering similar transitions to lower-level graphics APIs.
 
-%
-% IPR acknowledgement: the following list of items are from Ethel Ong's slides on Significance of the Research
-%
-\begin{itemize}
-\item  What is the relevance and contribution of your work to the computer science community? 
-
-\begin{itemize} 
-\item How does your technical contributions or empirical findings advance the field or grow our body of knowledge? 
-\item If you built a prototype of an interaction technique, interface, library, tool, or system, what is value does it add compared to existing solutions? 
-\end{itemize}
-
-\item What will be your contributions to society in general? 
-    \begin{itemize}
-      \item How will your main stakeholders benefit from your technical contributions or empirical findings? 
-      \item What are the positive social or economic impacts? 
-   \end{itemize}
-\end{itemize}
-
-\begin{comment}
-If applicable, describe possible commercialization and/or innovation in your research.
-\end{comment}
+For future researchers, this work establishes a modern DirectX-based rendering foundation that may support the integration of advanced graphics techniques, including hardware-accelerated ray tracing, compute shaders, GPU-driven rendering, and other contemporary visualization methods. Consequently, the study extends the long-term applicability of the original AnitoPlume project beyond its initial OpenGL implementation.

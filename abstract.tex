@@ -7,26 +7,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{abstract}
-Consists of 150 to 250 words in a \textcolor{blue}{\textbf{single paragraph}}, that provides the reader with a summary of your research/study and what you intend to do. It should be informative enough to serve as a substitute for reading the thesis document itself. The Abstract should contain the following sentences:
-\begin{itemize}
-   \item \textbf{Motivation}. One to two sentence(s) describing the research domain or problem area.
-   \item \textbf{Problem}. One to two sentence(s) describing the research challenge or opportunity to be addressed in your study
-   \item \textbf{Contribution}. One to two sentence(s) describing your intended contribution or how you plan to address the research question 
-   \item \textbf{Methodology}. One to two sentence(s) summarizing the approach or the manner in which you will carry out your study
-   \item \textbf{Significant Results or Findings}. One to two sentence(s) describing your findings and result (This can be skipped during proposal stage) 
-\end{itemize}
+Effective real-time visualization of dynamic natural hazards like volcanic eruptions plays a crucial role in disaster preparedness and public education, yet traditional scientific simulations often compromise real-time interactivity due to high computational overhead.
+While existing interactive tools like the OpenGL-based AnitoPlume simulator achieve real-time rendering, their reliance on high-level graphics APIs introduces significant CPU driver overhead and limits explicit control over modern GPU resources.
+This study addresses the challenge of modernizing scientific visualization systems by migrating the rendering subsystem of AnitoPlume to a low-level explicit graphics API, exploring whether the increased implementation complexity yields practical architectural and performance benefits.
+The primary contribution of this research is a modernized, DirectX-based rendering framework for the AnitoPlume simulator that preserves original physical behaviors and visual output while exposing direct hardware control.
+To achieve this, the methodology involves systematically porting the rendering pipeline, shader programs, and memory management structures from OpenGL to DirectX, followed by a comparative performance evaluation under identical hardware configurations.
+This research establishes an empirical baseline for graphics API migration in scientific visualization, providing a highly scalable foundation for integrating modern hardware-accelerated rendering techniques.
+%%\begin{itemize}
+  % \item \textbf{Motivation}. One to two sentence(s) describing the research domain or problem area.
+   %\item \textbf{Problem}. One to two sentence(s) describing the research challenge or opportunity to be addressed in your study
+   %\item \textbf{Contribution}. One to two sentence(s) describing your intended contribution or how you plan to address the research question 
+   %\item \textbf{Methodology}. One to two sentence(s) summarizing the approach or the manner in which you will carry out your study
+   %\item \textbf{Significant Results or Findings}. One to two sentence(s) describing your findings and result (This can be skipped during proposal stage) 
+%%\end{itemize}
 
 
 %
 %  Do not put citations or quotes in the abract.
 %
 
-Keywords can be found at \url{http://www.acm.org/about/class/class/2012?pageIndex=0}.  Click the 
-link ``HTML'' in the paragraph that starts with ''The \textbf{full CCS classification tree}...''.
 
 \begin{flushleft}
 \begin{tabular}{lp{4.25in}}
-\hspace{-0.5em}\textbf{Keywords:}\hspace{0.25em} & Keyword 1, keyword 2, keyword 3, keyword 4, etc. \textit{minimum of three relevant and descriptive keywords}\\
+\hspace{-0.5em}\textbf{Keywords:}\hspace{0.25em} & AnitoPlume, real-time visualization, DirectX, OpenGL, graphics API migration 
 \end{tabular}
 \end{flushleft}
 \end{abstract}
