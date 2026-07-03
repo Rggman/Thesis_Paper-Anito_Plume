@@ -20,7 +20,7 @@ AnitoPlume fills this gap by merging computer graphics techniques with site-spec
 \subsection{Graphics Architecture and System Performance}
 To bypass the overhead, heavy abstractions, and unneeded general-purpose features of commercial game engines, AnitoPlume was custom-built using a lean, native C++ open-source API stack consisting of OpenGL for graphics rendering, Eigen for numerical linear algebra, and dearIMGUI for the user interface layout.
 This custom application architecture optimizes real-time performance on consumer-grade hardware.
-By keeping the system dependencies minimal, the simulator successfully achieves real-time interactivity, running at an average rendering rate of 30 frames per second (FPS) on a mid-range system with 6 GB of video RAM (VRAM) \cite{del2026interactive}.
+By keeping the system dependencies minimal, the simulator successfully achieves real-time interactivity, running at an average rendering rate of 30 frames per second (FPS) on a system with 6 GB of video RAM (VRAM) capped at 2080 x 2080 resolution\cite{del2026interactive}.
 
 \subsection{Usability Design and Interactive Features}
 The simulator also introduced several usability improvements over previous volcanic visualization systems, including simplified camera controls, interactive parameter editing, real-time plume direction tracking, and contextual information about nearby communities affected by volcanic activity.
@@ -37,8 +37,15 @@ Despite these accomplishments, the primary contribution of AnitoPlume lies in th
 The study focused on plume simulation, terrain modeling, visual fidelity, and usability evaluation, while the OpenGL implementation served primarily as the rendering platform supporting these objectives.
 Consequently, the original work did not investigate how the rendering architecture itself might influence performance, resource utilization, maintainability, or future extensibility.
 
-The authors also acknowledged several opportunities for future development, including the incorporation of more advanced rendering techniques, expanded physics-based simulations, compute shader implementations, and additional GPU-accelerated features.
-These recommendations highlight the need for a rendering architecture capable of supporting increasingly sophisticated graphics workloads while maintaining interactive performance.
+The authors also acknowledged several opportunities for future development, which include:
+\begin{enumerate}
+   \item Photorealistic Rendering
+   \item Expanded Physics-Based Mechanics
+   \item Image-Based Parameter Estimation
+   \item Geoscience Data Integration
+   \item Automated Terrain Synthesis
+\end{enumerate}
+These recommendations highlight the critical need for a modern rendering architecture and a low-level API like DirectX 12, which are capable of supporting such intensive graphics and parallel computing workloads while maintaining real-time interactive performance.
 
 \section{API Migration in Rendering Systems}
 The migration of rendering software between graphics APIs is a well-known challenge in computer graphics. It often involves more than just replacing function calls. A successful port must account for differences in shader languages, resource-binding models, render-target handling, memory synchronization, and execution semantics. In practice, this means that a program cannot simply be translated line by line; instead, the rendering architecture must be reinterpreted in the context of the target API.
