@@ -9,14 +9,36 @@
 \chapter{Related Works}
 \label{sec:relatedworks}
 
-This chapter provides a synthesis of past research, existing algorithms, and or state-of-the-art software that are related/similar to the thesis. It should not present detailed summaries of each related work, but rather present a cohesive comparison of different aspects of their work. At the end of each section and this chapter, it should be clear what research challenges and opportunities will be focused on for the proposal.
+\section{Test}
 
-The sections can be about approaches, application areas, and categories of solutions that give readers an deep understanding of the current state of the field. 
+\section{AnitoPlume}
+AnitoPlume is the first interactive, real-time 3D graphics-based simulation application explicitly tailored for visualizing the changing landscape of the Taal Volcano island in the Philippines and its corresponding eruption plumes.
+Developed primarily to address the challenges of volcanic hazard and crisis communication, the simulator serves as an immersive, lightweight alternative to traditional 2D heatmaps and highly complex, non-interactive geoscientific numerical solvers (such as FALL3D and Tephra2).
+While geoscientific solvers excel at quantitative predictive accuracy, they require heavy high-performance computing resources and significant processing time, making them unviable for applications requiring immediate visual feedback, interactive flexibility, and low-latency user immersion.
+AnitoPlume fills this gap by merging computer graphics techniques with site-specific real-world terrain details to facilitate risk awareness and "what-if" situational modeling \cite{del2026interactive}.
 
-Observe a consistent format when presenting each of the reviewed works. This must be selected in consultation with the prospective adviser.
+\subsection{Graphics Architecture and System Performance}
+To bypass the overhead, heavy abstractions, and unneeded general-purpose features of commercial game engines, AnitoPlume was custom-built using a lean, native C++ open-source API stack consisting of OpenGL for graphics rendering, Eigen for numerical linear algebra, and dearIMGUI for the user interface layout.
+This custom application architecture optimizes real-time performance on consumer-grade hardware.
+By keeping the system dependencies minimal, the simulator successfully achieves real-time interactivity, running at an average rendering rate of 30 frames per second (FPS) on a mid-range system with 6 GB of video RAM (VRAM) \cite{del2026interactive}.
 
-\textcolor{red}{DO NOT FORGET to cite your references.} Related works can be discussed multiple times in different sections of this chapter, depending on what is being discussed or compared.
+\subsection{Usability Design and Interactive Features}
+The simulator also introduced several usability improvements over previous volcanic visualization systems, including simplified camera controls, interactive parameter editing, real-time plume direction tracking, and contextual information about nearby communities affected by volcanic activity.
+These additions improved both accessibility and user experience while preserving interactive performance \cite{del2026interactive}.
 
+\subsection{System Validation and Evaluation Metrics}
+To evaluate the effectiveness of the simulator, \citeauthor{del2026interactive} conducted quantitative and qualitative assessments.
+Visual fidelity was measured using the Structural Similarity Index (SSIM) and Root Mean Squared Error (RMSE) by comparing simulated eruption images with real-world photographs and surveillance footage of Taal Volcano.
+The study reported high visual similarity, indicating that the synthesized plume closely resembled actual volcanic eruptions.
+In addition, usability testing using the System Usability Scale (SUS) demonstrated that participants generally found the simulator easy to use and suitable for interactive exploration.
+
+\subsection{Architectural Limitations and Future Trajectories}
+Despite these accomplishments, the primary contribution of AnitoPlume lies in the design of its visualization framework rather than the underlying graphics API.
+The study focused on plume simulation, terrain modeling, visual fidelity, and usability evaluation, while the OpenGL implementation served primarily as the rendering platform supporting these objectives.
+Consequently, the original work did not investigate how the rendering architecture itself might influence performance, resource utilization, maintainability, or future extensibility.
+
+The authors also acknowledged several opportunities for future development, including the incorporation of more advanced rendering techniques, expanded physics-based simulations, compute shader implementations, and additional GPU-accelerated features.
+These recommendations highlight the need for a rendering architecture capable of supporting increasingly sophisticated graphics workloads while maintaining interactive performance.
 
 \begin{comment}
 %
