@@ -26,27 +26,27 @@
 Volcanic eruptions are among the most destructive natural hazards, producing ash plumes, pyroclastic flows, and volcanic gases that threaten nearby communities and critical infrastructure. 
 Effective visualization of these hazards plays an important role in disaster preparedness, scientific communication, and public education.
 Traditionally, volcanic simulations have relied on numerical models that prioritize scientific accuracy for hazard prediction and analysis.
-While these models provide valuable quantitative information, they are often computationally intensive and lack the interactive capabilities necessary for real-time visualization.
+While these models provide valuable quantitative information, they are often computationally intensive and lack the interactive capabilities necessary for real-time visualization \cite{rossant2021high}.
 
 % Describe the domain (where will you apply the topic)
 
 To overcome these limitations, the sub-field of real-time computer graphics has increasingly been applied to scientific visualization, balancing visual plausibility with high interactive performance.
-Within this domain, a notable localized development is AnitoPlume, a real-time three-dimensional volcanic plume simulator designed specifically for visualizing the complex eruption dynamics of Taal Volcano.
+Within this domain, a notable localized development is AnitoPlume, a real-time three-dimensional volcanic plume simulator designed specifically for visualizing the complex eruption dynamics of Taal Volcano \cite{del2026interactive}.
 Developed using C++ and the OpenGL graphics API, this specialized application combines a Lagrangian particle-based plume system with a detailed digital elevation model of the volcano's terrain.
-By maintaining an interactive rendering performance of approximately 30 frames per second, the system successfully demonstrated that computer graphics could bridge the gap between complex geological events and accessible hazard awareness software for local education and planning.
+By maintaining an interactive rendering performance of approximately 30 frames per second, the system successfully demonstrated that computer graphics could bridge the gap between complex geological events and accessible hazard awareness software for local education and planning  \cite{del2026interactive}.
 
 % Give a synthesis of previous work
 
-Previous efforts in graphics-driven volcanic visualization have heavily relied on traditional higher-level APIs like OpenGL due to their broad driver portability and structural simplicity.
+Previous efforts in graphics-driven volcanic visualization have heavily relied on traditional higher-level APIs like OpenGL due to their broad driver portability and structural simplicity \cite{Shiraef2016}.
 In these legacy architectures, the graphics API simplifies software development by delegating critical hardware management tasks—such as memory allocation and command scheduling—directly to the vendor's graphics driver.
-However, as visualization workloads scale, this abstraction inevitably introduces massive CPU driver overhead and restricts developers from optimizing how the hardware executes commands.
-Consequently, the computer graphics industry has seen a global shift toward modern, low-level explicit graphics APIs like DirectX, which strip away driver intervention and grant developers granular, direct control over GPU resources, pipeline states, and memory synchronization to maximize hardware efficiency.
+However, as visualization workloads scale, this abstraction inevitably introduces massive CPU driver overhead and restricts developers from optimizing how the hardware executes commands \cite{bossard2019high}.
+Consequently, the computer graphics industry has seen a global shift toward modern, low-level explicit graphics APIs like DirectX \cite{Capodieci2022}, which strip away driver intervention and grant developers granular, direct control over GPU resources, pipeline states, and memory synchronization to maximize hardware efficiency \cite{ioannidis2020multithreaded}.
 
 % State the problem and the research question
 
 Despite the theoretical performance advantages offered by modern explicit rendering pipelines, a significant challenge remains in the software modernization of established scientific tools.
 High-level visualization platforms like the original AnitoPlume simulator are tightly coupled to OpenGL architectures, creating a rigid barrier to optimization and preventing the integration of advanced, contemporary rendering techniques.
-Transitioning an active simulation system to a low-level framework like DirectX introduces extreme architectural complexity, requiring a complete restructuring of shader programs, command submissions, and memory allocation strategies.
+Transitioning an active simulation system to a low-level framework like DirectX introduces extreme architectural complexity, requiring a complete restructuring of shader programs, command submissions, and memory allocation strategies \cite{Unterguggenberger2022}.
 It remains an open question whether the practical rendering efficiency, resource utilization, and extensibility gains of such a migration justify the steep technical overhead required to port real-time hazard visualization software without altering its underlying scientific behaviors.
 
 %%
