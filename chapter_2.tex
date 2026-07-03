@@ -40,6 +40,40 @@ Consequently, the original work did not investigate how the rendering architectu
 The authors also acknowledged several opportunities for future development, including the incorporation of more advanced rendering techniques, expanded physics-based simulations, compute shader implementations, and additional GPU-accelerated features.
 These recommendations highlight the need for a rendering architecture capable of supporting increasingly sophisticated graphics workloads while maintaining interactive performance.
 
+\section{Graphics API Architecture and Migration Implications}
+The modernization of AnitoPlume involves migrating the rendering pipeline from a legazy OpenGL based implementation to the Falcor rendering framework.
+Falcor utilizes DirectX12 as its underlying graphics API.
+This migration introduces a fundamentally different graphics architecture characterized by explicit resource management, reduced driver overhead, and improved utilization of modern multi-core processors.
+These architectural changes are particularly beneficial for AnitoPlume, whose real-time volcanic plume simulation continuously updates thousands of dynamic particle billboards while rendering large terrain models and high-resolution textures.
+
+\subsection{OpenGL Implicit State vs. DirectX 12 Explicit State}
+One of the defining characteristics of OpenGL is its use of an implicit global state machine. As described in Section 2.5 of the OpenGL specifications, the rendering state is stored within the current OpenGL context, where API commands modify persistent state that remains active until explicitly changed.
+Draw calls consume the current context state, including the active shader program, bound textures, vertex buffers, depth testing configuration, blending settings, and other rendering parameters.
+This design simplifies the use of the graphics library because rendering commands do not need to specify every state required for each execution.
+However, it introduces additional work for the graphics driver since it must determine which states have changed since the previous draw, validate that the current combination of states is valid, and translate the API calls into GPU commands.
+These operations contribute to increased CPU overhead particularly in applications with a large number of draw calls.
+
+In contrast, DirectX 12 uses an explicit state management model. Rather than relying on a mutable global context, the application explicitly specifies the graphics pipeline configuration through Pipeline State Objects (PSOs), Root Signatures, Descriptor Heaps, and Command Lists.
+A Pipeline State Object PSO encapsulates a complete graphics pipeline configuration including shaders, rasterizer state, depth and stencil settings, blending configuration, and input layout. 
+The PSO is created and validated before rendering begins.
+During rendering, the application simply binds the appropriate PSO instead of modifying numerous individual rendering states.
+
+This explicit approach substantially reduces driver overhead because state validation and pipeline compilation occur during PSO creation rather than at every draw call.
+As a result, the driver performs fewer runtime checks and can submit commands to the GPU more efficiently.
+Furthermore, DirectX 12 enables multiple CPU threads to record command lists independently, improving scalability on modern multi-core processors.
+Since each command list can be recorded independently without modifying a shared global rendering context, multiple CPU threads can generate rendering commands concurrently.
+Synchronization is required only when threads access shared application-managed resources, resulting in significantly less synchronization overhead than the implicit state model of OpenGL.
+
+\subsection{Exploding the CPU Command Recording Bottleneck}
+TODO: Expound more on how openGL limits CPU scalability
+
+\subsection{Explicit Memory Management \& Resource Binding}
+TODO: Describe the differences between OpenGL's implicit GPU memory management and DirectX 12's explicit resource management model.
+
+\subsection{Falcor Rendering Framework}
+TODO: Explain how falcor abstracts the DX12 features through high level rendering interfaces.
+Explain how it speeds up development process while keeping the performance optimizations
+
 \begin{comment}
 %
 % IPR acknowledgement: the contents within this comment are from Ethel Ong's slides on RRL.
