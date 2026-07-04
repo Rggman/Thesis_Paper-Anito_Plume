@@ -7,12 +7,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{abstract}
-Effective real-time visualization of dynamic natural hazards like volcanic eruptions plays a crucial role in disaster preparedness and public education, yet traditional scientific simulations often compromise real-time interactivity due to high computational overhead.
-While existing interactive tools like the OpenGL-based AnitoPlume simulator achieve real-time rendering, their reliance on high-level graphics APIs introduces significant CPU driver overhead and limits explicit control over modern GPU resources.
-This study addresses the challenge of modernizing scientific visualization systems by migrating the rendering subsystem of AnitoPlume to a low-level explicit graphics API, exploring whether the increased implementation complexity yields practical architectural and performance benefits.
-The primary contribution of this research is a modernized, DirectX-based rendering framework for the AnitoPlume simulator that preserves original physical behaviors and visual output while exposing direct hardware control.
-To achieve this, the methodology involves systematically porting the rendering pipeline, shader programs, and memory management structures from OpenGL to DirectX, followed by a comparative performance evaluation under identical hardware configurations.
-This research establishes an empirical baseline for graphics API migration in scientific visualization, providing a highly scalable foundation for integrating modern hardware-accelerated rendering techniques.
+The Taal Volcano in the Philippines remains one of the country's most active volcanoes due to its recurring eruptive activity, highlighting the continued need for effective tools that support hazard communication, disaster preparedness, and scientific visualization.
+Interactive three-dimensional computer graphics simulations have demonstrated their potential to provide intuitive visual representations of volcanic eruption plumes while allowing users to explore eruption scenarios in an immersive virtual environment.
+Existing graphics-based volcanic plume simulators have successfully demonstrated real-time visualization capabilities; however, many rely on legacy graphics rendering technologies and software architectures that limit extensibility, maintainability, and the efficient utilization of modern graphics hardware. 
+This study proposes a modern 3D graphics rendering framework for interactive Taal Volcano plume simulation by redesigning the rendering architecture of an existing plume visualization system while preserving its established particle-based simulation model and core visualization techniques.
+The proposed framework aims to modernize the rendering pipeline, graphics resource management, shader implementation, and software architecture to provide a more scalable, maintainable, and extensible platform for future graphics-based scientific visualization applications.
+A design and development research methodology will be employed to reimplement the simulator using a contemporary graphics rendering framework and evaluate its rendering performance, graphics resource utilization, scalability, and visual fidelity through quantitative performance metrics and qualitative visual assessment.
 %%\begin{itemize}
   % \item \textbf{Motivation}. One to two sentence(s) describing the research domain or problem area.
    %\item \textbf{Problem}. One to two sentence(s) describing the research challenge or opportunity to be addressed in your study
@@ -29,7 +29,7 @@ This research establishes an empirical baseline for graphics API migration in sc
 
 \begin{flushleft}
 \begin{tabular}{lp{4.25in}}
-\hspace{-0.5em}\textbf{Keywords:}\hspace{0.25em} & AnitoPlume, real-time visualization, DirectX, OpenGL, graphics API migration 
+\hspace{-0.5em}\textbf{Keywords:}\hspace{0.25em} & Computer graphics, 3D graphics, Graphics rendering, Volcanic plume simulation, Taal Volcano, Particle systems
 \end{tabular}
 \end{flushleft}
 \end{abstract}
