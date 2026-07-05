@@ -10,6 +10,51 @@
 \label{sec:relatedworks}
 
 \section{Taal Volcano Primer}
+Taal Volcano is a complex volcano located in southwestern Luzon, Philippines, situated in the middle of Taal Lake (Smithsonian Institution, 2026).
+Figure 3 illustrates the volcano across different time periods, including its primary eruption phases. As one of the most active volcanoes in the country, the Philippine Institute of Volcanology and Seismology has recorded 36 historical eruptions at Taal (PHIVOLCS, 2024).
+Its frequent activity poses a major threat to local communities and the densely populated Metro Manila area. Although official hazard maps designate only the volcano island as a Permanent Danger Zone (PDZ) and outline a high-risk perimeter of 15 km, Taal's actual danger extends much further due to the regular release of toxic gases.
+Consequently, Metro Manila remains highly vulnerable to these emissions despite being located approximately 81 km away from the volcanic center.
+
+This vulnerability was clearly demonstrated during the January 12, 2020 eruption, when a phreatomagmatic event occurred at the main crater, producing a massive column of ash and steam (see Fig. 3.B).
+The severity of the eruption led PHIVOLCS to raise the alert status to Level 4, indicating that a hazardous eruption was imminent.
+The event was classified as a Volcanic Explosivity Index (VEI) 4 eruption, depositing an estimated tephra fallout volume of 0.097 $\text{km}^3$ (Balangue-Tarriela et al., 2022).
+Due to the immediate risks, a mass evacuation of roughly 376,000 people was carried out in the surrounding areas, including the provinces of Batangas and Cavite (Renzo, 2020; Del Castillo et al., 2020).
+
+The 2020 event is the only major eruption of Taal to be thoroughly documented, thanks to modern communication and technologies like accessible digital cameras, crowdsourcing, and high-resolution seismic sensors.
+This availability of real eruption footage and geographical data provides a strong foundation for developing visual simulations of the volcano.
+In this study, we present the first 3D computer graphics simulation designed to visualize Taal's eruption plumes, achieving a close visual match to the 2020 eruption.
+Because our simulation is built on scientific models of volcanic plume behavior, the framework can also be used to visualize previous major eruptions of similar magnitude, such as the VEI 4 eruptions that occurred in 1754 and 1911.
+
+
+\section{Geoscientific Modeling and Volcanic Crisis Communication}
+\subsection{Limitations of Current Numerical Models}
+In volcanology, the standard approach for evaluating risk and hazard zones relies on numerical simulations that model the physics of ash transport and tephra fallout.
+Volcanologists widely use Eulerian models such as FALL3D (Folch et al., 2009), Tephra2 (Bonadonna et al., 2005; Connor and Connor, 2006), and TephraProb (Biass et al., 2016), alongside Lagrangian models like HYSPLIT (Stein et al., 2015), for scientific analysis and hazard mapping.
+These models are highly valued for their quantitative accuracy and their capacity to incorporate atmospheric variables.
+
+However, these simulations are built for expert analysis rather than public situational awareness, requiring high-performance computing and substantial processing time.
+While these methods are essential for long-term hazard forecasting, they lack the interactive flexibility and 3D immersion needed for real-time visualization applications.
+To address this, our proposed software, AnitoPlume, serves as a computer graphics application that complements these numerical models by offering an interactive testbed for 3D volcanic eruption visualizations of Taal Volcano.
+
+\subsection{Advancements in 3D Hazard Visualization}
+Traditionally, volcanic hazards and crisis information are communicated using 2D maps that display contour lines and heat maps for ash distribution, pyroclastic flow boundaries, and tephra thickness (Nave et al., 2010; Thompson et al., 2015; Fearnley and Beaven, 2018; Esposti Ongaro et al., 2020). 
+Although 2D representations remain the standard for scientific experts, research indicates that integrating "spatial familiarity" is critical for prompting effective public responses (Preppernau and Jenny, 2015). 
+Comparative studies further demonstrate that general users often prefer 3D perspectives over 2D maps, as 3D views make it easier to understand complex terrain features and identify viable evacuation routes (Thompson et al., 2017; Driedger et al., 2024).
+
+To improve public communication, several research initiatives have explored immersive and interactive applications using computer graphics (Zhang et al., 2017; Lastic et al., 2022; Pretorius et al., 2024), virtual reality (VR) (Tibaldi et al., 2020; Asgary et al., 2020; Li, 2023), or gamification (Kerlow et al., 2020).
+Tools such as VolcanoVR (Hansen et al., 2025), VRVOLC (Delage et al., 2021), and HoloVulcano (Asgary et al., 2020) utilize commercial game engines to let stakeholders view complex volcanic phenomena in safe, immersive environments.
+
+Distinct from these approaches, we developed AnitoPlume using open-source APIs (C++, OpenGL, Eigen, dearIMGUI) with minimal external dependencies.
+By building the software without a standard game engine, we bypass general-purpose abstractions and unnecessary features, thereby optimizing real-time rendering performance. 
+Furthermore, while generic eruption simulations exist within computer graphics (Lastic et al., 2022; Pretorius et al., 2024), they are rarely applied to specific, high-risk locations like the Taal "Decade Volcano." By incorporating LiDAR and OpenTopography datasets, AnitoPlume integrates real-world terrain data with real-time plume dynamics, providing a unique visualization tool that allows users to interactively view various eruption scales directly on a virtual Taal volcano island.
+
+\section{Geoscientific Modeling and Volcanic Crisis Communication}
+Volcanic modeling paradigms in geosciences and computer graphics differ significantly in both methodology and primary intent.
+Within geoscientific and volcanological research, the priority is predictive accuracy and scientific forecasting. In this context, numerical solvers are essential for quantifying physical parameters such as mass eruption rates and tephra dispersal (Kavanagh et al., 2018; Poland and Anderson, 2020; Esposti Ongaro et al., 2020).
+
+Conversely, in the field of computer graphics, volcanic modeling is treated as a subfield of real-time rendering and procedural simulation, focusing primarily on particle systems and fluid dynamics (Stora et al., 1999; Roth and Guritz, 1995; Lastic et al., 2022; Li, 2023; Pretorius et al., 2024).
+Research in this domain emphasizes real-time user interactivity and immersion, meaning that visual effects are often approximations and physical models are simplified.
+Consequently, these techniques prioritize visual realism and low-latency performance over the complex computations found in traditional numerical solvers.
 
 \section{AnitoPlume}
 AnitoPlume is the first interactive, real-time 3D graphics-based simulation application explicitly tailored for visualizing the changing landscape of the Taal Volcano island in the Philippines and its corresponding eruption plumes.

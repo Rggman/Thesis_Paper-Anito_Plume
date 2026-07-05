@@ -56,7 +56,7 @@ Therefore, investigating how explicit GPU control impacts rendering throughput, 
 
 \section{Research Objectives}
 
-The primary aim of this study is to modernize the rendering architecture of the AnitoPlume volcanic plume simulator by porting its OpenGL implementation to DirectX and evaluating the impact of the migration on rendering performance, system architecture, and future extensibility.
+The primary aim of this study is to formulate and evaluate a low-overhead, explicit rendering architecture for the AnitoPlume volcanic plume simulator, and to quantify the impact of explicit GPU control on volumetric rendering throughput, memory bandwidth utilization, and visual fidelity. 
 
 \begin{comment}
 %
@@ -116,10 +116,9 @@ Specific Objective:
 
 The specific objectives of this research are as follows:
 \begin{enumerate}
-   \item To port the rendering subsystem of the published AnitoPlume simulator from OpenGL to DirectX 12 while strictly preserving its baseline simulation functionality and visual output;
-   \item To identify and document the technical engineering challenges encountered during the migration process, focusing on shader translation, rendering pipeline state adaptation, explicit resource management, and command synchronization.
-   \item To compare the performance of the OpenGL and DirectX 12 implementations under identical hardware environments using empirical metrics, including frame rate (FPS), CPU/GPU resource utilization, and frame rendering times; and
-   \item To assess the architectural maintainability and extensibility of the new DirectX 12 foundation for integrating future hardware-accelerated rendering techniques into the simulator. TODO: Replace later
+   \item To design an explicit volumetric rendering pipeline that transitions the AnitoPlume simulator from a dynamic state-machine model to explicitly defined Pipeline State Objects (PSOs) and command lists, while strictly preserving the baseline physical simulation accuracy;
+   \item To implement and assess explicit GPU resource synchronization and cross-API shader translation pipelines to manage the structural transition and memory allocation of large volumetric datasets; and
+   \item To analyze the rendering efficiency of the modernized pipeline against the previous implementation, utilizing GPU profiling metrics, including frame pacing, shader execution time, memory bandwidth utilization, and overall render throughput under identical hardware constraints.
 \end{enumerate}
 
 
@@ -149,4 +148,5 @@ For researchers in computer graphics, the study offers a detailed case study dem
 
 For developers of scientific visualization software, the findings may serve as a reference for future projects that require modernization of legacy rendering systems while preserving existing simulation logic. The documented migration process may also assist developers considering similar transitions to lower-level graphics APIs.
 
-For future researchers, this work establishes a modern DirectX-based rendering foundation that may support the integration of advanced graphics techniques, including hardware-accelerated ray tracing, compute shaders, GPU-driven rendering, and other contemporary visualization methods. Consequently, the study extends the long-term applicability of the original AnitoPlume project beyond its initial OpenGL implementation.
+For future researchers, this work establishes a scalable, explicit rendering foundation that supports integrating advanced graphics techniques, including hardware-accelerated ray tracing, compute shaders, GPU-driven rendering, and other contemporary visualization methods.
+Consequently, the study extends the long-term applicability of the original AnitoPlume project beyond its initial legacy implementation. 
