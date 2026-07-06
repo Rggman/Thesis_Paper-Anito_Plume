@@ -10,6 +10,25 @@
 \label{sec:relatedworks}
 
 \section{Taal Volcano Primer}
+
+\begin{figure}[htbp]
+    \centering
+    % The makebox ensures it stays centered even if you adjust layout tightly
+    \makebox[\textwidth][c]{
+        \begin{tabular}{cc}
+            % Top Row (Set to 47% width each to sit perfectly inside the margins)
+            \includegraphics[width=0.4\textwidth]{Taal_1.png} & 
+            \includegraphics[width=0.4\textwidth]{Taal_1.png} \\
+            \noalign{\vspace{0.05cm}} % Tighter vertical gap
+            % Bottom Row
+            \includegraphics[width=0.4\textwidth]{Taal_1.png} & 
+            \includegraphics[width=0.4\textwidth]{Taal_1.png}
+        \end{tabular}
+    }
+    \caption{Full user interface layout showing all four quadrants of the window simulator. \protect\cite{TechArx2016}.}
+    \label{fig:whole_window}
+\end{figure}
+
 Taal Volcano is a complex volcano located in southwestern Luzon, Philippines, situated in the middle of Taal Lake (Smithsonian Institution, 2026).
 Figure 3 illustrates the volcano across different time periods, including its primary eruption phases. As one of the most active volcanoes in the country, the Philippine Institute of Volcanology and Seismology has recorded 36 historical eruptions at Taal (PHIVOLCS, 2024).
 Its frequent activity poses a major threat to local communities and the densely populated Metro Manila area. Although official hazard maps designate only the volcano island as a Permanent Danger Zone (PDZ) and outline a high-risk perimeter of 15 km, Taal's actual danger extends much further due to the regular release of toxic gases.
@@ -61,6 +80,62 @@ AnitoPlume is the first interactive, real-time 3D graphics-based simulation appl
 Developed primarily to address the challenges of volcanic hazard and crisis communication, the simulator serves as an immersive, lightweight alternative to traditional 2D heatmaps and highly complex, non-interactive geoscientific numerical solvers (such as FALL3D and Tephra2).
 While geoscientific solvers excel at quantitative predictive accuracy, they require heavy high-performance computing resources and significant processing time, making them unviable for applications requiring immediate visual feedback, interactive flexibility, and low-latency user immersion.
 AnitoPlume fills this gap by merging computer graphics techniques with site-specific real-world terrain details to facilitate risk awareness and "what-if" situational modeling \cite{del2026interactive}.
+
+
+\begin{table}[htbp]
+    \centering
+    
+    % This forces the wide horizontal table to fit perfectly within your text margins
+    \resizebox{\textwidth}{!}{
+        \begin{tabularx}{1.65\textwidth}{>{\raggedright\arraybackslash\bfseries}p{3cm} X X X}
+            \toprule
+            & \textbf{Geoscientific Models (e.g., FALL3D, Tephra2)} 
+            & \textbf{Computer Graphics Related Work (e.g., \protect\citeA{Lastic2022})} 
+            & \textbf{AnitoPlume (Proposed Simulator)} \\
+            \midrule
+            
+            Method 
+            & Numerical solvers, Eulerian atmospheric dispersion models, Tephra accumulation and dispersion. 
+            & Eulerian, Lagrangian, or hybrid particle systems approximation. 
+            & Lagrangian system with synchronized multi-vent plume logic. \\
+            \addlinespace
+            
+            Visualization 
+            & Static 2D/3D low-fidelity contours, graph-based and/or scientific visualization, heatmaps. 
+            & 3D scene using simple spheres, billboard particles, static planes, or basic landscapes. 
+            & 3D scene using LiDAR and OpenTopography terrain data, dynamic textures, textured particles, interactive UI with plume trackers. \\
+            \addlinespace
+            
+            Performance 
+            & High accuracy at the cost of high computation time. 
+            & Real-time performance prioritized for visual realism. Approximation of physical eruption behavior. 
+            & Real-time performance with improved visual realism. Optimized for 30 FPS. E.g., Terrain-specific model through multi-source 3D modeling workflow. \\
+            \addlinespace
+            
+            Temporal Representation 
+            & Focuses on snapshots of single eruptive events. 
+            & Continuous loop simulations with emphasis on plume structure alone. 
+            & Dynamic textures: Multi-year landscape visualization (2015--2023), different plume particles based on duration. \\
+            \addlinespace
+            
+            User Interface (UI) 
+            & Displays comprehensive outputs and calculations. E.g., dispersal, mass accumulation, probability maps. 
+            & Parameter tuning for visual and physics adjustments, either via the UI or via text/command-line input. 
+            & A user application requiring no text prompt. Revised layout for parameter tuning. UI is suited for ``what-if'' scenarios because of integrated hazard trackers. \\
+            \addlinespace
+            
+            Validation Strategy 
+            & Field-constrained analysis of tephra fall deposits. 
+            & Qualitative visual comparisons 
+            & Quantitative similarity analysis --- structural image similarity (SSIM) and root mean squared error (RMSE). Usability testing conducted. \\
+            
+            \bottomrule
+        \end{tabularx}
+    }
+
+             \caption{Comparison of volcanic simulation features observed in geoscientific and computer graphics applications and the AnitoPlume system.}
+         \label{tab:simulation_comparison}
+\end{table}
 
 \subsection{Graphics Architecture and System Performance}
 To bypass the overhead, heavy abstractions, and unneeded general-purpose features of commercial game engines, AnitoPlume was custom-built using a lean, native C++ open-source API stack consisting of OpenGL for graphics rendering, Eigen for numerical linear algebra, and dearIMGUI for the user interface layout.
