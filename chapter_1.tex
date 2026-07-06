@@ -32,6 +32,16 @@ While these models provide valuable quantitative information, they are often com
 
 To overcome these limitations, the subfield of real-time computer graphics has increasingly been applied to scientific visualization, balancing visual plausibility with high interactive performance.
 Within this domain, a notable localized development is AnitoPlume, a real-time three-dimensional volcanic plume simulator designed specifically for visualizing the complex eruption dynamics of Taal Volcano \cite{del2026interactive}.
+
+\begin{figure}[htbp]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=1.25\textwidth]{AnitoPlume-Interface.png}
+    }
+    \caption{User Interface of AnitoPlume. The Taal volcano model is rendered in the center of the simulator. The photo reference is on the left. \protect\cite{del2026interactive}.}
+    \label{fig:single_experiment}
+\end{figure}
+
 This specialized application combines a Lagrangian particle-based plume system with a detailed digital elevation model of the volcano's terrain.
 By maintaining an interactive rendering performance of approximately 30 frames per second, the system demonstrated that computer graphics could bridge the gap between complex geological events and accessible hazard-awareness software for local education and planning \cite{del2026interactive}.
 
@@ -44,6 +54,16 @@ Consequently, the computer graphics industry has seen a global shift toward mode
 These low-level architectures strip away hidden driver intervention and grant developers granular, direct control over GPU resources, pipeline states, and memory synchronization to maximize hardware efficiency \cite{ioannidis2020multithreaded}.
 
 % State the problem and the research question
+
+\begin{figure}[htbp]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.85\textwidth]{Graphics_APIs.png}
+    }
+    % \protect is mandatory when using apacite inside captions
+    \caption{Graphics APIs. \protect\cite{TechArx2016}.}
+    \label{fig:graphics_api}
+\end{figure}
 
 Despite the theoretical performance advantages of modern explicit rendering pipelines, a significant challenge remains: the architectural enhancement of established scientific tools.
 High-level visualization platforms like the original AnitoPlume simulator are tightly coupled to legacy architectures, creating a rigid barrier to optimization and preventing the integration of advanced, contemporary rendering techniques. 
