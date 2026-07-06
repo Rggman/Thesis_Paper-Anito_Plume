@@ -1,62 +1,41 @@
 \chapter{Methodology}
 \label{sec:methodology}
+The primary objective of this research is to migrate and improve AnitoPlume's real-time simulation framework by modernizing its rendering pipeline, optimizing hardware utilization through new, explicit graphics APIs, and refining its underlying physical simulation models. 
 
-This chapter enumerates and discusses the specific steps and activities that will be performed by the proponent to accomplish the objectives of the research. The discussion covers the activities from pre-proposal to Final Thesis Writing. 
+\section{Systems Analysis}
 
-Ethical issues surrounding the research and the steps to be taken by the research team to adhere to ethical guidelines and principles should be included when discussing each of the activities.
+We will investigate contemporary, explicit rendering paradigms to identify optimization opportunities within the existing legacy graphics pipeline (OpenGL). This involves studying low-level hardware abstraction techniques designed to reduce CPU overhead and improve memory bandwidth utilization. In parallel, existing computational fluid dynamics and particle-based simulation models will be evaluated to explore additional advanced algorithmic approaches to validate and potentially enhance the accuracy, scalability, and performance of the current physics implementations.
 
-Research activities include inquiry, survey, research, brainstorming, canvassing, consultation, review, interview, observe, experiment, design, test, document, and other similar tasks. The following sections present an example set of activities and methods for conducting computing research. \textbf{\textcolor{red}{However, note that your group's actual research activities and methods will be different depending on your intended research contributions. You should consult closely with your thesis adviser for proper guidance. The following sections need not appear in your actual thesis proposal.}}
+\section{Implementation and Migration}
 
-\section{Data Collection}
+The existing graphics architecture will be transitioned to a new, explicit graphics API. This pipeline re-engineering involves restructuring the rendering engine to utilize decoupled shading layers and unified abstractions. Concurrently, the underlying physical simulation logic, such as Lagrangian-based particle systems, will be validated and iteratively improved. Algorithmic refinements will be introduced to increase the fidelity of fluid-terrain interactions and volumetric behavior without compromising real-time performance constraints. Throughout this process, the system will undergo continuous integration and profiling. Optimization techniques will then be applied to resolve any bottlenecks in both graphics processing and physics computations.
 
-This section, also called "Data Gathering", focus on activities that will enable the researchers to understand their users and their context better, or to analyze the operating environment where the proposed software may be deployed. The types of activities would include interviews, observations, surveys, focus group discussions, and review of secondary data (reports, videos, manuals) to enable the researchers to identify user requirements; learn the existing processes, strategies, rules and guidelines; and/or build the datasets and knowledge resources needed in the study.
+\section{Usability Testing}
 
-Ethical issues surrounding the collection of data from human participants, and from internet or 3rd party sources should be indicated. The steps to be taken by the proponents to ensure that ethical guidelines are followed should also be explained.
-
-\section{Software Design and Implementation}
-
-This section covers the design of data structures, knowledge bases, user interface, and algorithms. It includes implementation and related activities - tool selection, unit testing, integration testing, and function testing - that were covered in the course "Software Engineering".
-
-Your Adviser may ask you to separate the Design and the Implementation sections as needed. 
-
-You may also indicate a specific software development lifecycle model that you plan to adopt in developing your software, such as the Agile methodology.
-
-For machine learning types of research, this section may be replaced with "Model Training".
-
-\section{Validation}
-
-This section contains the different types of validation activities that you will conduct to evaluate the performance of your model or algorithm or software. It may include user perception studies, end user acceptance testing, usability test, and model validation.
-
-Ethical issues surrounding the collection of data from human participants should be indicated. The steps to be taken by the proponents to ensure that ethical guidelines are followed should also be explained.
-
-This section should include a discussion of the following if working with human participants:
+To verify that the architectural overhaul maintains or improves the interactive user experience, an exploratory usability test will be conducted with target beneficiaries:
 \begin{itemize}
-    \item Participant Selection. Who are your target participants? How will they be selected? What data will be collected?
-    \item Orientation. How will ethics be observed? What documents, e.g., validation protocol, will be shared with participants to orient them regarding the research and the validation procedure? Will there be an Informed Consent and Informed Assent? Are they found in the Appendix? Will there be any pre-tests or interviews to be administered prior to the actual experiment?
-    \item Experiment Proper (aka Procedure). How long is the experiment or how long should the user use your software? Is it one-on-one, or one-to-many? What will you do while the experiment is ongoing - observe the participants using a checklist, guide the participants, record the interaction/usage?
-    \item Debriefing. After the experiment, will you administer any post-tests or debriefing to solicit feedback from your participants? What are these?
+    \item Setup:  After screening and obtaining consent, participants will be given time to explore the interface.
+    \item Task:  Participants will use the software to recreate specific Taal Volcano eruption plumes, following a set of predefined scenarios.
+    \item Survey: Users will complete the System Usability Scale (SUS) questionnaire to rate the software's ease of use.
+    \item Feedback: A closing interview will gather suggestions for improving the interface and overall performance.
 \end{itemize}
 
-\subsection{Calendar of Activities}
-
-For the proposal, a Gantt chart showing the schedule of the activities should be added. You can create a table like below, or create a figure. For example:
-
-Table \ref{tab:timetableactivities} shows a Gantt chart of the activities.  Each bullet represents approximately one week worth of activity.
-
-\begin{table}[]
-    \centering
-    \begin{tabular}{l|c|c|c|c|c|c|c|c|c}
-         \toprule
-         & \multicolumn{6}{c|}{2021} & \multicolumn{3}{c}{2022} \\
-         \textbf{Activity} & \textbf{Apr} & \textbf{May} & \textbf{Jun} & \textbf{Jul} & \textbf{Aug} & \textbf{Sep} & \textbf{Jan} & \textbf{Feb} & \textbf{Mar} \\
-         \midrule
-         Data Collection & **** & **** & & & & & & & \\
-         \midrule
-         Software Design & & **** & **** & **** & **** & **** & & & \\
-         \midrule
-         Validation & & & & & & **** & **** & **** & \\
-         \bottomrule
-    \end{tabular}
-    \caption{Gantt Chart of Activities}
-    \label{tab:timetableactivities}
+\begin{table}[htbp]
+\centering
+\caption[Sample SUS questionnaire.]{Sample SUS questionnaire implemented by \cite{del2026interactive} 1 --- strongly disagree, 5 --- strongly agree.}\begin{tabular}{lp{12cm}}
+\hline
+Code & Question \\
+\hline
+Q1 & I think that I would use AnitoPlume frequently. \\
+Q2 & I found AnitoPlume unnecessarily complex. \\
+Q3 & I found AnitoPlume easy to use. \\
+Q4 & I think that I would need the support of a technical person to be able to effectively and efficiently use AnitoPlume. \\
+Q5 & I found that various features of the simulator were well integrated in AnitoPlume. \\
+Q6 & I thought there was too much inconsistency in AnitoPlume. \\
+Q7 & I would imagine that most people without prior experience in using similar software would easily learn how to use AnitoPlume. \\
+Q8 & I found AnitoPlume very cumbersome (slow or complicated and therefore inefficient) to use. \\
+Q9 & I felt very confident while using AnitoPlume. \\
+Q10 & I needed to figure out a lot of things (such as hotkeys, navigating the UI) before I could confidently use AnitoPlume. \\
+\hline
+\end{tabular}
 \end{table}
