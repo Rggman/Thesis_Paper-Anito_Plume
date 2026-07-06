@@ -79,8 +79,8 @@ Consequently, these techniques prioritize visual realism and low-latency perform
 AnitoPlume is the first interactive, real-time 3D graphics-based simulation application explicitly tailored for visualizing the changing landscape of the Taal Volcano island in the Philippines and its corresponding eruption plumes.
 Developed primarily to address the challenges of volcanic hazard and crisis communication, the simulator serves as an immersive, lightweight alternative to traditional 2D heatmaps and highly complex, non-interactive geoscientific numerical solvers (such as FALL3D and Tephra2).
 While geoscientific solvers excel at quantitative predictive accuracy, they require heavy high-performance computing resources and significant processing time, making them unviable for applications requiring immediate visual feedback, interactive flexibility, and low-latency user immersion.
-AnitoPlume fills this gap by merging computer graphics techniques with site-specific real-world terrain details to facilitate risk awareness and "what-if" situational modeling \cite{del2026interactive}.
-
+AnitoPlume fills this gap by merging computer graphics techniques with site-specific real-world terrain details to facilitate risk awareness and ``what-if'' situational modeling \cite{del2026interactive}. 
+To visually demonstrate these differences in rendering approach and graphical fidelity, Table \ref{tab:simulation_comparison} compares the output of previous plume simulations with the real-time terrain integration of our proposed simulator.
 
 \begin{table}[htbp]
     \centering
@@ -133,9 +133,10 @@ AnitoPlume fills this gap by merging computer graphics techniques with site-spec
         \end{tabularx}
     }
 
-             \caption{Comparison of volcanic simulation features observed in geoscientific and computer graphics applications and the AnitoPlume system.}
-         \label{tab:simulation_comparison}
+    \caption{Comparison of volcanic simulation features observed in geoscientific and computer graphics applications and the AnitoPlume system.}
+    \label{tab:simulation_comparison} % <-- PLACED PERFECTLY HERE!
 \end{table}
+
 
 \subsection{Graphics Architecture and System Performance}
 To bypass the overhead, heavy abstractions, and unneeded general-purpose features of commercial game engines, AnitoPlume was custom-built using a lean, native C++ open-source API stack consisting of OpenGL for graphics rendering, Eigen for numerical linear algebra, and dearIMGUI for the user interface layout.
