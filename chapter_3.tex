@@ -49,54 +49,22 @@ Tasks such as pipeline configuration, resource allocation, and command preparati
 This shift allows command generation to be safely distributed across multiple CPU threads \cite{ping2026modern}.
 The lightweight driver architecture introduced by explicit graphics APIs minimizes runtime validation and hidden state management, reducing CPU overhead while providing developers with greater control over rendering operations. By enabling application-driven optimization and more efficient utilization of hardware resources, explicit graphics API architectures are better suited for performance-critical rendering workloads \cite{IoannidisC.2020MRFC}.
 
-\section{Lagrangian Particle Model for Volumetric Plume Dynamics}
-Volcanic eruption plumes are complex multiphase systems consisting of volcanic ash, gases, and entrained atmospheric air. 
-Their evolution is governed by interactions between gravitational forces, buoyancy, atmospheric resistance, and environmental conditions, resulting in dynamic structures that change continuously over time. 
-In computer graphics and scientific visualization, such phenomena can be represented using Eulerian and Lagrangian formulations (Esposti Ongaro et al., 2020).
+\section{Lagrangian Model for Volumetric Plume Dynamics}
 
-This study adopts the Lagrangian plume formulation proposed by \citeA{lastic2022interactive} and the theoretical foundation for volcanic plume behavior in AnitoPlume (Del Gallego et al., 2026). 
-Rather than introducing a new physical model, this research preserves the established plume dynamics formulation and focuses on the modernization of the underlying graphics architecture and the extension of simulator capabilities. 
-The adopted formulation provides the mathematical basis for representing plume evolution, including particle motion, buoyancy effects, atmospheric interaction, and density-driven behavior.
+AnitoPlume utilizes a Lagrangian formulation for representing volcanic plume evolution, where the plume is modeled as a collection of discrete volumetric elements whose physical states are updated over time.
+Unlike Eulerian approaches that evaluate flow properties within fixed spatial domains, Lagrangian approaches track the movement and evolution of individual elements within the flow field \cite{EspostiOngaro2020Validation}.
 
-The Lagrangian formulation represents the plume as a collection of independently evolving volumetric slices. 
-Each slice maintains its own physical state variables and undergoes force evaluation, numerical integration, and property updates based on local parameters.
-This particle-based structure exhibits data parallel characteristics because the computations applied to individual slices are largely independent.
-Therefore, the model is suitable for parallel execution architectures where multiple particle states can be processed concurrently.
+This study adopts the plume formulation presented by \citeA{lastic2022interactive} and implemented in AnitoPlume \cite{del2026interactive}.
+The underlying physical model is preserved during the modernization process, while this research focuses on improving the computational architecture responsible for executing and rendering the simulation.
 
-Therefore, the adopted plume model establishes the computational requirements that motivate the architectural migration explored in this study. 
-Since the underlying physical formulation remains unchanged, improving simulator performance requires addressing the efficiency of the execution and rendering pipeline rather than reducing the complexity of the physical model.
+Each plume element maintains state variables such as position, velocity, mass, density, and volume. During each simulation step, these variables are updated based on the governing physical equations, which consider forces including gravity, buoyancy, atmospheric drag, and wind effects \cite{lastic2022interactive,del2026interactive,gmd-9-431-2016}.
 
-\subsection{Governing Particle Dynamics}
-The evolution of the volcanic plume is defined by the physical equations introduced by \citeA{lastic2022interactive}. 
-The model represents each plume element as a particle governed by Newtonian mechanics, where its motion is determined by the combined influence of gravitational force, buoyancy, atmospheric friction, and wind forces.
+The structure of the Lagrangian formulation exhibits data-parallel characteristics because individual plume elements can be updated primarily using their local state information and shared simulation parameters.
+Consequently, operations such as force evaluation and numerical integration can be distributed across multiple processing units, provided that synchronization requirements are properly managed.
 
-Gravity provides the primary downward force acting on the particle due to its mass and density, while buoyancy produces upward acceleration caused by the density difference between the hot volcanic mixture and the surrounding atmosphere. 
-Atmospheric friction reduces particle velocity through resistance, while wind forces introduce lateral movement that affects plume deformation and direction.
-
-The particle state is updated through numerical integration over discrete time steps. 
-In addition to external forces, the model incorporates air entrainment, which represents the continuous mixing between the volcanic mixture and surrounding atmosphere. 
-This process modifies particle density and momentum over time, allowing the plume to expand and evolve naturally during ascent.
-
-Through this formulation, plume behavior emerges from the collective interaction of individual particles rather than from predefined animation paths. 
-This enables physically based visualization of eruption columns while maintaining a formulation suitable for interactive simulation.
-
-\subsection{Computational Characteristics of Particle-Based Plume Simulation}
-The adopted Lagrangian plume formulation represents a computationally intensive workload due to the continuous processing required for large numbers of dynamic particles. 
-Each simulation step requires evaluation of physical forces, numerical integration of particle states, and preparation of updated data for rendering.
-
-Unlike static graphical objects, plume particles are continuously changing in position, velocity, density, and appearance. 
-As the number of active particles increases, the amount of computation and data movement required by the simulation increases accordingly. 
-Additional physical behaviors, such as density evolution and regime transitions, introduce further computational requirements due to their dependence on particle-level calculations.
-
-Furthermore, the simulation and rendering processes are closely coupled. 
-The physical model generates updated particle states, while the rendering pipeline must continuously transform these states into visual representations such as particle billboards or volumetric approximations. 
-This creates a high-throughput workload where simulation accuracy, rendering efficiency, and resource management must operate together.
-
-Since this study retains the established Lagrangian plume formulation, these computational demands remain inherent to the system. 
-Therefore, the primary challenge addressed by this research is not the simplification of plume physics, but the modernization of the execution architecture responsible for processing and rendering the particle-based simulation. 
-This requirement provides the theoretical motivation for migrating from implicit graphics API architectures toward explicit graphics API architectures.
-
-
+This computational characteristic makes the plume simulation suitable for optimization through modern parallel processing architectures.
+Since the physical workload consists of continuously updating large numbers of dynamic elements, improving execution efficiency requires an architecture capable of reducing overhead and efficiently utilizing available hardware resources.
+Explicit graphics architectures provide mechanisms that support this objective by enabling greater control over resource management and parallel command execution.
 
 %\begin{itemize}
 
