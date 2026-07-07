@@ -14,18 +14,18 @@ The modernization of AnitoPlume involves migrating the rendering pipeline from a
 This migration introduces a fundamentally different graphics architecture characterized by explicit resource management, reduced driver overhead, and improved utilization of modern multicore processors.
 These architectural changes are beneficial for simulators such as AnitoPlume, which require continuous updates of thousands of dynamic particle billboards.
 
-\section{Implicit and Explicit Graphics API Architectures}
+\section{Graphics Rendering Architectures}
 Traditional graphics API architectures are designed to abstract low-level graphics operations from the programmer by implicitly managing graphics state, resource synchronization, and command validation within the graphics driver.
 Throughout this study, these are referred to as implicit graphics APIs, whereas architectures that expose these responsibilities directly to the application are referred to as explicit graphics APIs.
 
 \subsection{Overview of Graphics API Architectures}
-Implicit graphics APIs such as OpenGL and legacy Direct3D versions are designed to prioritize compatibility and ease of use by abstracting hardware complexity behind an implicit state-machine model (Khronos Group, 2022).
+Implicit graphics APIs such as OpenGL are based on a state-based programming model where the application modifies global rendering states that are maintained by the graphics implementation \cite{opengl46spec2022}.
 Implicit graphics API architecture relies on a thick driver layer that abstracts graphics pipeline management from the application (Fig. 1).
 Because the driver is responsible for maintaining graphics state, performing runtime validation, tracking resource usage, and managing command execution, significant CPU overhead is introduced during rendering (Ping et al., 2026).
 
-Meanwhile, explicit graphics API architectures adopt a low-level design that exposes hardware functionality directly to the application, transferring responsibilities traditionally handled by the graphics driver to the application layer.
-Rather than relying on implicit driver-managed operations, explicit graphics APIs employ Pipeline State Objects (PSOs) to explicitly define and manage the configuration of the graphics pipeline.
-Applications explicitly define pipeline states, resource allocation, synchronization, and memory management as seen on figure \ref{fig:api_architecture_comparison} (Ping et al., 2026).
+Explicit graphics architectures expose synchronization, resource management, and command submission responsibilities directly to applications \cite{vulkan14spec2024}.
+Rather than relying on implicit driver-managed state changes, explicit graphics architectures require the application to explicitly define and manage the configuration of the graphics pipeline.
+Applications explicitly define pipeline states, resource allocation, synchronization, and memory management as seen on figure \ref{fig:api_architecture_comparison}.
 
 \begin{figure}[htbp]
     \centering
@@ -39,39 +39,35 @@ Applications explicitly define pipeline states, resource allocation, synchroniza
 
 \subsection{Limitations of the Implicit API Architecture}
 The limitations of the traditional graphics API architecture become particularly significant in computationally intensive scientific visualization systems such as AnitoPlume. 
-In addition to numerically integrating volcanic plume dynamics including gravity, buoyancy, drag, and wind forces for thousands of particles each simulation step, the CPU must also handle graphics driver validation and state management (Del Gallego et al., 2026). 
-This added overhead limits rendering performance, making low-overhead graphics APIs the superior choice to reduce CPU-side workload and better support complex simulations. 
-As rendering workloads become more complex, these driver-managed operations can limit the application's ability to optimize resource usage, creating CPU-side bottlenecks that reduce the rate at which work can be submitted to the GPU.
-In legacy implicit APIs, rendering work is typically funneled through a single CPU thread, creating a bottleneck where driver validation and state management prevent utilization of multi core processors.
+In addition to numerically integrating volcanic plume dynamics including gravity, buoyancy, drag, and wind forces for thousands of particles each simulation step, the CPU must also handle graphics driver validation and state management \cite{del2026interactive}. 
+This added overhead limits rendering performance, motivating the use of lower-overhead graphics APIs to reduce CPU-side workload for applications that require high-throughput rendering. 
+As rendering workloads become more complex, these driver-managed operations can limit the application's ability to optimize resource usage, creating CPU-side bottlenecks that reduce the rate at which work can be submitted to the GPU \cite{ping2026modern}.
 
 \subsection{Performance Optimization opportunities}
-Explicit APIs remove this constraint by requiring the application to define and validate pipeline state objects in advance.
-This shift allows command generation to be safely distributed across multiple CPU threads.
-Different threads can independently construct command buffers and later submit them in parallel to the GPU (Khronos Group, 2024).
-The lightweight driver architecture introduced by explicit graphics APIs minimizes runtime validation and hidden state management, reducing CPU overhead while providing developers with greater control over rendering operations. By enabling application-driven optimization and more efficient utilization of hardware resources, explicit graphics API architectures are better suited for performance-critical rendering workloads (Ioannidis Boutsi, 2020).
+Explicit graphics architectures reduce driver-managed serialization by shifting the responsibility to the application.
+Tasks such as pipeline configuration, resource allocation, and command preparation can be performed explicitly by the application before or outside the main rendering loop. During runtime, the system only executes predefined instructions without modifying or accessing the underlying data.
+This shift allows command generation to be safely distributed across multiple CPU threads \cite{ping2026modern}.
+The lightweight driver architecture introduced by explicit graphics APIs minimizes runtime validation and hidden state management, reducing CPU overhead while providing developers with greater control over rendering operations. By enabling application-driven optimization and more efficient utilization of hardware resources, explicit graphics API architectures are better suited for performance-critical rendering workloads \cite{IoannidisC.2020MRFC}.
 
 \section{Lagrangian Particle Model for Volumetric Plume Dynamics}
 Volcanic eruption plumes are complex multiphase systems consisting of volcanic ash, gases, and entrained atmospheric air. 
 Their evolution is governed by interactions between gravitational forces, buoyancy, atmospheric resistance, and environmental conditions, resulting in dynamic structures that change continuously over time. 
 In computer graphics and scientific visualization, such phenomena can be represented using Eulerian and Lagrangian formulations (Esposti Ongaro et al., 2020).
 
-This study adopts the Lagrangian plume formulation proposed by Lastic et al. (2022) and the theoretical foundation for volcanic plume behavior in AnitoPlume (Del Gallego et al., 2026). 
+This study adopts the Lagrangian plume formulation proposed by \citeA{lastic2022interactive} and the theoretical foundation for volcanic plume behavior in AnitoPlume (Del Gallego et al., 2026). 
 Rather than introducing a new physical model, this research preserves the established plume dynamics formulation and focuses on the modernization of the underlying graphics architecture and the extension of simulator capabilities. 
 The adopted formulation provides the mathematical basis for representing plume evolution, including particle motion, buoyancy effects, atmospheric interaction, and density-driven behavior.
 
-Within this model, the volcanic eruption column is represented as a sequence of volumetric slices emitted from a source vent. 
-Each slice consists of multiple particles that collectively approximate the structure and movement of the plume. 
-Individual particles maintain physical state variables, including position, velocity, density, radius, and mass, which are updated throughout the simulation according to the governing physical equations.
-
-Because each particle evolves independently according to local physical interactions, the Lagrangian formulation naturally exhibits a highly parallel computational structure. 
-However, maintaining thousands of dynamically changing particles requires continuous numerical integration and frequent updates to their visual representation. 
-As particle counts increase, the computational workload grows due to the repeated evaluation of physical forces, state updates, and rendering operations.
+The Lagrangian formulation represents the plume as a collection of independently evolving volumetric slices. 
+Each slice maintains its own physical state variables and undergoes force evaluation, numerical integration, and property updates based on local parameters.
+This particle-based structure exhibits data parallel characteristics because the computations applied to individual slices are largely independent.
+Therefore, the model is suitable for parallel execution architectures where multiple particle states can be processed concurrently.
 
 Therefore, the adopted plume model establishes the computational requirements that motivate the architectural migration explored in this study. 
 Since the underlying physical formulation remains unchanged, improving simulator performance requires addressing the efficiency of the execution and rendering pipeline rather than reducing the complexity of the physical model.
 
 \subsection{Governing Particle Dynamics}
-The evolution of the volcanic plume is defined by the physical equations introduced by Lastic et al. (2022). 
+The evolution of the volcanic plume is defined by the physical equations introduced by \citeA{lastic2022interactive}. 
 The model represents each plume element as a particle governed by Newtonian mechanics, where its motion is determined by the combined influence of gravitational force, buoyancy, atmospheric friction, and wind forces.
 
 Gravity provides the primary downward force acting on the particle due to its mass and density, while buoyancy produces upward acceleration caused by the density difference between the hot volcanic mixture and the surrounding atmosphere. 
