@@ -61,10 +61,9 @@ Comparative studies further demonstrate that general users often prefer 3D persp
 To improve public communication, several research initiatives have explored immersive and interactive applications using computer graphics (Zhang et al., 2017; Lastic et al., 2022; Pretorius et al., 2024), virtual reality (VR) (Tibaldi et al., 2020; Asgary et al., 2020; Li, 2023), or gamification (Kerlow et al., 2020).
 Tools such as VolcanoVR (Hansen et al., 2025), VRVOLC (Delage et al., 2021), and HoloVulcano (Asgary et al., 2020) utilize commercial game engines to let stakeholders view complex volcanic phenomena in safe, immersive environments.
 
-Distinct from these approaches, we developed AnitoPlume using open-source APIs (C++, OpenGL, Eigen, dearIMGUI) with minimal external dependencies.
-By building the software without a standard game engine, we bypass general-purpose abstractions and unnecessary features, thereby optimizing real-time rendering performance. 
-Furthermore, while generic eruption simulations exist within computer graphics (Lastic et al., 2022; Pretorius et al., 2024), they are rarely applied to specific, high-risk locations like the Taal "Decade Volcano." By incorporating LiDAR and OpenTopography datasets, AnitoPlume integrates real-world terrain data with real-time plume dynamics, providing a unique visualization tool that allows users to interactively view various eruption scales directly on a virtual Taal volcano island.
-
+Distinct from these commercial engine approaches, the original AnitoPlume framework was developed using a custom, open-source stack (C++, OpenGL, Eigen, dearIMGUI) to bypass general-purpose engine abstractions and optimize real-time rendering performance. 
+Furthermore, while generic eruption simulations exist (Lastic et al., 2022; Pretorius et al., 2024), AnitoPlume specifically targeted the high-risk Taal "Decade Volcano" by integrating LiDAR and OpenTopography terrain datasets with real-time plume dynamics. 
+Building directly upon this specific, site-tailored approach, our work modernizes this legacy architecture by replacing its original rendering backend with a next-generation graphics API, significantly enhancing visual fidelity and pipeline efficiency.
 \section{Geoscientific Modeling and Volcanic Crisis Communication}
 Volcanic modeling paradigms in geosciences and computer graphics differ significantly in both methodology and primary intent.
 Within geoscientific and volcanological research, the priority is predictive accuracy and scientific forecasting. In this context, numerical solvers are essential for quantifying physical parameters such as mass eruption rates and tephra dispersal (Kavanagh et al., 2018; Poland and Anderson, 2020; Esposti Ongaro et al., 2020).
