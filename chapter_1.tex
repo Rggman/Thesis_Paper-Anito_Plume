@@ -139,6 +139,7 @@ The specific objectives of this research are as follows:
    \item To design an explicit volumetric rendering pipeline that transitions the AnitoPlume simulator from a dynamic state-machine model to explicitly defined Pipeline State Objects (PSOs) and command lists, while strictly preserving the baseline physical simulation accuracy;
    \item To implement and assess explicit GPU resource synchronization and cross-API shader translation pipelines to manage the structural transition and memory allocation of large volumetric datasets; and
    \item To analyze the rendering efficiency of the modernized pipeline against the previous implementation, utilizing GPU profiling metrics, including frame pacing, shader execution time, memory bandwidth utilization, and overall render throughput under identical hardware constraints.
+   \item To verify that the architectural design maintains or improves the interactive user experience by conducting usability testing with target beneficiaries.
 \end{enumerate}
 
 
@@ -149,12 +150,9 @@ The specific objectives of this research are as follows:
 \section{Scope and Limitations of the Research}
 \label{sec:scopelimitations}
 
-This study is bounded by the technical objectives of migrating an existing graphics application to a modern architecture, establishing strict constraints to isolate rendering engine efficiency.
-
-The architectural analysis is limited to comparing the state-machine model of OpenGL with the explicit, low-overhead pipeline model of DirectX 12 within real-time scientific visualization frameworks. 
-
-The implementation phase is strictly confined to porting the rendering subsystem of the published AnitoPlume simulator from OpenGL to DirectX 12. The scope includes migrating existing graphics resources, translating shader programs into High-Level Shader Language (HLSL), and rewriting command buffers to accurately reproduce the original terrain and particle rendering. This study explicitly excludes any modifications to the core scientific simulation algorithms.
-
+The implementation evaluates an explicit graphics architecture using the existing AnitoPlume visualization framework as the simulation platform.
+The study investigates explicit pipeline state management, command recording, shader portability, and resource synchronization while preserving the underlying plume simulation model.
+Modifications to the scientific simulation algorithms are outside the scope of this work.
 
 %%
 %% --- 1.4 Significance of the Research --- %%
@@ -162,11 +160,10 @@ The implementation phase is strictly confined to porting the rendering subsystem
 
 \section{Significance of the Research}
 
-This study contributes to both computer graphics research and scientific visualization by examining the modernization of an existing real-time simulation system rather than developing an entirely new application. Through the successful migration of AnitoPlume from OpenGL to DirectX, the research provides practical insights into graphics API migration and software modernization for visualization systems.
+This study contributes to both computer graphics research and scientific visualization by providing empirical evidence on the application of explicit graphics architectures to real-time volumetric scientific visualization.
+For researchers in computer graphics, the study offers a detailed case study demonstrating the architectural modifications required when transitioning between two fundamentally different graphics APIs.
+The comparison between the use of an implicit to an explicit graphics API architecture contributes to empirical evidence regarding rendering performance, implementation complexity, and software maintainability.
 
-For researchers in computer graphics, the study offers a detailed case study demonstrating the architectural modifications required when transitioning between two fundamentally different graphics APIs. The comparison between the OpenGL and DirectX implementations contributes empirical evidence regarding rendering performance, implementation complexity, and software maintainability.
-
-For developers of scientific visualization software, the findings may serve as a reference for future projects that require modernization of legacy rendering systems while preserving existing simulation logic. The documented migration process may also assist developers considering similar transitions to lower-level graphics APIs.
-
+For developers of scientific visualization software, the findings may serve as a reference for future projects that require designing future high-performance rendering systems.
 For future researchers, this work establishes a scalable, explicit rendering foundation that supports integrating advanced graphics techniques, including hardware-accelerated ray tracing, compute shaders, GPU-driven rendering, and other contemporary visualization methods.
 Consequently, the study extends the long-term applicability of the original AnitoPlume project beyond its initial legacy implementation. 
