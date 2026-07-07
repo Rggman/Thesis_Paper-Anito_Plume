@@ -54,16 +54,19 @@ The lightweight driver architecture introduced by explicit graphics APIs minimiz
 AnitoPlume utilizes a Lagrangian formulation for representing volcanic plume evolution, where the plume is modeled as a collection of discrete volumetric elements whose physical states are updated over time.
 Unlike Eulerian approaches that evaluate flow properties within fixed spatial domains, Lagrangian approaches track the movement and evolution of individual elements within the flow field \cite{EspostiOngaro2020Validation}.
 
-This study adopts the plume formulation presented by \citeA{lastic2022interactive} and implemented in AnitoPlume \cite{del2026interactive}.
-The underlying physical model is preserved during the modernization process, while this research focuses on improving the computational architecture responsible for executing and rendering the simulation.
-
-Each plume element maintains state variables such as position, velocity, mass, density, and volume. During each simulation step, these variables are updated based on the governing physical equations, which consider forces including gravity, buoyancy, atmospheric drag, and wind effects \cite{lastic2022interactive,del2026interactive,gmd-9-431-2016}.
+The plume formulation presented by \citeA{lastic2022interactive} and implemented in AnitoPlume \cite{del2026interactive} represents plume dynamics through discrete elements with associated physical properties.
+Each plume element maintains state variables such as position, velocity, mass, density, and volume. During each simulation step, these variables are updated based on governing physical equations that consider forces including gravity, buoyancy, atmospheric drag, and wind effects \cite{lastic2022interactive,del2026interactive,gmd-9-431-2016}.
 
 The structure of the Lagrangian formulation exhibits data-parallel characteristics because individual plume elements can be updated primarily using their local state information and shared simulation parameters.
-Consequently, operations such as force evaluation and numerical integration can be distributed across multiple processing units, provided that synchronization requirements are properly managed.
+Consequently, operations such as force evaluation and numerical integration can be distributed across multiple processing units, provided that synchronization requirements are properly managed \cite{lastic2022interactive}.
 
-This computational characteristic makes the plume simulation suitable for optimization through modern parallel processing architectures.
-Since the physical workload consists of continuously updating large numbers of dynamic elements, improving execution efficiency requires an architecture capable of reducing overhead and efficiently utilizing available hardware resources.
+However, Lagrangian particle-based methods also present limitations when applied to large-scale geophysical phenomena. 
+The computational cost associated with representing the large number of particles required for realistic volcanic processes has limited the widespread use of fully Lagrangian approaches in volcanological simulations \cite{EspostiOngaro2020Validation}. 
+These limitations motivate the consideration of alternative formulations, model refinements, or modifications to the underlying mathematical representation depending on the accuracy and computational requirements of the simulation. 
+Consequently, the selection of governing equations and the formulation of the plume model remain important considerations in the continued development of volcanic simulation systems.
+
+Despite these considerations, the data-parallel characteristics of the Lagrangian representation make plume simulation suitable for optimization through modern parallel processing architectures.
+Since the computational workload consists of continuously updating large numbers of dynamic elements, improving execution efficiency requires an architecture capable of reducing overhead and efficiently utilizing available hardware resources.
 Explicit graphics architectures provide mechanisms that support this objective by enabling greater control over resource management and parallel command execution.
 
 %\begin{itemize}
