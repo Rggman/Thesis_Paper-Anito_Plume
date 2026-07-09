@@ -46,7 +46,7 @@ This availability of real eruption footage and geographical data provides a stro
 \section{Geoscientific Modeling and Volcanic Crisis Communication}
 \subsection{Limitations of Current Numerical Models}
 In volcanology, the standard approach for evaluating risk and hazard zones relies on numerical simulations that model the physics of ash transport and tephra fallout.
-Volcanologists widely use Eulerian models such as FALL3D (Folch et al., 2009), Tephra2 (Bonadonna et al., 2005; Connor and Connor, 2006), and TephraProb (Biass et al., 2016), alongside Lagrangian models like HYSPLIT (Stein et al., 2015), for scientific analysis and hazard mapping.
+Volcanologists widely use Eulerian models such as FALL3D \cite{folch2009fall3d}, Tephra2 \cite{bonadonna2006probabilistic, connor2006inversion}, and TephraProb \cite{biass2016tephraprob}, alongside Lagrangian models like HYSPLIT \cite{stein2015noaa}, for scientific analysis and hazard mapping.
 These models are highly valued for their quantitative accuracy and their capacity to incorporate atmospheric variables.
 
 However, these simulations are built for expert analysis rather than public situational awareness, requiring high-performance computing and substantial processing time.
@@ -54,21 +54,21 @@ While these methods are essential for long-term hazard forecasting, they lack th
 To address this, our proposed software, AnitoPlume, serves as a computer graphics application that complements these numerical models by offering an interactive testbed for 3D volcanic eruption visualizations of Taal Volcano.
 
 \subsection{Advancements in 3D Hazard Visualization}
-Traditionally, volcanic hazards and crisis information are communicated using 2D maps that display contour lines and heat maps for ash distribution, pyroclastic flow boundaries, and tephra thickness (Nave et al., 2010; Thompson et al., 2015; Fearnley and Beaven, 2018; Esposti Ongaro et al., 2020). 
-Although 2D representations remain the standard for scientific experts, research indicates that integrating "spatial familiarity" is critical for prompting effective public responses (Preppernau and Jenny, 2015). 
-Comparative studies further demonstrate that general users often prefer 3D perspectives over 2D maps, as 3D views make it easier to understand complex terrain features and identify viable evacuation routes (Thompson et al., 2017; Driedger et al., 2024).
+Traditionally, volcanic hazards and crisis information are communicated using 2D maps that display contour lines and heat maps for ash distribution, pyroclastic flow boundaries, and tephra thickness \cite{nave2010re, thompson2015influence, fearnley2018volcano, esposti2020framework}. 
+Although 2D representations remain the standard for scientific experts, research indicates that integrating "spatial familiarity" is critical for prompting effective public responses \cite{preppernau2015three}. 
+Comparative studies further demonstrate that general users often prefer 3D perspectives over 2D maps, as 3D views make it easier to understand complex terrain features and identify viable evacuation routes \cite{thompson2017more, driedger2024following}.
 
-To improve public communication, several research initiatives have explored immersive and interactive applications using computer graphics (Zhang et al., 2017; Lastic et al., 2022; Pretorius et al., 2024), virtual reality (VR) (Tibaldi et al., 2020; Asgary et al., 2020; Li, 2023), or gamification (Kerlow et al., 2020).
-Tools such as VolcanoVR (Hansen et al., 2025), VRVOLC (Delage et al., 2021), and HoloVulcano (Asgary et al., 2020) utilize commercial game engines to let stakeholders view complex volcanic phenomena in safe, immersive environments.
+To improve public communication, several research initiatives have explored immersive and interactive applications using computer graphics \cite{zhang2017hybrid, lastic2022interactive, pretorius2024volcanic}, virtual reality (VR) \cite{tibaldi2020real, asgary2019simulation, li2023synthesizing}, or gamification \cite{kerlow2020earth}.
+Tools such as VolcanoVR \cite{hansen2025volcanovr}, VRVOLC \cite{delage2021visualising}, and HoloVulcano \cite{asgary2019simulation} utilize commercial game engines to let stakeholders view complex volcanic phenomena in safe, immersive environments.
 
 Distinct from these commercial engine approaches, the original AnitoPlume framework was developed using a custom, open-source stack (C++, OpenGL, Eigen, dearIMGUI) to bypass general-purpose engine abstractions and optimize real-time rendering performance. 
-Furthermore, while generic eruption simulations exist (Lastic et al., 2022; Pretorius et al., 2024), AnitoPlume specifically targeted the high-risk Taal "Decade Volcano" by integrating LiDAR and OpenTopography terrain datasets with real-time plume dynamics. 
+Furthermore, while generic eruption simulations exist \cite{lastic2022interactive, pretorius2024volcanic}, AnitoPlume specifically targeted the high-risk Taal "Decade Volcano" by integrating LiDAR and OpenTopography terrain datasets with real-time plume dynamics. 
 Building directly upon this specific, site-tailored approach, our work modernizes this legacy architecture by replacing its original rendering backend with a next-generation graphics API, significantly enhancing visual fidelity and pipeline efficiency.
 \section{Geoscientific Modeling and Volcanic Crisis Communication}
 Volcanic modeling paradigms in geosciences and computer graphics differ significantly in both methodology and primary intent.
-Within geoscientific and volcanological research, the priority is predictive accuracy and scientific forecasting. In this context, numerical solvers are essential for quantifying physical parameters such as mass eruption rates and tephra dispersal (Kavanagh et al., 2018; Poland and Anderson, 2020; Esposti Ongaro et al., 2020).
+Within geoscientific and volcanological research, the priority is predictive accuracy and scientific forecasting. In this context, numerical solvers are essential for quantifying physical parameters such as mass eruption rates and tephra dispersal \cite{kavanagh2018review, poland2020partly, esposti2020framework}.
 
-Conversely, in the field of computer graphics, volcanic modeling is treated as a subfield of real-time rendering and procedural simulation, focusing primarily on particle systems and fluid dynamics (Stora et al., 1999; Roth and Guritz, 1995; Lastic et al., 2022; Li, 2023; Pretorius et al., 2024).
+Conversely, in the field of computer graphics, volcanic modeling is treated as a subfield of real-time rendering and procedural simulation, focusing primarily on particle systems and fluid dynamics \cite{stora1999animating, roth1995visualization, lastic2022interactive, li2023synthesizing, pretorius2024volcanic}.
 Research in this domain emphasizes real-time user interactivity and immersion, meaning that visual effects are often approximations and physical models are simplified.
 Consequently, these techniques prioritize visual realism and low-latency performance over the complex computations found in traditional numerical solvers.
 
