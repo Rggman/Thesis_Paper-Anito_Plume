@@ -39,3 +39,53 @@ Q10 & I needed to figure out a lot of things (such as hotkeys, navigating the UI
 \hline
 \end{tabular}
 \end{table}
+
+
+\section{Calendar of Activities}
+
+For the proposal, a Gantt chart showing the schedule of the activities should be added. You can create a table like below, or create a figure. For example:
+
+Table \ref{tab:timetableactivities} shows a Gantt chart of the activities.  Each bullet represents approximately one week worth of activity.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Proposed calendar of activities}
+    \label{tab:calendaractivities}
+    \begin{tabular}{l|c|c|c|c|c|c|c|c}
+        \toprule
+        \textbf{Activity} & \textbf{Aug} & \textbf{Sep} & \textbf{Oct} & \textbf{Nov} & \textbf{Dec} & \textbf{Jan} & \textbf{Feb} & \textbf{Mar} \\
+        \midrule
+        Literature review and reference refinement & X & X &  &  &  &  &  & \\
+        Baseline analysis of AnitoPlume renderer &  & X & X &  &  &  &  & \\
+        Environment setup and toolchain preparation &  &  & X & X &  &  &  & \\
+        Rendering architecture design and migration planning &  &  &  & X & X &  &  & \\
+        DirectX 12 implementation and shader porting &  &  &  &  & X & X & X & \\
+        Resource synchronization and debugging &  &  &  &  &  & X & X & \\
+        Performance evaluation and visual comparison &  &  &  &  &  &  & X & X \\
+        Usability testing and thesis writing &  &  &  &  &  & X & X & X \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+
+\begin{comment}
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{l|c|c|c|c|c|c|c|c|c}
+         \toprule
+         & \multicolumn{6}{c|}{2021} & \multicolumn{3}{c}{2022} \\
+         \textbf{Activity} & \textbf{Apr} & \textbf{May} & \textbf{Jun} & \textbf{Jul} & \textbf{Aug} & \textbf{Sep} & \textbf{Jan} & \textbf{Feb} & \textbf{Mar} \\
+         \midrule
+         Data Collection & **** & **** & & & & & & & \\
+         \midrule
+         Software Design & & **** & **** & **** & **** & **** & & & \\
+         \midrule
+         Validation & & & & & & **** & **** & **** & \\
+         \bottomrule
+    \end{tabular}
+    \caption{Gantt Chart of Activities}
+    \label{tab:timetableactivities}
+\end{table}
+\end{comment}
