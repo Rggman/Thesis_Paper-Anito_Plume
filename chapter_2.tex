@@ -244,6 +244,48 @@ The necessity of this structural rewrite is evident in advanced rendering archit
 The most technically demanding aspect of the explicit migration process is resource synchronization. In OpenGL, hardware hazards are concealed by the driver, meaning developers rarely need to explicitly manage the transitions between writing to and reading from the same texture or buffer \cite{Unterguggenberger2022}. DirectX 12, by contrast, transfers the burden of memory management entirely to the developer, requiring explicit resource barriers to ensure that GPU accesses occur in the correct deterministic order \cite{rossant2021high}. 
 
 This explicit synchronization burden is concretely demonstrated in the Falcor engine, which utilizes a dedicated barrier system to route resources into their correct states before any updates, copies, or draw calls are executed. By manually handling transitions at both the resource and subresource levels, the architecture reinforces that state transitions are a central engine responsibility rather than an invisible driver service. For the AnitoPlume study, this supports a key argument: accurate migration is not just about producing a similar output image, but about guaranteeing that the GPU views each buffer in the correct state at the exact right microsecond. This is essential when updating thousands of particle billboards, as incorrect barrier placement during parallel draw calls leads to race conditions, stale texture reads, flickering artifacts, or catastrophic device crashes \cite{cheung2024applications}.
+
+\begin{table}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.5} % Adds a bit of padding between rows
+\begin{tabular}{|p{4.5cm}|p{4.5cm}|p{4.5cm}|}
+\hline
+\textbf{OpenGL} & \textbf{Vulkan} & \textbf{DirectX 12} \\ 
+\hline
+
+Originally created for graphics workstations with direct renderers, split memory. & 
+A better match for modern platforms, including mobile platforms with unified memory and tiled rendering support. & 
+A modern API targeted at Windows PCs and Xbox consoles, allowing developers to scale performance across these unified platforms. \\ 
+\hline
+
+Driver handles state validation, dependency tracking, error checking. This may limit and randomize performance. & 
+The application has direct and predictable control over the GPU via an explicit API. & 
+Gives application and game developers explicit control over how the GPU's resources are allocated, shifting state validation away from the driver. \\ 
+\hline
+
+Obsolete threading model does not allow generation of graphics commands in parallel to command execution. & 
+API designed for multi-core, multi-thread platforms. Multiple command buffers can be created in parallel. & 
+Designed to fully utilize multi-core CPUs by allowing command lists to be pre-computed in a free-threaded manner across any CPU core. \\ 
+\hline
+
+API choices can be complex, syntax evolved over twenty years. & 
+Removal of legacy requirements simplifies API design, simplifies usage guidance, and reduces specification size. & 
+Abandons legacy, finely grained orthogonal state objects in favor of unified Pipeline State Objects (PSO) assembled in real time. \\ 
+\hline
+
+Shader language compiler is a part of the driver, and it only supports GLSL. The shader source has to be shipped. & 
+SPIR-V is the new compiler target, enabling front-end language flexibility and reliability. & 
+Utilizes High-Level Shader Language (HLSL) compiled down to an intermediate representation (DXIL/DXBC) to ease driver workloads and improve portability. \\ 
+\hline
+
+Developers have to take into account implementation variability between vendors. & 
+Due to the simpler API and common language front-ends, more rigorous testing will increase cross-vendor compatibility. & 
+Ensures hardware consistency across vendors through strictly defined Feature Levels (e.g., DirectX 12 Ultimate), meaning core features are supported across the board. \\ 
+\hline
+
+\end{tabular}
+\caption[Graphics API Comparison: OpenGL vs. Vulkan vs. DirectX 12]{Graphics API Comparison: OpenGL vs. Vulkan vs. DirectX 12 from \citeauthor{shiraef2016exploratory} and \citeauthor{zoraja2023vanityx}}\label{tab:graphics_api_comparison}
+\end{table}
 \begin{comment}
 %
 % IPR acknowledgement: the contents within this comment are from Ethel Ong's slides on RRL.

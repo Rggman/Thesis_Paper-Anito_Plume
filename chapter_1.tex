@@ -76,9 +76,7 @@ Therefore, investigating how explicit GPU control impacts rendering throughput, 
 
 \section{Research Objectives}
 
-The primary aim of this study is to formulate and evaluate a low-overhead, explicit rendering architecture for the AnitoPlume volcanic plume simulator, and to quantify the impact of explicit GPU control on volumetric rendering throughput, memory bandwidth utilization, and visual fidelity. 
-
-\begin{comment}
+This study aims to port and extend AnitoPlume, an existing Taal Volcano plume simulator, by redesigning its rendering architecture with a modern graphics framework while preserving its established particle-based simulation model. The research evaluates the resulting improvements in rendering performance, GPU resource utilization, scalability, and visual fidelity, and assesses whether the modernized system maintains an interactive and usable experience for its target beneficiaries.\begin{comment}
 %
 % IPR acknowledgement: the following sentences and examples are from Ethel Ong's slides 
 %     on Research Objectives
@@ -136,10 +134,10 @@ Specific Objective:
 
 The specific objectives of this research are as follows:
 \begin{enumerate}
-   \item To design an explicit volumetric rendering pipeline that transitions the AnitoPlume simulator from a dynamic state-machine model to explicitly defined Pipeline State Objects (PSOs) and command lists, while strictly preserving the baseline physical simulation accuracy;
-   \item To implement and assess explicit GPU resource synchronization and cross-API shader translation pipelines to manage the structural transition and memory allocation of large volumetric datasets; and
-   \item To analyze the rendering efficiency of the modernized pipeline against the previous implementation, utilizing GPU profiling metrics, such as but not limited to frame pacing, shader execution time, memory bandwidth utilization, and overall render throughput under identical hardware constraints.
-   \item To validate the overall user experience by conducting usability testing with target beneficiaries.
+   \item To benchmark GPU resource synchronization and cross-API shader translation for AnitoPlume's volumetric plume data, establishing a baseline for porting the simulator to the new rendering framework;
+   \item To redesign AnitoPlume's software architecture by transitioning from a dynamic state-machine model to explicitly defined Pipeline State Objects (PSOs) and command lists;
+   \item To analyze the rendering efficiency of the modernized pipeline against the previous implementation using GPU profiling metrics, such as, but not limited to, frame pacing, shader execution time, memory bandwidth utilization, and overall render throughput, under identical hardware constraints;
+   \item To validate the overall user experience of the modernized simulator by conducting usability testing with target beneficiaries.
 \end{enumerate}
 
 
@@ -150,20 +148,22 @@ The specific objectives of this research are as follows:
 \section{Scope and Limitations of the Research}
 \label{sec:scopelimitations}
 
-The implementation evaluates an explicit graphics architecture using the existing AnitoPlume visualization framework as the simulation platform.
-The study investigates explicit pipeline state management, command recording, shader portability, and resource synchronization while preserving the underlying plume simulation model.
-Modifications to the scientific simulation algorithms are outside the scope of this work.
+This study is limited to porting and extending AnitoPlume, an existing Taal Volcano plume visualization system, from its current graphics API (OpenGL) to a modern graphics API, such as Vulkan or DirectX 12. In contrast to legacy APIs, where the graphics driver automatically manages GPU state, memory allocation, and synchronization on the application's behalf, explicit APIs require the application to directly define and control these aspects, including Pipeline State Objects (PSOs), command lists, and GPU resource synchronization. This shift is the basis for the "explicit" rendering architecture investigated in this research. The study specifically examines pipeline state management, command recording, shader portability across graphics APIs, and GPU resource synchronization, while strictly preserving AnitoPlume's existing particle-based plume simulation model. Modifications to the underlying scientific simulation algorithms, volcanic plume physics, or eruption modeling parameters are outside the scope of this work.
 
+The usability testing phase will involve 10 to 20 voluntary participants, consisting of computer science students and developers with a relevant background in 3D graphics or software development. Participants will be recruited on-campus within DLSU computer laboratories. Data collection will take place within the DLSU College of Computer Studies (CCS) laboratory environments, or in controlled remote developer testing environments for participants unable to be physically present. After completing a standardized set of interaction tasks with the ported simulator, participants will complete an anonymous, self-administered questionnaire using the System Usability Scale (SUS) to evaluate application responsiveness, stability, and visual parity relative to the original AnitoPlume system. This phase is expected to take 2 to 4 weeks within the systems evaluation timeframe of the study.
+
+This research is limited to a single case study, the AnitoPlume Taal Volcano plume simulator, and its findings on rendering performance and usability are not guaranteed to generalize to other volcanic visualization systems or simulation platforms. Benchmarking results are further constrained to the specific hardware configurations used during testing and may not be representative of performance across all GPU vendors or consumer hardware. Finally, given the sample size of 10 to 20 participants, usability findings are intended to provide indicative, rather than statistically generalizable, insight into user experience.
 %%
 %% --- 1.4 Significance of the Research --- %%
 %%
 
 \section{Significance of the Research}
+This study contributes to both computer graphics research and scientific visualization by providing empirical evidence on the application of modern graphics architectures to real-time volumetric scientific visualization, while also offering immediate, practical value to Philippine disaster risk reduction efforts.
 
-This study contributes to both computer graphics research and scientific visualization by providing empirical evidence on the application of explicit graphics architectures to real-time volumetric scientific visualization.
+For Philippine communities and disaster management stakeholders, this study offers direct, immediate benefits. Taal Volcano remains under close monitoring due to its recurring eruptive activity, yet accessible, interactive 3D tools for communicating volcanic hazards to the public and to local decision-makers remain limited. By modernizing and extending AnitoPlume into a more performant, maintainable, and scalable system, this study lays the groundwork for AnitoPlume V2 to potentially serve as one of the first accessible 3D visualization tools for volcanic hazard communication in the Philippines. Such a tool could support disaster preparedness education, hazard awareness campaigns, and public information efforts led by local government units (LGUs) and agencies such as PHIVOLCS, by allowing communities and responders to visualize eruption scenarios in a more intuitive and immersive manner than static hazard maps alone. While this study does not directly evaluate deployment with disaster response agencies or affected communities, it establishes the technical foundation necessary to pursue such applications in future work.
+
 For researchers in computer graphics, the study offers a detailed case study demonstrating the architectural modifications required when transitioning between two fundamentally different graphics APIs.
-The comparison between the use of an implicit to an explicit graphics API architecture contributes to empirical evidence regarding rendering performance, implementation complexity, and software maintainability.
 
-For developers of scientific visualization software, the findings may serve as a reference for future projects that require designing future high-performance rendering systems.
-For future researchers, this work establishes a scalable, explicit rendering foundation that supports integrating advanced graphics techniques, including hardware-accelerated ray tracing, compute shaders, GPU-driven rendering, and other contemporary visualization methods.
-Consequently, the study extends the long-term applicability of the original AnitoPlume project beyond its initial legacy implementation. 
+For developers of scientific visualization software, the findings may serve as a reference for future projects that require designing high-performance rendering systems for similarly data-intensive, real-time visualization applications.
+
+For future researchers, this work establishes a scalable rendering foundation that supports integrating advanced graphics techniques, including hardware-accelerated ray tracing, compute shaders, GPU-driven rendering, and other contemporary visualization methods. Consequently, the study extends the long-term applicability of the original AnitoPlume project beyond its initial legacy implementation, while positioning it as a potential stepping stone toward practical, real-world disaster communication tools for volcanic hazards in the Philippines.
