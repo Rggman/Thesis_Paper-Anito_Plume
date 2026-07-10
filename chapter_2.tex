@@ -245,6 +245,8 @@ The most technically demanding aspect of the explicit migration process is resou
 
 This explicit synchronization burden is concretely demonstrated in the Falcor engine, which utilizes a dedicated barrier system to route resources into their correct states before any updates, copies, or draw calls are executed. By manually handling transitions at both the resource and subresource levels, the architecture reinforces that state transitions are a central engine responsibility rather than an invisible driver service. For the AnitoPlume study, this supports a key argument: accurate migration is not just about producing a similar output image, but about guaranteeing that the GPU views each buffer in the correct state at the exact right microsecond. This is essential when updating thousands of particle billboards, as incorrect barrier placement during parallel draw calls leads to race conditions, stale texture reads, flickering artifacts, or catastrophic device crashes \cite{cheung2024applications}.
 
+\begin{comment}
+
 \begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.5} % Adds a bit of padding between rows
@@ -286,6 +288,9 @@ Ensures hardware consistency across vendors through strictly defined Feature Lev
 \end{tabular}
 \caption[Graphics API Comparison: OpenGL vs. Vulkan vs. DirectX 12]{Graphics API Comparison: OpenGL vs. Vulkan vs. DirectX 12 from \citeauthor{shiraef2016exploratory} and \citeauthor{zoraja2023vanityx}}\label{tab:graphics_api_comparison}
 \end{table}
+\end{comment}
+
+
 \begin{comment}
 %
 % IPR acknowledgement: the contents within this comment are from Ethel Ong's slides on RRL.

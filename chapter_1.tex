@@ -24,36 +24,48 @@
 % Describe the research area
 
 Volcanic eruptions are among the most destructive natural hazards, producing ash plumes, pyroclastic flows, and volcanic gases that threaten nearby communities and critical infrastructure. 
-Effective visualization of these hazards plays an important role in disaster preparedness, scientific communication, and public education.
-Traditionally, volcanic simulations have relied on numerical models that prioritize scientific accuracy for hazard prediction and analysis.
+Effective visualization of these hazards plays an important role in disaster preparedness, scientific communication, and public education. 
+Traditionally, volcanic simulations have relied on numerical models that prioritize scientific accuracy for hazard prediction and analysis. 
 While these models provide valuable quantitative information, they are often computationally intensive and lack the interactive capabilities necessary for real-time visualization \cite{rossant2021high}.
 
 % Describe the domain (where will you apply the topic)
 
-To overcome these limitations, the subfield of real-time computer graphics has increasingly been applied to scientific visualization, balancing visual plausibility with high interactive performance.
-Within this domain, a notable localized development is AnitoPlume, a real-time three-dimensional volcanic plume simulator designed specifically for visualizing the complex eruption dynamics of Taal Volcano \cite{del2026interactive}.
+The original AnitoPlume was developed as a real-time 3D simulator for Taal Volcano. 
+Replicating the 2020 eruption and providing an interactive, and immersive, application for use in disaster communication and awareness (Del Gallego et al., 2026). 
+The application can be broken down into its three major components: a terrain model, the plume simulations, and the UI. The terrain component renders a detailed elevation model of Taal Volcano, with collisions and maps, serving as the basis for plume behavior regarding terrain. 
+The plumes use a Lagrangian, particle-based approach to represent eruption dynamics through smoke layers, free spheres, falling spheres, and stagnation states. 
+These allow the plume to rise, spread, collapse, and interact with wind and terrain. The user interface provides control over eruption parameters, wind settings, camera and display modes, etc. 
 
 \begin{figure}[htbp]
     \centering
     \makebox[\textwidth][c]{
-        \includegraphics[width=1.2\textwidth]{AnitoPlume-Interface.png}
+        \includegraphics[width=1\textwidth]{terrain2.png}
     }
-    \caption{User Interface of AnitoPlume. The Taal volcano model is rendered in the center of the simulator. The photo reference is on the left. \protect\cite{del2026interactive}.}
-    \label{fig:single_experiment}
+    \caption{Terrain models of Taal Volcano inside the Anito plume. From left to right, top to bottom: Taal volcano during 2015, 2019, 2021, and 2023.}
+    \label{fig:terrain}
 \end{figure}
 
-This specialized application combines a Lagrangian particle-based plume system with a detailed digital elevation model of the volcano's terrain.
-By maintaining an interactive rendering performance of approximately 30 frames per second, the system demonstrated that computer graphics could bridge the gap between complex geological events and accessible hazard-awareness software for local education and planning \cite{del2026interactive}.
+\begin{figure}[htbp]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=1\textwidth]{plumes.png}
+    }
+    \caption{Different plume simulations of AnitoPlume. From left to right, top to bottom: default display, display free spheres, display torus layers, and display spheres with sub-spheres. \protect\cite{del2026interactive}.}
+    \label{fig:plumes}
+\end{figure}
 
-% Give a synthesis of previous work
+\begin{figure}[htbp]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=1\textwidth]{ui.png}
+    }
+    \caption{User Interface of AnitoPlume. The Taal volcano model is rendered in the center of the simulator. The photo reference is on the left. \protect\cite{del2026interactive}.}
+    \label{fig:ui}
+\end{figure}
 
-Previous efforts in graphics-driven volcanic visualization have heavily relied on traditional, high-level graphics architectures due to their broad portability and structural simplicity \cite{Shiraef2016}.
-In these legacy state-machine models, the graphics API simplifies software development by delegating critical hardware management tasks, such as memory allocation and command scheduling, directly to the vendor's graphics driver.
-However, as visualization workloads scale, this abstraction inevitably introduces massive CPU driver overhead and restricts developers from optimizing how the hardware executes commands \cite{bossard2019high}.
-Consequently, the computer graphics industry has seen a global shift toward modern, explicit rendering paradigms. 
-These low-level architectures strip away hidden driver intervention and grant developers granular, direct control over GPU resources, pipeline states, and memory synchronization to maximize hardware efficiency \cite{ioannidis2020multithreaded}.
-
-% State the problem and the research question
+Despite the theoretical performance advantages of modern rendering pipelines, a significant challenge remains: the architectural enhancement of established scientific tools.
+Therefore, investigating how explicit GPU control impacts rendering throughput, memory bandwidth utilization, and overall visual fidelity provides essential insights for the future development of highly scalable scientific visualization systems\cite{Unterguggenberger2022}. 
+While AnitoPlume demonstrates that a volcanic plume can be visualized interactively at real-time framerates, its existing graphics architecture limits the possible terrain and plume optimizations. 
 
 \begin{figure}[htbp]
     \centering
@@ -65,11 +77,16 @@ These low-level architectures strip away hidden driver intervention and grant de
     \label{fig:graphics_api}
 \end{figure}
 
-Despite the theoretical performance advantages of modern explicit rendering pipelines, a significant challenge remains: the architectural enhancement of established scientific tools.
-High-level visualization platforms like the original AnitoPlume simulator are tightly coupled to legacy architectures, creating a rigid barrier to optimization and preventing the integration of advanced, contemporary rendering techniques. 
-Transitioning an active simulation system to an explicit framework requires a complete restructuring of shader programs, command submissions, and memory allocation strategies. 
-This process moves beyond a mere software translation; it presents a critical opportunity to upgrade the shading architecture and optimize the visual representation of complex fluid-terrain interactions \cite{Unterguggenberger2022}.
-Therefore, investigating how explicit GPU control impacts rendering throughput, memory bandwidth utilization, and overall visual fidelity provides essential insights for the future development of highly scalable scientific visualization systems.
+The proposed AnitoPlume V2 therefore aims to port the visual system to a new rendering framework, and revisit the existing plume simulation logic. 
+Improving on, but not limited to: GPU control and utilization, shading flexibility, rendering efficiency, and simulation logic improvements. 
+In doing so, the project will improve how the terrain and plumes are rendered, with emphasis on higher fidelity terrain models and plume simulations at least as detailed as the current representation.
+
+% Give a synthesis of previous work
+
+% State the problem and the research question
+
+
+
 %%
 %% --- 1.2 Research Objectives --- %%
 %%
