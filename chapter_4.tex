@@ -43,6 +43,40 @@ These synchronization points guarantee that all worker threads complete one phas
     \label{fig:parralel}
 \end{figure}
 
+
+\section{Benchmarking Procedure}
+\subsection{Evaluation Metrics}
+Benchmarking is conducted to quantitatively evaluate the performance improvements introduced by the proposed execution architecture. The legacy implementation serves as the baseline and is compared against the modernized implementation under identical simulation scenarios and hardware configurations.
+
+\begin{table}[htbp]
+\centering
+\renewcommand{\arraystretch}{1} % Set to 1.3 for a clean, professional breathing room
+\caption{Performance metrics and descriptions used for evaluation.}
+\label{tab:performance_metrics}
+\begin{tabular}{l p{8cm}}
+\hline
+\textbf{Metric} & \textbf{Description} \\ 
+\hline
+Average FPS            & Overall rendering performance \\
+Frame Time (ms)        & Total frame execution time \\
+CPU Frame Time         & CPU workload \\
+GPU Frame Time         & GPU workload \\
+Command Recording Time & CPU time spent preparing GPU commands \\
+Shader Execution Time  & GPU shader workload \\
+GPU Memory Bandwidth   & Memory utilization \\
+CPU Utilization        & Effectiveness of multithreading \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection {Data Analysis}
+The benchmarking results will be analyzed using descriptive statistics. For each benchmark scenario, the arithmetic mean of the five experimental runs will be computed for all performance metrics to minimize the influence of transient background processes and system variability. The proposed implementation will then be compared against the legacy implementation using absolute values and percentage improvement for each performance metric.
+
+To evaluate scalability, performance measurements will be collected under progressively increasing simulation workloads. The relationship between workload size and rendering performance will be visualized using line graphs illustrating trends in average frame rate, frame time, CPU utilization, and GPU utilization. GPU profiling metrics, including shader execution time, command recording time, and memory bandwidth utilization, will likewise be compared to determine how efficiently the proposed architecture utilizes available hardware resources.
+
+Finally, the benchmarking results will be interpreted alongside the User Acceptance Testing (UAT) results to determine whether improvements in computational performance correspond to improvements in perceived responsiveness and overall user experience.
+
+
 \section{Usability Testing}
 
 To verify that the architectural overhaul maintains or improves the interactive user experience, an exploratory usability test will be conducted with target beneficiaries:
