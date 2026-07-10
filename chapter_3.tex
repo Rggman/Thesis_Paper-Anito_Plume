@@ -97,6 +97,11 @@ Consequently, Eulerian volcanic transport models are typically designed for offl
 \textbf{Limitation} & Cost grows with particle count for visual realism. & Cost grows with grid resolution/domain coverage. \\ \hline
 \end{tabular}
 \end{table}
+
+AnitoPlume adopts the Lagrangian formulation because it prioritizes real-time interactivity over the grid-based accuracy of Eulerian models. 
+This study preserves that formulation as a fixed theoretical foundation, since its scope is limited to the rendering and software architecture layer, not the underlying plume dynamics. 
+The Lagrangian model's data-parallel characteristics, individual elements updating largely independently using local state, are what make it a suitable target for the proposed low-level rendering architecture, which is designed to expose fine-grained control over parallel command execution and GPU resource management. 
+This theoretical basis justifies why the present study's contributions are directed at the rendering pipeline rather than the plume simulation model itself.
 %\begin{itemize}
 
 %\item \url{https://link.springer.com/chapter/10.1007/978-1-4419-1454-5_12}
