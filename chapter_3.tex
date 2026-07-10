@@ -49,8 +49,9 @@ Tasks such as pipeline configuration, resource allocation, and command preparati
 This shift allows command generation to be safely distributed across multiple CPU threads \cite{ping2026modern}.
 The lightweight driver architecture introduced by explicit graphics APIs minimizes runtime validation and hidden state management, reducing CPU overhead while providing developers with greater control over rendering operations. By enabling application-driven optimization and more efficient utilization of hardware resources, explicit graphics API architectures are better suited for performance-critical rendering workloads \cite{IoannidisC.2020MRFC}.
 
-\section{Lagrangian Model for Volumetric Plume Dynamics}
+\section{Lagrangian and Eulerian Models for Volumetric Plume Dynamics}
 
+\subsection{Lagrangian Formulation}
 AnitoPlume utilizes a Lagrangian formulation for representing volcanic plume evolution, where the plume is modeled as a collection of discrete volumetric elements whose physical states are updated over time.
 Unlike Eulerian approaches that evaluate flow properties within fixed spatial domains, Lagrangian approaches track the movement and evolution of individual elements within the flow field \cite{EspostiOngaro2020Validation}.
 
@@ -68,7 +69,34 @@ Consequently, the selection of governing equations and the formulation of the pl
 Despite these considerations, the data-parallel characteristics of the Lagrangian representation make plume simulation suitable for optimization through modern parallel processing architectures.
 Since the computational workload consists of continuously updating large numbers of dynamic elements, improving execution efficiency requires an architecture capable of reducing overhead and efficiently utilizing available hardware resources.
 Explicit graphics architectures provide mechanisms that support this objective by enabling greater control over resource management and parallel command execution.
+\subsection{Eulerian Formulation}
 
+In contrast to the Lagrangian approach, the Eulerian formulation describes plume dynamics with reference to fixed points or cells in space, rather than tracking discrete elements as they move through the flow field. 
+Under this formulation, the volcanic plume is represented as a continuous field of quantities, such as ash concentration, density, temperature, and velocity, which are computed and updated at fixed grid locations over time as material flows through them \cite{EspostiOngaro2020Validation}. 
+Rather than following individual particles or plume elements as they travel through the atmosphere, the Eulerian approach numerically solves governing transport equations directly on a spatial grid that discretizes the simulation domain. 
+This formulation underlies many of the numerical geoscientific models used for volcanic hazard forecasting; for instance, models such as FALL3D use Eulerian atmospheric dispersion techniques to compute the transport, dispersion, and eventual deposition of volcanic tephra across a defined spatial domain \cite{folch2009fall3d,del2026interactive}. 
+While this grid-based approach is generally well-suited for capturing diffusive processes and producing quantitatively accurate forecasts, it comes at a significant computational cost, particularly as grid resolution increases or the simulation domain grows, since the governing equations must be solved at every grid cell regardless of whether volcanic material is present at that location. 
+Consequently, Eulerian volcanic transport models are typically designed for offline scientific analysis and hazard mapping rather than for real-time or interactive visualization \cite{del2026interactive}.
+
+\subsection{Comparison of Both Approaches}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Summary of key theoretical distinctions between the Lagrangian and Eulerian formulations.}
+\label{tab:lagrangian_eulerian_comparison}
+\begin{tabular}{l p{5cm} p{5cm}}
+\hline
+\textbf{Dimension} & \textbf{Lagrangian Formulation} & \textbf{Eulerian Formulation} \\ \hline
+\textbf{Frame of reference} & Tracks discrete, moving plume elements. & Evaluates fixed spatial grid points. \\
+\textbf{Representation} & Discrete particles with individual states (pos, vel, mass). & Continuous field of quantities (concentration, density). \\
+\textbf{Computation} & Scales with particle count; local-state updates. & Scales with grid size; solved at every cell. \\
+\textbf{Accuracy} & Approximates diffusive behavior. & High quantitative accuracy for diffusive transport. \\
+\textbf{Real-time} & Well-suited; lightweight for moderate counts. & Generally unsuitable; computationally demanding. \\
+\textbf{Representative use} & Lastic et al. (2022); AnitoPlume & FALL3D (Folch et al., 2009) \\
+\textbf{Limitation} & Cost grows with particle count for visual realism. & Cost grows with grid resolution/domain coverage. \\ \hline
+\end{tabular}
+\end{table}
 %\begin{itemize}
 
 %\item \url{https://link.springer.com/chapter/10.1007/978-1-4419-1454-5_12}
