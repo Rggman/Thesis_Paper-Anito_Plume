@@ -75,9 +75,9 @@ Consequently, these techniques prioritize visual realism and low-latency perform
 \section{Particle systems}
 
 \subsection{Real-time particle systems}
-Within computer graphics applications, volcanic plumes are frequently simulated utilizing particle systems, an approach comparable to the representation of other gaseous atmospheric phenomena such as smoke, fog, and clouds (Rautenhaus et al., 2017; Engel et al., 2004; Akenine-Moller et al., 2019). 
-Real-time (RT) particle frameworks characterize these phenomena as collections of "fuzzy objects" (Reeves, 1998) that lack distinct geometric boundaries, distinguishing them from traditional 3D models composed of explicit polygonal surfaces. 
-Every constituent particle is inherently dynamic, continuously altering its morphology and position over a discrete lifespan that spans from its generation to its ultimate dissipation.
+Within computer graphics applications, volcanic plumes can be simulated utilizing particle systems, an approach similar to the representation of other atmospheric phenomena such as smoke, fog, and clouds (Rautenhaus et al., 2017; Engel et al., 2004; Akenine-Moller et al., 2019). 
+Real-time (RT) particle systems model these phenomena as collections of "fuzzy objects" (Reeves, 1998) that lack well-defined surface, distinguishing them from traditional 3D models composed of explicit polygonal surfaces. 
+Every constituent particle is dynamic, continuously altering its morphology and position over a discrete lifespan that spans from its birth to its eventual dissipation.
 
 Modern frameworks replicate the stochastic properties of individual particles by exposing various parameters that users can adjust to mimic specific visual effects like fire, smoke, or fog. 
 This methodology is formally classified as a Lagrangian perspective. 
@@ -112,7 +112,7 @@ A heightmap serves as a widely adopted format consisting of a 2D raster grid of 
 When modeling terrains inspired by actual geographical landscapes, data must be sourced from geographic information systems, including satellite imagery or LiDAR maps. 
 While converting satellite and LiDAR data into a heightmap to generate a 3D terrain within visualization software is a direct methodology, it remains susceptible to data gaps and structural inaccuracies, particularly when the underlying DEMs are captured by low-resolution sensors.
 
-A significant portion of existing literature isolates specific volcanic eruption behaviors, such as lava propagation or plume dynamics, while rarely accounting for volcanic topography during the simulation process. 
+Prior works focus on the volcanic eruption behaviors, such as lava propagation or plume dynamics, while rarely accounting for volcanic topography during the simulation process. 
 Because AnitoPlume was designed as a holistic 3D simulator of the Taal Volcano, terrain rendering constitutes a core component of its architectural framework. 
 The baseline 3D model of the Taal Volcano Island was constructed by extracting LiDAR data from opentopography.org \cite{openTopography2025} and processing it within QGIS \cite{moyroud2018introduction}, a geographic information system utilized to generate the requisite heightmap. 
 This heightmap was leveraged to produce an initial 3D mesh of Taal, which was subsequently refined using Blender \cite{BlenderFoundation2025}. Any incomplete segments within the original LiDAR data were manually resolved using digital inpainting, sculpting, and smoothing workflows.
@@ -120,20 +120,17 @@ This heightmap was leveraged to produce an initial 3D mesh of Taal, which was su
 
 \section{Volcanic simulations}
 
-Within computer graphics research, a distinct focus is placed on the generation of visually convincing lava flow animations.
-For instance, \citeauthor{zhang2017hybrid} introduced a hybrid framework engineered to simulate lava viscosity while accounting for thermal transfer and surface friction mechanics. 
+Some computer graphics researchers focus on the generation of visually convincing lava flow animations.
+For instance, \citeauthor{zhang2017hybrid} created a hybrid framework engineered to simulate lava viscosity while accounting for thermal transfer and surface friction mechanics. 
 To capture granular-fluid flows—which are highly applicable to mass-wasting events such as landslides, avalanches, and lava progression—researchers frequently adopt debris flow models because they synthesize foundational concepts from fluid, solid, and soil mechanics \cite{IversonGeorge2014, GeorgeIverson2014, TrujilloVela2022}.
 
-Conversely, the simulation of volcanic plumes typically mandates the use of atmospheric transport or scattering models, ensuring that the simulated plume interacts realistically with the surrounding air masses or environmental wind fields \cite{lastic2022interactive, pretorius2024volcanic}. 
-To advance these capabilities, novel fluid solvers have been introduced, including Coadjoint Orbit FLIP (CoFLIP) \cite{nabizadeh2024fluid} and Adaptive-FLIP \cite{braun2025adaptive}, both of which operate as modern extensions of the classic fluid implicit particle (FLIP) formulation \cite{BrackbillRuppel1986}. 
-Among these developments, the framework proposed by \citeauthor{lastic2022interactive} represents the inaugural attempt at real-time plume simulation, utilizing a streamlined Lagrangian simulation methodology. 
-Building upon this, \citeauthor{pretorius2024volcanic} introduced a coupled architecture that integrates explosive eruptive behaviors directly with atmospheric simulations to render comprehensive volcanic skyscapes.
+As for the simulation of volcanic plumes, it typically employs the use of atmospheric transport or scattering models, ensuring that the simulated plume interacts realistically with the ambient air  or  wind  \cite{lastic2022interactive, pretorius2024volcanic}. 
+New novel fluid such as Coadjoint Orbit FLIP (CoFLIP) \cite{nabizadeh2024fluid} and Adaptive-FLIP \cite{braun2025adaptive}, both of which operate as modern extensions of fluid implicit particle (FLIP) formulation \cite{BrackbillRuppel1986}. 
+Among these developments, the framework proposed by \citeauthor{lastic2022interactive} represents the first work observed so far that can perform real-time plume simulation, due to utilizing a streamlined Lagrangian simulation. 
+Building upon this, \citeauthor{pretorius2024volcanic} proposed a coupling model of explosive eruptive behaviors directly with atmospheric simulations to render volcanic skyscapes.
 
-Alternative domains of research prioritize the analysis and interpretation of empirical eruption data to improve forecasting and monitoring capabilities \cite{Pardini2024}. 
-Recently, this has expanded to include deep learning and semantic segmentation techniques designed to automatically detect and isolate volcanic plumes within optical camera imagery \cite{Wilkes2022, GuerreroTello2022, Torrisi2024, Swetha2023}.
-
-From the standpoint of our research, while these diverse methods represent the state-of-the-art in computational volcanology, the specific real-time Lagrangian mechanics established by \citeauthor{lastic2022interactive} form the exact processing bottleneck within AnitoPlume that our project addresses. 
-By migrating these specialized plume rendering and simulation routines to a modern graphics API, our work aims to maximize the throughput of these established visual frameworks without compromising their underlying behavioral validity.
+Alternative domains of research prioritize the analysis and interpretation of eruption data \cite{Pardini2024}. 
+Recently, several works has expanded to include deep learning and semantic segmentation techniques designed to automatically detect and isolate volcanic plumes within optical camera imagery \cite{Wilkes2022, GuerreroTello2022, Torrisi2024, Swetha2023}.
 
 \section{AnitoPlume}
 AnitoPlume is the first interactive, real-time 3D graphics-based simulation application explicitly tailored for visualizing the changing landscape of the Taal Volcano island in the Philippines and its corresponding eruption plumes.
