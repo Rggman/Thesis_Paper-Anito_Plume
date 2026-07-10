@@ -1,14 +1,47 @@
 \chapter{Methodology}
 \label{sec:methodology}
-The primary objective of this research is to migrate and improve AnitoPlume's real-time simulation framework by modernizing its rendering pipeline, optimizing hardware utilization through new, explicit graphics APIs, and refining its underlying physical simulation models. 
-
-\section{Systems Analysis}
-
-We will investigate contemporary, explicit rendering paradigms to identify optimization opportunities within the existing legacy graphics pipeline (OpenGL). This involves studying low-level hardware abstraction techniques designed to reduce CPU overhead and improve memory bandwidth utilization. In parallel, existing computational fluid dynamics and particle-based simulation models will be evaluated to explore additional advanced algorithmic approaches to validate and potentially enhance the accuracy, scalability, and performance of the current physics implementations.
+The primary objective of this research is to port and extend AnitoPlume's real-time simulation framework by modernizing its rendering pipeline, optimizing hardware utilization through new, explicit graphics APIs, and refining its underlying physical simulation models. 
 
 \section{Implementation and Migration}
 
-The existing graphics architecture will be transitioned to a new, explicit graphics API. This pipeline re-engineering involves restructuring the rendering engine to utilize decoupled shading layers and unified abstractions. Concurrently, the underlying physical simulation logic, such as Lagrangian-based particle systems, will be validated and iteratively improved. Algorithmic refinements will be introduced to increase the fidelity of fluid-terrain interactions and volumetric behavior without compromising real-time performance constraints. Throughout this process, the system will undergo continuous integration and profiling. Optimization techniques will then be applied to resolve any bottlenecks in both graphics processing and physics computations.
+\subsection{Legacy Simulation}
+The legacy execution architecture relies on a strictly sequential, single-threaded pipeline driven by an iterative time-stepping loop. 
+Within each frame slice, the simulation runs a high-frequency sub-stepping loop (executing ten physics updates per render frame) to remove visual smoke jumping and oscillations due to numerical instability. 
+The control flow inside this sub-step operates linearly across distinct global entity arrays. For each iteration, the following operations are performed as shown in Figure \ref{fig:legacy-simulation}:
+Smoke Layer Update: Computes air entrainment, thermodynamic properties, external forces, and motion for each smoke layer.
+
+Free Sphere Update: Updates particles attached to smoke layers and evaluates transitions to falling or stagnating states.
+
+Falling Sphere Update: Simulates particle settling, terrain interaction, and particle accumulation for secondary plume formation.
+
+Stagnation Update: Simulates lateral dispersion of neutrally buoyant particles
+
+\begin{figure}[htbp]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=1.2\textwidth]{legacy-simulation-loop.png}
+    }
+    \caption{Legacy Physics Simulation Loop.}
+    \label{fig:legacy-simulation}
+\end{figure}
+
+\subsection{Parallelization of the Simulation Loop}
+To improve the responsiveness of the interactive simulation for multicore CPUs, parallelization can be used. 
+Concurrent execution is possible since individual smoke layers operate in complete isolation from one another. 
+The mathematical functions executed during the smoke layer update phase do not feature any cross-layer spatial dependencies. 
+Instead, the physics equations for any given layer depend strictly on a shared set of initial environmental parameters, vent parameters, and global trackers.
+
+Since later simulation stages consume data produced by earlier stages, barrier synchronization is introduced between execution phases as shown in Figure \ref{fig:parralel}. 
+These synchronization points guarantee that all worker threads complete one phase before subsequent phases begin. Rendering is performed only after all simulation stages have completed to ensure visual consistency.
+
+\begin{figure}[htbp]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=1\textwidth]{parralel.png}
+    }
+    \caption{Parallelization of Smoke Layer Update Phase.}
+    \label{fig:parralel}
+\end{figure}
 
 \section{Usability Testing}
 
@@ -41,12 +74,11 @@ Q10 & I needed to figure out a lot of things (such as hotkeys, navigating the UI
 \end{table}
 
 
-\section{Calendar of Activities}
+\section{Research Workflow}
 
-For the proposal, a Gantt chart showing the schedule of the activities should be added. You can create a table like below, or create a figure. For example:
+This study follows a nine-phase research workflow, outlined in Table \ref{tab:research_methodology_phases}, that guides the porting and extension of AnitoPlume from its legacy rendering implementation to the proposed rendering architecture, from initial legacy analysis through final evaluation of performance and usability.
 
-Table \ref{tab:timetableactivities} shows a Gantt chart of the activities.  Each bullet represents approximately one week worth of activity.
-
+\begin{comment}
 \begin{table}[htbp]
     \centering
     \caption{Proposed calendar of activities}
@@ -66,8 +98,27 @@ Table \ref{tab:timetableactivities} shows a Gantt chart of the activities.  Each
         \bottomrule
     \end{tabular}
 \end{table}
+\end{comment}
 
-
+\begin{table}[htbp]
+\centering
+\small
+\caption{Overview of the Research Phases, Activities, and Objectives.}
+\label{tab:research_methodology_phases}
+\begin{tabular}{c p{5cm} p{7.5cm}}
+\hline
+\textbf{Phase} & \textbf{Research Activity} & \textbf{Purpose / Output} \\ \hline
+1 & Legacy Simulator Analysis & Examine the existing simulator architecture and document its execution flow, simulation pipeline, and rendering process. \\
+2 & Performance Profiling & Profile CPU and GPU execution to measure frame time, resource utilization, and identify performance hotspots. \\
+3 & Bottleneck Identification & Analyze profiling results to determine computational and architectural bottlenecks affecting scalability. \\
+4 & Execution Architecture Design & Design a task-based, multithreaded execution architecture with explicit synchronization between simulation stages. \\
+5 & Rendering Pipeline Modernization & Replace the legacy rendering workflow with an explicit GPU command submission architecture that supports multithreaded command generation. \\
+6 & Parallel Simulation Implementation & Implement concurrent execution of independent simulation tasks while preserving correctness through synchronization barriers. \\
+7 & Performance Evaluation & Compare the legacy and proposed implementations using GPU profiling metrics such as frame time, render throughput, shader execution time, and memory bandwidth utilization under identical hardware conditions. \\
+8 & Usability Evaluation & Conduct User Acceptance Testing (UAT) with target beneficiaries to evaluate usability, responsiveness, and overall user experience. \\
+9 & Data Analysis & Analyze quantitative performance metrics and UAT results to determine whether the proposed architecture improves scalability, rendering efficiency, and interactive user experience. \\ \hline
+\end{tabular}
+\end{table}
 
 \begin{comment}
 
