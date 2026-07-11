@@ -246,29 +246,6 @@ The most technically demanding aspect of the explicit migration process is resou
 This explicit synchronization burden is concretely demonstrated in the Falcor engine, which utilizes a dedicated barrier system to route resources into their correct states before any updates, copies, or draw calls are executed. By manually handling transitions at both the resource and subresource levels, the architecture reinforces that state transitions are a central engine responsibility rather than an invisible driver service. For the AnitoPlume study, this supports a key argument: accurate migration is not just about producing a similar output image, but about guaranteeing that the GPU views each buffer in the correct state at the exact right microsecond. This is essential when updating thousands of particle billboards, as incorrect barrier placement during parallel draw calls leads to race conditions, stale texture reads, flickering artifacts, or catastrophic device crashes \cite{cheung2024applications}.
 
 
-\begin{table}[htbp]
-\centering
-\small % Reduces font size to save vertical space
-\renewcommand{\arraystretch}{1.2} % Modest padding instead of 1.5
-\begin{tabular}{|p{4.2cm}|p{4.2cm}|p{4.2cm}|}
-\hline
-\textbf{OpenGL} & \textbf{Vulkan} & \textbf{DirectX 12} \\ 
-\hline
-API originally created for graphics workstations; uses split memory. & Match for modern platforms (mobile/unified memory/tiled rendering). & Modern API for Windows/Xbox; scales across unified platforms. \\ 
-\hline
-Driver handles state validation/error tracking, limiting performance. & Explicit API gives application direct, predictable GPU control. & Shifting validation to driver, giving developers explicit resource control. \\ 
-\hline
-Obsolete single-threaded model; no parallel command generation. & Built for multi-core/threads; parallel command buffers. & Multi-core optimized; pre-computes command lists on any CPU core. \\ 
-\hline
-Complex choices; syntax evolved over 20+ years. & No legacy requirements; simpler API design and smaller specification. & Replaces legacy state objects with unified Pipeline State Objects (PSO). \\ 
-\hline
-In-driver GLSL compiler; requires shipping raw shader source. & SPIR-V target enables front-end language flexibility and reliability. & Compiles HLSL to intermediate DXIL/DXBC to reduce driver workload. \\ 
-\hline
-High vendor-specific implementation variability. & Simpler API and testing improve cross-vendor compatibility. & Strict Feature Levels (e.g., DX12 Ultimate) ensure vendor consistency. \\ 
-\hline
-\end{tabular}
-\caption[Graphics API Comparison: OpenGL vs. Vulkan vs. DirectX 12]{Graphics API Comparison: OpenGL vs. Vulkan vs. DirectX 12 from \citeauthor{shiraef2016exploratory} and \citeauthor{zoraja2023vanityx}}\label{tab:graphics_api_comparison}
-\end{table}
 \begin{comment}
 
 \begin{table}[htbp]

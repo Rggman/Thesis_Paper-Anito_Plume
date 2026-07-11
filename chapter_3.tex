@@ -6,7 +6,7 @@
 %                 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Theoretical Framework}
+\chapter{Computer Graphics and Rendering Concepts}
 \label{sec:theoframework}
 %Please refer to the following resources regarding Theoretical Framework: 
 
@@ -23,11 +23,40 @@ Implicit graphics APIs such as OpenGL are based on a state-based programming mod
 Implicit graphics API architecture relies on a thick driver layer that abstracts graphics pipeline management from the application (Fig. 1).
 Because the driver is responsible for maintaining graphics state, performing runtime validation, tracking resource usage, and managing command execution, significant CPU overhead is introduced during rendering (Ping et al., 2026).
 
+\begin{table}[htbp]
+\centering
+\small % Reduces font size to save vertical space
+\renewcommand{\arraystretch}{1.2} % Modest padding instead of 1.5
+\begin{tabular}{|p{4.2cm}|p{4.2cm}|p{4.2cm}|}
+\hline
+\textbf{OpenGL} & \textbf{Vulkan} & \textbf{DirectX 12} \\ 
+\hline
+API originally created for graphics workstations; uses split memory. & Match for modern platforms (mobile/unified memory/tiled rendering). & Modern API for Windows/Xbox; scales across unified platforms. \\ 
+\hline
+Driver handles state validation/error tracking, limiting performance. & Explicit API gives application direct, predictable GPU control. & Shifting validation to driver, giving developers explicit resource control. \\ 
+\hline
+Obsolete single-threaded model; no parallel command generation. & Built for multi-core/threads; parallel command buffers. & Multi-core optimized; pre-computes command lists on any CPU core. \\ 
+\hline
+Complex choices; syntax evolved over 20+ years. & No legacy requirements; simpler API design and smaller specification. & Replaces legacy state objects with unified Pipeline State Objects (PSO). \\ 
+\hline
+In-driver GLSL compiler; requires shipping raw shader source. & SPIR-V target enables front-end language flexibility and reliability. & Compiles HLSL to intermediate DXIL/DXBC to reduce driver workload. \\ 
+\hline
+High vendor-specific implementation variability. & Simpler API and testing improve cross-vendor compatibility. & Strict Feature Levels (e.g., DX12 Ultimate) ensure vendor consistency. \\ 
+\hline
+\end{tabular}
+\caption[Graphics API Comparison: OpenGL vs. Vulkan vs. DirectX 12]{Graphics API Comparison: OpenGL vs. Vulkan vs. DirectX 12 from \citeauthor{shiraef2016exploratory} and \citeauthor{zoraja2023vanityx}}\label{tab:graphics_api_comparison}
+\end{table}
+
 Explicit graphics architectures expose synchronization, resource management, and command submission responsibilities directly to applications \cite{vulkan14spec2024}.
 Rather than relying on implicit driver-managed state changes, explicit graphics architectures require the application to explicitly define and manage the configuration of the graphics pipeline.
 Applications explicitly define pipeline states, resource allocation, synchronization, and memory management as seen on figure \ref{fig:api_architecture_comparison}.
 
-\begin{figure}[htbp]
+The limitations of the traditional graphics API architecture become particularly significant in computationally intensive scientific visualization systems such as AnitoPlume. 
+In addition to numerically integrating volcanic plume dynamics including gravity, buoyancy, drag, and wind forces for thousands of particles each simulation step, the CPU must also handle graphics driver validation and state management \cite{del2026interactive}. 
+This added overhead limits rendering performance, motivating the use of lower-overhead graphics APIs to reduce CPU-side workload for applications that require high-throughput rendering. 
+As rendering workloads become more complex, these driver-managed operations can limit the application's ability to optimize resource usage, creating CPU-side bottlenecks that reduce the rate at which work can be submitted to the GPU \cite{ping2026modern}.
+
+\begin{figure}[H]
     \centering
     \makebox[\textwidth][c]{
         \includegraphics[width=1.2\textwidth]{Implicit_Vs_Explicit.png}
@@ -37,17 +66,13 @@ Applications explicitly define pipeline states, resource allocation, synchroniza
     \label{fig:api_architecture_comparison}
 \end{figure}
 
-\subsection{Limitations of the Implicit API Architecture}
-The limitations of the traditional graphics API architecture become particularly significant in computationally intensive scientific visualization systems such as AnitoPlume. 
-In addition to numerically integrating volcanic plume dynamics including gravity, buoyancy, drag, and wind forces for thousands of particles each simulation step, the CPU must also handle graphics driver validation and state management \cite{del2026interactive}. 
-This added overhead limits rendering performance, motivating the use of lower-overhead graphics APIs to reduce CPU-side workload for applications that require high-throughput rendering. 
-As rendering workloads become more complex, these driver-managed operations can limit the application's ability to optimize resource usage, creating CPU-side bottlenecks that reduce the rate at which work can be submitted to the GPU \cite{ping2026modern}.
 
 \subsection{Performance Optimization opportunities}
 Explicit graphics architectures reduce driver-managed serialization by shifting the responsibility to the application.
 Tasks such as pipeline configuration, resource allocation, and command preparation can be performed explicitly by the application before or outside the main rendering loop. During runtime, the system only executes predefined instructions without modifying or accessing the underlying data.
 This shift allows command generation to be safely distributed across multiple CPU threads \cite{ping2026modern}.
 The lightweight driver architecture introduced by explicit graphics APIs minimizes runtime validation and hidden state management, reducing CPU overhead while providing developers with greater control over rendering operations. By enabling application-driven optimization and more efficient utilization of hardware resources, explicit graphics API architectures are better suited for performance-critical rendering workloads \cite{IoannidisC.2020MRFC}.
+
 
 \section{Lagrangian and Eulerian Models for Volumetric Plume Dynamics}
 
