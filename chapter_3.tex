@@ -23,6 +23,10 @@ Implicit graphics APIs such as OpenGL are based on a state-based programming mod
 Implicit graphics API architecture relies on a thick driver layer that abstracts graphics pipeline management from the application (Fig. 1).
 Because the driver is responsible for maintaining graphics state, performing runtime validation, tracking resource usage, and managing command execution, significant CPU overhead is introduced during rendering (Ping et al., 2026).
 
+Explicit graphics architectures expose synchronization, resource management, and command submission responsibilities directly to applications \cite{vulkan14spec2024}.
+Rather than relying on implicit driver-managed state changes, explicit graphics architectures require the application to explicitly define and manage the configuration of the graphics pipeline.
+Applications explicitly define pipeline states, resource allocation, synchronization, and memory management as seen on figure \ref{fig:api_architecture_comparison}.
+
 \begin{table}[htbp]
 \centering
 \small % Reduces font size to save vertical space
@@ -45,11 +49,11 @@ High vendor-specific implementation variability. & Simpler API and testing impro
 \hline
 \end{tabular}
 \caption[Graphics API Comparison: OpenGL vs. Vulkan vs. DirectX 12]{Graphics API Comparison: OpenGL vs. Vulkan vs. DirectX 12 from \citeauthor{shiraef2016exploratory} and \citeauthor{zoraja2023vanityx}}\label{tab:graphics_api_comparison}
+\label{tab:dif_API}
 \end{table}
 
-Explicit graphics architectures expose synchronization, resource management, and command submission responsibilities directly to applications \cite{vulkan14spec2024}.
-Rather than relying on implicit driver-managed state changes, explicit graphics architectures require the application to explicitly define and manage the configuration of the graphics pipeline.
-Applications explicitly define pipeline states, resource allocation, synchronization, and memory management as seen on figure \ref{fig:api_architecture_comparison}.
+Table \ref{tab:dif_API} summarizes the key architectural and performance differences between the OpenGL, Vulkan, and DirectX 12 graphics APIs. 
+It contrasts the single-threaded design of OpenGL with the modern, multi-threaded, and explicitly controlled paradigms introduced by Vulkan and DirectX 12.
 
 The limitations of the traditional graphics API architecture become particularly significant in computationally intensive scientific visualization systems such as AnitoPlume. 
 In addition to numerically integrating volcanic plume dynamics including gravity, buoyancy, drag, and wind forces for thousands of particles each simulation step, the CPU must also handle graphics driver validation and state management \cite{del2026interactive}. 
