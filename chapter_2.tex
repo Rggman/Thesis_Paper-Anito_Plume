@@ -107,19 +107,44 @@ In modernizing the application's graphics API, these rotating spheres are transl
 
 \section{Terrain rendering}
 
+
+
 Virtual terrains are typically represented through digital elevation models (DEM), such as textured meshes or heightmaps. 
 Approaches to constructing these terrains can generally be categorized by how the underlying elevation data is obtained. 
 \textit{Acquisition-based techniques} derive terrain data from real-world sources, such as satellite imagery (e.g., Google Maps/Earth) or LiDAR scanning, allowing the reconstruction of terrain that reflects actual geographical landscapes. 
 In contrast, \textit{procedural techniques} generate terrain algorithmically, typically through noise-based functions, without reliance on real-world source data. 
 Regardless of acquisition method, elevation data is commonly represented as a \textit{heightmap}, a widely adopted format consisting of a 2D raster grid of elevation values, which is utilized to extrude a flat plane into a three-dimensional surface.
 
-When modeling terrains inspired by actual geographical landscapes, data must be sourced from geographic information systems, including satellite imagery or LiDAR maps. 
+When modeling terrains inspired by actual geographical landscapes, data must be sourced from geographic information systems, including satellite imagery or LiDAR maps.
+Raw LiDAR returns, however, capture more than just ground elevation—they include reflections from vegetation, structures, and other above-ground features that must be filtered out before a usable terrain surface can be extracted. Figure \ref{fig:lidar_dem_layers} illustrates this filtering process, showing the progression from raw above-ground height measurements to an isolated Bare Earth DEM suitable for terrain extrusion.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=1\textwidth]{lidar.png}
+    }
+    % \protect is mandatory when using apacite inside captions
+    \caption{Example of processed LiDAR output layers. From \protect\cite{USGS2018ForestMetrics}.}
+    \label{fig:lidar_dem_layers}
+\end{figure}
+
 While converting satellite and LiDAR data into a heightmap to generate a 3D terrain within visualization software is a direct methodology, it remains susceptible to data gaps and structural inaccuracies, particularly when the underlying DEMs are captured by low-resolution sensors.
 
 Prior works focus on the volcanic eruption behaviors, such as lava propagation or plume dynamics, while rarely accounting for volcanic topography during the simulation process. 
 Because AnitoPlume was designed as a holistic 3D simulator of the Taal Volcano, terrain rendering constitutes a core component of its architectural framework. 
 The baseline 3D model of the Taal Volcano Island was constructed using an acquisition-based approach: LiDAR data was extracted from opentopography.org \cite{openTopography2025} and processed within QGIS \cite{moyroud2018introduction}, a geographic information system utilized to generate the requisite heightmap. 
 This heightmap was leveraged to produce an initial 3D mesh of Taal, which was subsequently refined using Blender \cite{BlenderFoundation2025}. Any incomplete segments within the original LiDAR data were manually resolved using digital inpainting, sculpting, and smoothing workflows.
+Figure \ref{fig:anitoplume_terrain_workflow} summarizes this end-to-end pipeline, from LiDAR-derived heightmap conversion in QGIS through mesh refinement in Blender.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=1\textwidth]{AnitoPlume_TerrainWorkFlow.png}
+    }
+    % \protect is mandatory when using apacite inside captions
+    \caption{AnitoPlume's terrain modeling workflow of Taal Volcano. From \protect\cite{del2026interactive}.}
+    \label{fig:anitoplume_terrain_workflow}
+\end{figure}
 
 \section{Volcanic simulations}
 Some computer graphics researchers focus on the generation of visually convincing lava flow animations.
