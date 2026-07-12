@@ -36,25 +36,16 @@ The application can be broken down into its three major components: a terrain mo
 The plumes use a Lagrangian, particle-based approach to represent eruption dynamics through smoke layers, free spheres, falling spheres, and stagnation states. 
 These allow the plume to rise, spread, collapse, and interact with wind and terrain. The user interface provides control over eruption parameters, wind settings, camera and display modes, etc. 
 
-\begin{figure}[htbp]
+\begin{figure}[H] % Notice the capital H
     \centering
     \makebox[\textwidth][c]{
-        \includegraphics[width=1\textwidth]{terrain2.png}
+        \includegraphics[width=1.1\textwidth]{plumes_and_terrain.png}
     }
-    \caption{Terrain models of Taal Volcano inside the Anito plume. From left to right, top to bottom: Taal volcano during 2015, 2019, 2021, and 2023.}
+    \caption{Terrain models of Taal Volcano inside the Anito plume and Different plume simulations of AnitoPlume. \protect\cite{del2026interactive}.}
     \label{fig:terrain}
 \end{figure}
 
-\begin{figure}[htbp]
-    \centering
-    \makebox[\textwidth][c]{
-        \includegraphics[width=1\textwidth]{plumes.png}
-    }
-    \caption{Different plume simulations of AnitoPlume. From left to right, top to bottom: default display, display free spheres, display torus layers, and display spheres with sub-spheres. \protect\cite{del2026interactive}.}
-    \label{fig:plumes}
-\end{figure}
-
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \makebox[\textwidth][c]{
         \includegraphics[width=1\textwidth]{ui.png}
@@ -62,6 +53,9 @@ These allow the plume to rise, spread, collapse, and interact with wind and terr
     \caption{User Interface of AnitoPlume. The Taal volcano model is rendered in the center of the simulator. The photo reference is on the left. \protect\cite{del2026interactive}.}
     \label{fig:ui}
 \end{figure}
+
+Graphics Application Programming Interfaces (APIs) define how applications communicate rendering operations to the graphics processing unit (GPU). 
+Unlike traditional implicit graphics APIs, modern explicit graphics APIs require applications to explicitly manage rendering state, resource allocation, and command submission, thereby reducing driver overhead and improving utilization of modern multicore processors and graphics hardware \cite{ping2026modern}.
 
 Despite the theoretical performance advantages of modern rendering pipelines, a significant challenge remains: the architectural enhancement of established scientific tools.
 Therefore, investigating how GPU control impacts rendering throughput, memory bandwidth utilization, and overall visual fidelity provides essential insights for the future development of highly scalable scientific visualization systems\cite{Unterguggenberger2022}. 
@@ -153,8 +147,8 @@ Specific Objective:
 The specific objectives of this research are as follows:
 \begin{enumerate}
    \item To benchmark GPU resource synchronization and cross-API shader translation for AnitoPlume's volumetric plume data, establishing a baseline for porting the simulator to the new rendering framework;
-   \item To redesign AnitoPlume's software architecture by transitioning from a dynamic state-machine model to explicitly defined Pipeline State Objects (PSOs) and command lists;
-   \item To analyze the rendering efficiency of the modernized pipeline against the previous implementation using GPU profiling metrics, such as, but not limited to, frame pacing, shader execution time, memory bandwidth utilization, and overall render throughput, under identical hardware constraints;
+   \item To redesign AnitoPlume's software architecture by migrating its rendering subsystem from an implicit graphics API architecture to an explicit graphics API architecture;
+   \item To analyze the rendering efficiency of the modernized pipeline against the previous implementation using GPU profiling metrics, such as, but not limited to, frame pacing, shader execution time, memory bandwidth utilization, and overall render throughput, under identical hardware constraints; and
    \item To validate the overall user experience of the modernized simulator by conducting usability testing with target beneficiaries.
 \end{enumerate}
 
