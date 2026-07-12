@@ -91,7 +91,7 @@ Although RT particle systems are computationally efficient and highly capable of
 Furthermore, they struggle to natively model key physical behaviors, such as the internal density distribution across the particle volume. 
 Consequently, incorporating physical fluid dynamics becomes necessary to capture authentic plume mechanics (Section 2.5.2).
 
-\subsection{Real-time particle systems}
+\subsection{Particle systems and fluid dynamics}
 While real-time particle frameworks offer efficient approximations and excel at high-frame-rate visualization, they fundamentally lack the mechanism to resolve complex physical fluid interactions \cite{nishita2001modeling}. 
 A volcanic plume represents a complex, multi-phase mixture of gases and ash; standard real-time particle systems cannot autonomously compute environmental interactions involving atmospheric clouds, wind fields, air entrainment, and gravitational forces \cite{lastic2022interactive, pretorius2024volcanic}. 
 To resolve this limitation, several methodologies integrate fluid solvers to govern underlying particle motion, which is subsequently visualized via a real-time engine or exported to offline production suites like Houdini \cite{fedkiw2003simulating, pfaff2012lagrangian, lastic2022interactive, pretorius2024volcanic}.
