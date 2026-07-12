@@ -71,10 +71,7 @@ While AnitoPlume demonstrates that a volcanic plume can be visualized interactiv
     \label{fig:graphics_api}
 \end{figure}
 
-The proposed AnitoPlume V2 therefore aims to port the visual system to a new rendering framework, and revisit the existing plume simulation logic. 
-Improving on, but not limited to: GPU control and utilization, shading flexibility, rendering efficiency, and simulation logic improvements. 
-In doing so, the project will improve how the terrain and plumes are rendered, with emphasis on higher fidelity terrain models and plume simulations at least as detailed as the current representation.
-
+The proposed AnitoPlume V2 therefore aims to port the visual system to a modern rendering framework while revisiting the existing plume simulation architecture. The project seeks to improve, but is not limited to, GPU control and utilization, shading flexibility, rendering efficiency, and simulation logic. To address the performance limitations of the legacy implementation, the study adopts an execution architecture that exposes greater parallelism, reduces unnecessary CPU-GPU synchronization, and separates simulation from rendering responsibilities. The modernization also emphasizes modular system design, enabling individual rendering and simulation components to be maintained, extended, or replaced with minimal impact on the rest of the system. Furthermore, the project aims to improve how the terrain and plumes are rendered, with emphasis on higher-fidelity terrain models and plume simulations at least as detailed as the current representation. 
 % Give a synthesis of previous work
 
 % State the problem and the research question
