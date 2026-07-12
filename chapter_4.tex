@@ -79,7 +79,7 @@ Finally, the benchmarking results will be interpreted alongside the User Accepta
 
 To verify that the architectural overhaul maintains or improves the interactive user experience, an exploratory usability test will be conducted with target beneficiaries:
 \begin{itemize}
-    \item Setup:  After screening and obtaining consent, participants will be given time to explore the interface.
+    \item Setup:  After screening and obtaining consent from the Informed Consent Form(ICF), participants will be given time to explore the interface
     \item Task:  Participants will use the software to recreate specific Taal Volcano eruption plumes, following a set of predefined scenarios.
     \item Survey: Users will complete the System Usability Scale (SUS) questionnaire to rate the software's ease of use.
     \item Feedback: A closing interview will gather suggestions for improving the interface and overall performance.
@@ -134,23 +134,22 @@ This study follows a nine-phase research workflow, outlined in Table \ref{tab:re
 
 \begin{table}[htbp]
 \centering
-\small
-\caption{Overview of the Research Phases, Activities, and Objectives.}
-\label{tab:research_methodology_phases}
-\begin{tabular}{c p{5cm} p{7.5cm}}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{l p{5cm} p{8cm}}
 \hline
-\textbf{Phase} & \textbf{Research Activity} & \textbf{Purpose / Output} \\ \hline
-1 & Legacy Simulator Analysis & Examine the existing simulator architecture and document its execution flow, simulation pipeline, and rendering process. \\
-2 & Performance Profiling & Profile CPU and GPU execution to measure frame time, resource utilization, and identify performance hotspots. \\
-3 & Bottleneck Identification & Analyze profiling results to determine computational and architectural bottlenecks affecting scalability. \\
-4 & Execution Architecture Design & Design a task-based, multithreaded execution architecture with explicit synchronization between simulation stages. \\
-5 & Rendering Pipeline Modernization & Replace the legacy rendering workflow with an explicit GPU command submission architecture that supports multithreaded command generation. \\
-6 & Parallel Simulation Implementation & Implement concurrent execution of independent simulation tasks while preserving correctness through synchronization barriers. \\
-7 & Performance Evaluation & Compare the legacy and proposed implementations using GPU profiling metrics such as frame time, render throughput, shader execution time, and memory bandwidth utilization under identical hardware conditions. \\
-8 & Usability Evaluation & Conduct User Acceptance Testing (UAT) with target beneficiaries to evaluate usability, responsiveness, and overall user experience. \\
-9 & Data Analysis & Analyze quantitative performance metrics and UAT results to determine whether the proposed architecture improves scalability, rendering efficiency, and interactive user experience. \\ \hline
+\textbf{Phase} & \textbf{Research Activity} & \textbf{Purpose / Output} \\
+\hline
+\textbf{1} & \textbf{Legacy Pipeline Profiling and Bottleneck Analysis} & Evaluate the existing simulation and rendering architecture to establish baseline performance metrics. Profile CPU-GPU synchronization, draw call overhead, and frame pacing to identify compute and graphics pipeline bottlenecks that impede scalability. \\
+\hline
+\textbf{2} & \textbf{Architectural Refactoring and Pipeline Optimization} & Design and iteratively implement optimizations within the execution model and rendering pipeline. This involves exploring modern graphics paradigms (e.g., explicit command submission, reducing driver overhead) and evaluating concurrent execution strategies to maximize render throughput, adapting the architecture based on empirical performance gains. \\
+\hline
+\textbf{3} & \textbf{Performance Benchmarking and Interactive Evaluation} & Conduct a comparative analysis between the legacy and refactored pipelines using low-level GPU profiling metrics (e.g., shader execution time, memory bandwidth utilization). Perform user testing to correlate these hardware-level optimizations with perceived interactive responsiveness and visual consistency. \\
+\hline
 \end{tabular}
+\caption{Overview of the Research Phases, Activities, and Objectives}
+\label{tab:research_phases}
 \end{table}
+
 
 \begin{comment}
 

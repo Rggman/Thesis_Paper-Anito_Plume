@@ -92,6 +92,8 @@ Furthermore, they struggle to natively model key physical behaviors, such as the
 Consequently, incorporating physical fluid dynamics becomes necessary to capture authentic plume mechanics (Section 2.5.2).
 
 \subsection{Particle systems and fluid dynamics}
+
+
 While real-time particle frameworks offer efficient approximations and excel at high-frame-rate visualization, they fundamentally lack the mechanism to resolve complex physical fluid interactions \cite{nishita2001modeling}. 
 A volcanic plume represents a complex, multi-phase mixture of gases and ash; standard real-time particle systems cannot autonomously compute environmental interactions involving atmospheric clouds, wind fields, air entrainment, and gravitational forces \cite{lastic2022interactive, pretorius2024volcanic}. 
 To resolve this limitation, several methodologies integrate fluid solvers to govern underlying particle motion, which is subsequently visualized via a real-time engine or exported to offline production suites like Houdini \cite{fedkiw2003simulating, pfaff2012lagrangian, lastic2022interactive, pretorius2024volcanic}.
@@ -99,6 +101,17 @@ To resolve this limitation, several methodologies integrate fluid solvers to gov
 Purely Lagrangian frameworks utilized in RT graphics incur steep computational overhead when managing massive particle counts ($> 500\text{K}$ on mid-range graphics hardware), rendering them impractical for highly interactive, real-time applications. 
 To address this, researchers leverage Eulerian architectures, where grid-based solvers prove more efficient for representing continuous media like fluids and capturing high-fidelity scientific details \cite{janicke2010measuring, pfaff2012lagrangian, saidi2014comparison}. 
 Hybrid Eulerian–Lagrangian systems have also been introduced to exploit the dual advantages of both paradigms, with recent implementations deployed in cloud and cyclone modeling \cite{vimont2020interactive, stam2023stable, pretorius2024volcanic, amador2024cyclogenesis}.
+To contextualize this, Figure \ref{fig:particle_systems_and_fluid_dynamics} outlines different kinds of particle-based modeling:
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=1\textwidth]{particles.png}
+    }
+    % \protect is mandatory when using apacite inside captions
+    \caption{Overview of different particle systems and fluid simulations. From top to bottom; left to right: graph neural network (GNN) for physics simulations, procedural particle system for rendering fuzzy physical phenomena, high-resolution time evolution of a smoke explosion, compilation of different particle simulations.\protect\cite{sanchez2020learning, reeves1998particle, selle2005vortex, nowrouzezahrai2006vortex}.}
+    \label{fig:particle_systems_and_fluid_dynamics}
+\end{figure}
 
 The core simulation pipeline of AnitoPlume closely mirrors the Lagrangian volcanic plume model developed by \citeauthor{lastic2022interactive}. 
 Within this framework, column dynamics are resolved via a top-down architectural approach: an ascending circular cross-section simulates the rising eruption column emerging from the volcanic crater, which subsequently spawns rotating spheres for each discrete layer. 
