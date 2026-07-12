@@ -108,18 +108,20 @@ In modernizing the application's graphics API, these rotating spheres are transl
 \section{Terrain rendering}
 
 Virtual terrains are typically represented through digital elevation models (DEM), such as textured meshes or heightmaps. 
-A heightmap serves as a widely adopted format consisting of a 2D raster grid of elevation data, which is utilized to extrude a flat plane into a three-dimensional surface. 
+Approaches to constructing these terrains can generally be categorized by how the underlying elevation data is obtained. 
+\textit{Acquisition-based techniques} derive terrain data from real-world sources, such as satellite imagery (e.g., Google Maps/Earth) or LiDAR scanning, allowing the reconstruction of terrain that reflects actual geographical landscapes. 
+In contrast, \textit{procedural techniques} generate terrain algorithmically, typically through noise-based functions, without reliance on real-world source data. 
+Regardless of acquisition method, elevation data is commonly represented as a \textit{heightmap}, a widely adopted format consisting of a 2D raster grid of elevation values, which is utilized to extrude a flat plane into a three-dimensional surface.
+
 When modeling terrains inspired by actual geographical landscapes, data must be sourced from geographic information systems, including satellite imagery or LiDAR maps. 
 While converting satellite and LiDAR data into a heightmap to generate a 3D terrain within visualization software is a direct methodology, it remains susceptible to data gaps and structural inaccuracies, particularly when the underlying DEMs are captured by low-resolution sensors.
 
 Prior works focus on the volcanic eruption behaviors, such as lava propagation or plume dynamics, while rarely accounting for volcanic topography during the simulation process. 
 Because AnitoPlume was designed as a holistic 3D simulator of the Taal Volcano, terrain rendering constitutes a core component of its architectural framework. 
-The baseline 3D model of the Taal Volcano Island was constructed by extracting LiDAR data from opentopography.org \cite{openTopography2025} and processing it within QGIS \cite{moyroud2018introduction}, a geographic information system utilized to generate the requisite heightmap. 
+The baseline 3D model of the Taal Volcano Island was constructed using an acquisition-based approach: LiDAR data was extracted from opentopography.org \cite{openTopography2025} and processed within QGIS \cite{moyroud2018introduction}, a geographic information system utilized to generate the requisite heightmap. 
 This heightmap was leveraged to produce an initial 3D mesh of Taal, which was subsequently refined using Blender \cite{BlenderFoundation2025}. Any incomplete segments within the original LiDAR data were manually resolved using digital inpainting, sculpting, and smoothing workflows.
 
-
 \section{Volcanic simulations}
-
 Some computer graphics researchers focus on the generation of visually convincing lava flow animations.
 For instance, \citeauthor{zhang2017hybrid} created a hybrid framework engineered to simulate lava viscosity while accounting for thermal transfer and surface friction mechanics. 
 To capture granular-fluid flows—which are highly applicable to mass-wasting events such as landslides, avalanches, and lava progression—researchers frequently adopt debris flow models because they synthesize foundational concepts from fluid, solid, and soil mechanics \cite{IversonGeorge2014, GeorgeIverson2014, TrujilloVela2022}.
@@ -128,6 +130,21 @@ As for the simulation of volcanic plumes, it typically employs the use of atmosp
 New novel fluid such as Coadjoint Orbit FLIP (CoFLIP) \cite{nabizadeh2024fluid} and Adaptive-FLIP \cite{braun2025adaptive}, both of which operate as modern extensions of fluid implicit particle (FLIP) formulation \cite{BrackbillRuppel1986}. 
 Among these developments, the framework proposed by \citeauthor{lastic2022interactive} represents the first work observed so far that can perform real-time plume simulation, due to utilizing a streamlined Lagrangian simulation. 
 Building upon this, \citeauthor{pretorius2024volcanic} proposed a coupling model of explosive eruptive behaviors directly with atmospheric simulations to render volcanic skyscapes.
+
+Figure \ref{fig:VolcanicSims} illustrates representative outputs from real-time plume simulation frameworks, contrasting the Lagrangian-based approach of \citeauthor{lastic2022interactive} (left) with AnitoPlume's own real-time volcanic plume simulation of Taal Volcano (right), which serves as the baseline system extended in this work.
+
+
+\begin{figure}[H]
+    % Allows the images to expand beyond the text margins evenly on both sides
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.55\textwidth]{lastic_simulation.png}%
+        \hfill
+        \includegraphics[width=0.55\textwidth]{AnitoPlume_sim.png}
+    }
+    % \protect is mandatory when using apacite inside captions
+    \caption{Volcanic Simulations from \protect\cite{lastic2022interactive} (left) and \protect\cite{del2026interactive} (right).}
+    \label{fig:VolcanicSims}
+\end{figure}
 
 Alternative domains of research prioritize the analysis and interpretation of eruption data \cite{Pardini2024}. 
 Recently, several works has expanded to include deep learning and semantic segmentation techniques designed to automatically detect and isolate volcanic plumes within optical camera imagery \cite{Wilkes2022, GuerreroTello2022, Torrisi2024, Swetha2023}.

@@ -98,6 +98,20 @@ Consequently, the selection of governing equations and the formulation of the pl
 Despite these considerations, the data-parallel characteristics of the Lagrangian representation make plume simulation suitable for optimization through modern parallel processing architectures.
 Since the computational workload consists of continuously updating large numbers of dynamic elements, improving execution efficiency requires an architecture capable of reducing overhead and efficiently utilizing available hardware resources.
 Explicit graphics architectures provide mechanisms that support this objective by enabling greater control over resource management and parallel command execution.
+
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.85\textwidth]{lastic_langrangian.png}
+    }
+    % \protect is mandatory when using apacite inside captions
+    \caption{Lagrangian Approach (from \protect\cite{lastic2022interactive}).}
+    \label{fig:lagrangian}
+\end{figure}
+
+Figure \ref{fig:lagrangian} illustrates the Lagrangian formulation implemented by \cite{lastic2022interactive}, detailing the physical forces, wind-driven trajectory changes, and volumetric expansion acting on individual discrete plume elements over time.
+
 \subsection{Eulerian Formulation}
 
 In contrast to the Lagrangian approach, the Eulerian formulation describes plume dynamics with reference to fixed points or cells in space, rather than tracking discrete elements as they move through the flow field. 
@@ -106,6 +120,18 @@ Rather than following individual particles or plume elements as they travel thro
 This formulation underlies many of the numerical geoscientific models used for volcanic hazard forecasting; for instance, models such as FALL3D use Eulerian atmospheric dispersion techniques to compute the transport, dispersion, and eventual deposition of volcanic tephra across a defined spatial domain \cite{folch2009fall3d,del2026interactive}. 
 While this grid-based approach is generally well-suited for capturing diffusive processes and producing quantitatively accurate forecasts, it comes at a significant computational cost, particularly as grid resolution increases or the simulation domain grows, since the governing equations must be solved at every grid cell regardless of whether volcanic material is present at that location. 
 Consequently, Eulerian volcanic transport models are typically designed for offline scientific analysis and hazard mapping rather than for real-time or interactive visualization \cite{del2026interactive}.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.6\textwidth]{eulerian.png}
+    }
+    % \protect is mandatory when using apacite inside captions
+    \caption{Eulerian Approach (from \protect\cite{folch2020fall3d}).}
+    \label{fig:eulerian}
+\end{figure}
+
+For the Eulerian Approach, Figure \ref{fig:eulerian} visualizes how it discretizes the simulation space into a 3D staggered mesh of fixed computational cells to evaluate mass transport and flow velocity over time.
 
 \subsection{Comparison of Both Approaches}
 

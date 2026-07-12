@@ -26,13 +26,11 @@ Stagnation Update: Simulates lateral dispersion of neutrally buoyant particles
 \end{figure}
 
 \subsection{Parallelization of the Simulation Loop}
-To improve the responsiveness of the interactive simulation for multicore CPUs, parallelization can be used. 
-Concurrent execution is possible since individual smoke layers operate in complete isolation from one another. 
-The mathematical functions executed during the smoke layer update phase do not feature any cross-layer spatial dependencies. 
-Instead, the physics equations for any given layer depend strictly on a shared set of initial environmental parameters, vent parameters, and global trackers.
-
-Since later simulation stages consume data produced by earlier stages, barrier synchronization is introduced between execution phases as shown in Figure \ref{fig:parralel}. 
-These synchronization points guarantee that all worker threads complete one phase before subsequent phases begin. Rendering is performed only after all simulation stages have completed to ensure visual consistency.
+One possible improvement for AnitoPlume's performance is to explore multi-threaded rendering. 
+To achieve this, we propose implementing parallelization to improve the responsiveness of the interactive simulation for multicore CPUs. 
+This concurrent execution is feasible because individual smoke layers operate in complete isolation from one another. 
+The mathematical functions executed during the smoke layer update phase do not feature any cross-layer spatial dependencies; instead, the physics equations for any given layer depend strictly on a shared set of initial environmental parameters, vent parameters, and global trackers. Because later simulation stages consume data produced by earlier stages, we propose introducing barrier synchronization between execution phases, as shown in Figure \ref{fig:parralel}. 
+These synchronization points will guarantee that all worker threads complete one phase before subsequent phases begin, ensuring that rendering is performed only after all simulation stages have concluded to maintain visual consistency.
 
 \begin{figure}[htbp]
     \centering
