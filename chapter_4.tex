@@ -45,8 +45,11 @@ These synchronization points guarantee that all worker threads complete one phas
 
 
 \section{Benchmarking Procedure}
-\subsection{Evaluation Metrics}
-Benchmarking is conducted to quantitatively evaluate the performance improvements introduced by the proposed execution architecture. The legacy implementation serves as the baseline and is compared against the modernized implementation under identical simulation scenarios and hardware configurations.
+Benchmarking will quantify the performance gains of the proposed architecture relative to the AnitoPlumeV1 baseline, using identical scenarios and hardware. 
+For each scenario, the arithmetic mean of all runs will be used to reduce the effect of system variability, with results compared via absolute values and percentage improvement.
+
+To evaluate scalability, performance metrics will be collected through increasing simulation workloads. 
+The specific metrics utilized for this evaluation, along with their respective descriptions, are detailed in Table~\ref{tab:performance_metrics}.
 
 \begin{table}[htbp]
 \centering
@@ -69,10 +72,7 @@ CPU Utilization        & Effectiveness of multithreading \\
 \end{tabular}
 \end{table}
 
-\subsection {Data Analysis}
-The benchmarking results will be analyzed using descriptive statistics. For each benchmark scenario, the arithmetic mean of the five experimental runs will be computed for all performance metrics to minimize the influence of transient background processes and system variability. The proposed implementation will then be compared against the legacy implementation using absolute values and percentage improvement for each performance metric.
-
-To evaluate scalability, performance measurements will be collected under progressively increasing simulation workloads. The relationship between workload size and rendering performance will be visualized using line graphs illustrating trends in average frame rate, frame time, CPU utilization, and GPU utilization. GPU profiling metrics, including shader execution time, command recording time, and memory bandwidth utilization, will likewise be compared to determine how efficiently the proposed architecture utilizes available hardware resources.
+Workload size and rendering performance will be visualized using line graphs illustrating trends in average frame rate, frame time, CPU utilization, and GPU utilization. GPU profiling metrics, including shader execution time, command recording time, and memory bandwidth utilization, will likewise be compared to determine how efficiently the proposed architecture utilizes available hardware resources. 
 
 Finally, the benchmarking results will be interpreted alongside the User Acceptance Testing (UAT) results to determine whether improvements in computational performance correspond to improvements in perceived responsiveness and overall user experience.
 
