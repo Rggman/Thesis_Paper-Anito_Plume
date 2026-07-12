@@ -7,19 +7,14 @@ The primary objective of this research is to port and extend AnitoPlume's real-t
 \subsection{Legacy Simulation}
 The legacy execution architecture relies on a strictly sequential, single-threaded pipeline driven by an iterative time-stepping loop. 
 Within each frame slice, the simulation runs a high-frequency sub-stepping loop (executing ten physics updates per render frame) to remove visual smoke jumping and oscillations due to numerical instability. 
-The control flow inside this sub-step operates linearly across distinct global entity arrays. For each iteration, the following operations are performed as shown in Figure \ref{fig:legacy-simulation}:
-Smoke Layer Update: Computes air entrainment, thermodynamic properties, external forces, and motion for each smoke layer.
+The control flow inside this sub-step operates linearly across distinct global entity arrays. 
 
-Free Sphere Update: Updates particles attached to smoke layers and evaluates transitions to falling or stagnating states.
-
-Falling Sphere Update: Simulates particle settling, terrain interaction, and particle accumulation for secondary plume formation.
-
-Stagnation Update: Simulates lateral dispersion of neutrally buoyant particles
+As shown in Figure \ref{fig:legacy-simulation}, the simulation is organized around the smoke layer as the primary simulation unit. Each smoke layer models the behavior of the eruption column by computing atmospheric air entrainment, thermodynamic properties (e.g., temperature and density), external forces such as buoyancy, gravity, wind, and drag, and integrating the resulting motion over time. Attached to every smoke layer are free spheres, which represent smoke that inherit the motion and physical state of their parent layer while evaluating transitions into falling or neutrally buoyant states. Each free sphere further generates a hierarchy of subspheres that provide the volumetric detail required for visualization. These subspheres are rendered as billboard sprites to produce the final volumetric appearance of the smoke cloud but do not participate in the physical simulation.
 
 \begin{figure}[htbp]
     \centering
     \makebox[\textwidth][c]{
-        \includegraphics[width=1.2\textwidth]{legacy-simulation-loop.png}
+        \includegraphics[width=1.2\textwidth]{legacy-sims2.png}
     }
     \caption{Legacy Physics Simulation Loop.}
     \label{fig:legacy-simulation}
