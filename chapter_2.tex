@@ -109,14 +109,14 @@ In modernizing the application's graphics API, these rotating spheres are transl
 
 
 
-Virtual terrains are typically represented through digital elevation models (DEM), such as textured meshes or heightmaps. 
-Approaches to constructing these terrains can generally be categorized by how the underlying elevation data is obtained. 
-\textit{Acquisition-based techniques} derive terrain data from real-world sources, such as satellite imagery (e.g., Google Maps/Earth) or LiDAR scanning, allowing the reconstruction of terrain that reflects actual geographical landscapes. 
-In contrast, \textit{procedural techniques} generate terrain algorithmically, typically through noise-based functions, without reliance on real-world source data. 
+Virtual terrains are typically represented through digital elevation models (DEM), such as textured meshes or heightmaps.
+Approaches to constructing these terrains can generally be categorized by how the underlying elevation data is obtained.
+\textit{Acquisition-based techniques} derive terrain data from real-world sources, such as satellite imagery (e.g., Google Maps/Earth) or LiDAR scanning, allowing the reconstruction of terrain that reflects actual geographical landscapes.
+In contrast, \textit{procedural techniques} generate terrain algorithmically, typically through noise-based functions, without reliance on real-world source data.
 Regardless of acquisition method, elevation data is commonly represented as a \textit{heightmap}, a widely adopted format consisting of a 2D raster grid of elevation values, which is utilized to extrude a flat plane into a three-dimensional surface.
 
 When modeling terrains inspired by actual geographical landscapes, data must be sourced from geographic information systems, including satellite imagery or LiDAR maps.
-Raw LiDAR returns, however, capture more than just ground elevation—they include reflections from vegetation, structures, and other above-ground features that must be filtered out before a usable terrain surface can be extracted. Figure \ref{fig:lidar_dem_layers} illustrates this filtering process, showing the progression from raw above-ground height measurements to an isolated Bare Earth DEM suitable for terrain extrusion.
+Aside from ground elevation, raw LiDAR scans also include reflections from vegetation, structures, and other above-ground features that must be filtered out before a usable terrain surface can be extracted. Figure \ref{fig:lidar_dem_layers} illustrates this filtering process, showing the progression from raw above-ground height measurements to an isolated Bare Earth DEM suitable for terrain extrusion.
 
 \begin{figure}[H]
     \centering
