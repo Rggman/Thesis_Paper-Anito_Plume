@@ -2,8 +2,6 @@
 \label{sec:methodology}
 The primary objective of this research is to port and extend AnitoPlume's real-time simulation framework by modernizing its rendering pipeline, optimizing hardware utilization through new, explicit graphics APIs, and refining its underlying physical simulation models. 
 
-\section{Implementation and Migration}
-
 \subsection{Legacy Simulation}
 The legacy execution architecture relies on a strictly sequential, single-threaded pipeline driven by an iterative time-stepping loop. 
 Within each frame slice, the simulation runs a high-frequency sub-stepping loop (executing ten physics updates per render frame) to remove visual smoke jumping and oscillations due to numerical instability. 
@@ -11,17 +9,52 @@ The control flow inside this sub-step operates linearly across distinct global e
 
 As shown in Figure \ref{fig:legacy-simulation}, the simulation is organized around the smoke layer as the primary simulation unit. Each smoke layer models the behavior of the eruption column by computing atmospheric air entrainment, thermodynamic properties (e.g., temperature and density), external forces such as buoyancy, gravity, wind, and drag, and integrating the resulting motion over time. Attached to every smoke layer are free spheres, which represent smoke that inherit the motion and physical state of their parent layer while evaluating transitions into falling or neutrally buoyant states. Each free sphere further generates a hierarchy of subspheres that provide the volumetric detail required for visualization. These subspheres are rendered as billboard sprites to produce the final volumetric appearance of the smoke cloud but do not participate in the physical simulation.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \makebox[\textwidth][c]{
-        \includegraphics[width=1.2\textwidth]{legacy-sims2.png}
+        \includegraphics[width=0.9\textwidth]{legacy-sims2.png}
     }
     \caption{Legacy Physics Simulation Loop.}
     \label{fig:legacy-simulation}
 \end{figure}
 
-AnitoPlume initializes the simulation environment by loading a preprocessed three-dimensional terrain model representing Taal. The terrain mesh is generated offline from geospatial elevation datasets and optimized for interactive rendering while preserving the topographic features required for volcanic hazard visualization (Del Gallego et. al, 2026). Textures for the terrain model were made through photobashing of satellite images taken form Google Earth; as seen on Figure X (Del Gallego et. al, 2026). During initialization, the terrain is imported into the rendering pipeline, transformed into the simulation coordinate system, and associated with its corresponding surface texture.
+AnitoPlume initializes the simulation environment by loading a preprocessed three-dimensional terrain model representing Taal. The terrain mesh is generated offline from geospatial elevation datasets and optimized for interactive rendering while preserving the topographic features required for volcanic hazard visualization \cite{del2026interactive}. 
+Textures for the terrain model were made through photobashing of satellite images taken from Google Earth; as seen on Figure \ref{fig:photobashing} \cite{del2026interactive}. 
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.8\textwidth]{photobash.png}
+    }
+    \caption{Workflow for texturing the surrounding area of Taal Volcano. From \protect\cite{del2026interactive}.}
+    \label{fig:photobashing}
+\end{figure}
+
+During initialization, the terrain is imported into the rendering pipeline, transformed into the simulation coordinate system, and associated with its corresponding surface texture.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.9\textwidth]{textureRender.png}
+    }
+    \caption{Legacy Terrain Rendering PipeLine.}
+    \label{fig:texture-rendering}
+\end{figure}
+
 In addition to visualization, the terrain serves as the physical boundary of the simulation. Height and surface normal information are queried during particle updates to detect terrain intersections and compute particle-ground interactions, allowing falling volcanic material to respond to the underlying topography. Consequently, the terrain functions as both the rendered environment and the collision surface used by the simulation.
+
+Beyond the core simulation and terrain rendering pipelines, AnitoPlume also provides an interactive graphical user interface (GUI) through which users can manipulate plume behavior in real time. This interface additionally surfaces contextual 3D tooltips that display relevant information about Taal Volcano directly within the scene. Figure~\ref{fig:uirender} shows this interface, representing the primary means by which users interact with and observe the legacy simulation system.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.95\textwidth]{UI3.png}
+    }
+    \caption{GUI of AnitoPlume for manipulating plume behavior and 3D UI tooltips for displaying taal information to the user. From \protect\cite{del2026interactive}.}
+    \label{fig:uirender}
+\end{figure}
+
+
 
 \subsection{Parallelization of the Simulation Loop}
 One possible improvement for AnitoPlume's performance is to explore multi-threaded rendering. 
