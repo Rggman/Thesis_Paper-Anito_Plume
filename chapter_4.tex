@@ -40,10 +40,11 @@ These synchronization points will guarantee that all worker threads complete one
 \end{figure}
 
 \subsection{Terrain Rendering Improvements}
-While the terrain geometry accurately captures the topography of the study area, the rendering implementation is intentionally simple. The terrain is rendered using a single textured mesh with basic diffuse lighting and fixed material properties, without terrain-specific rendering techniques such as multi-layer texture blending, physically based shading, normal mapping, ambient occlusion, or level-of-detail management.
-The proposed rendering architecture enables more advanced rendering techniques to be incorporated without modifying the underlying physics simulation, since rendering resources are managed independently through explicit GPU resource management. This architecture may facilitate the integration of enhancements such as higher-resolution terrain textures, physically based materials, dynamic lighting, normal mapping, shadow mapping, terrain tessellation, and level-of-detail rendering while preserving the existing simulation workflow.
+While the terrain geometry will accurately capture the topography of the study area, the initial rendering implementation will be intentionally simple. We will render the terrain using a single textured mesh with basic diffuse lighting and fixed material properties, without terrain-specific rendering techniques such as multi-layer texture blending, physically based shading, normal mapping, ambient occlusion, or level-of-detail management.
 
-Although the terrain rendering pipeline is modernized, the existing graphical user interface as described in Figure 2 remains intact. User interactions for terrain visualization, simulation control, and parameter configuration are preserved, ensuring compatibility with the original application workflow. 
+The proposed rendering architecture will enable more advanced rendering techniques to be incorporated without modifying the underlying physics simulation, since we will manage rendering resources independently through explicit GPU resource management. One promising approach is to utilize this architecture to facilitate the integration of enhancements such as higher-resolution terrain textures, physically based materials, dynamic lighting, normal mapping, shadow mapping, terrain tessellation, and level-of-detail rendering while preserving the existing simulation workflow.
+
+Although we will modernize the terrain rendering pipeline, the existing graphical user interface as described in Figure 2 will remain intact. We will preserve user interactions for terrain visualization, simulation control, and parameter configuration, ensuring compatibility with the original application workflow.
 
 \section{Benchmarking Procedure}
 Benchmarking will quantify the performance gains of the proposed architecture relative to the AnitoPlumeV1 baseline, using identical scenarios and hardware. 
@@ -82,13 +83,14 @@ Finally, the benchmarking results will be interpreted alongside the User Accepta
 
 To verify that the architectural overhaul maintains or improves the interactive user experience, an exploratory usability test will be conducted with target beneficiaries:
 \begin{itemize}
-    \item Setup:  After screening and obtaining consent from the Informed Consent Form(ICF), participants will be given time to explore the interface
+    \item Setup:  After screening and obtaining consent from the Informed Consent Form (ICF), participants will be given time to explore the interface.
     \item Task:  Participants will use the software to recreate specific Taal Volcano eruption plumes, following a set of predefined scenarios.
     \item Survey: Users will complete the System Usability Scale (SUS) questionnaire to rate the software's ease of use.
     \item Feedback: A closing interview will gather suggestions for improving the interface and overall performance.
 \end{itemize}
 
-\begin{table}[htbp]
+% Changed to [H] to force exact placement before the next section
+\begin{table}[H]
 \centering
 \caption[Sample SUS questionnaire.]{Sample SUS questionnaire implemented by \cite{del2026interactive} 1 --- strongly disagree, 5 --- strongly agree.}\begin{tabular}{lp{12cm}}
 \hline
@@ -111,7 +113,7 @@ Q10 & I needed to figure out a lot of things (such as hotkeys, navigating the UI
 
 \section{Research Workflow}
 
-This study follows a nine-phase research workflow, outlined in Table \ref{tab:research_methodology_phases}, that guides the porting and extension of AnitoPlume from its legacy rendering implementation to the proposed rendering architecture, from initial legacy analysis through final evaluation of performance and usability.
+This study follows a three-phase research workflow, outlined in Table \ref{tab:research_phases}, that guides the porting and extension of AnitoPlume from its legacy rendering implementation to the proposed rendering architecture, from initial legacy analysis through final evaluation of performance and usability.
 
 \begin{comment}
 \begin{table}[htbp]
@@ -135,7 +137,7 @@ This study follows a nine-phase research workflow, outlined in Table \ref{tab:re
 \end{table}
 \end{comment}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
