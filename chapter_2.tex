@@ -169,18 +169,15 @@ New novel fluid such as Coadjoint Orbit FLIP (CoFLIP) \cite{nabizadeh2024fluid} 
 Among these developments, the framework proposed by \citeauthor{lastic2022interactive} represents the first work observed so far that can perform real-time plume simulation, due to utilizing a streamlined Lagrangian simulation. 
 Building upon this, \citeauthor{pretorius2024volcanic} proposed a coupling model of explosive eruptive behaviors directly with atmospheric simulations to render volcanic skyscapes.
 
-Figure \ref{fig:VolcanicSims} illustrates representative outputs from real-time plume simulation frameworks, contrasting the Lagrangian-based approach of \citeauthor{lastic2022interactive} (left) with AnitoPlume's own real-time volcanic plume simulation of Taal Volcano (right), which serves as the baseline system extended in this work.
-
+Figure \ref{fig:VolcanicSims} illustrates representative outputs from real-time plume simulation frameworks, contrasting the Lagrangian-based approach of \citeauthor{lastic2022interactive} and the coupled skyscape model of \citeauthor{pretorius2024volcanic}  with AnitoPlume's own real-time volcanic plume simulation of Taal Volcano, which serves as the baseline system extended in this work.
 
 \begin{figure}[H]
     % Allows the images to expand beyond the text margins evenly on both sides
     \makebox[\textwidth][c]{
-        \includegraphics[width=0.55\textwidth]{lastic_simulation.png}%
-        \hfill
-        \includegraphics[width=0.55\textwidth]{AnitoPlume_sim.png}
+        \includegraphics[width=1\textwidth]{volc-sims.png}
     }
     % \protect is mandatory when using apacite inside captions
-    \caption{Volcanic Simulations from \protect\cite{lastic2022interactive} (left) and \protect\cite{del2026interactive} (right).}
+    \caption{Volcanic Simulations from \protect\cite{del2026interactive} (top), \protect\cite{lastic2022interactive} (bottom-left) and \protect\cite{pretorius2024volcanic} (bottom-right).}
     \label{fig:VolcanicSims}
 \end{figure}
 
