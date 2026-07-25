@@ -150,27 +150,6 @@ Q10 & I needed to figure out a lot of things (such as hotkeys, navigating the UI
 
 This study follows a three-phase research workflow, outlined in Table \ref{tab:research_phases}, that guides the porting and extension of AnitoPlume from its legacy rendering implementation to the proposed rendering architecture, from initial legacy analysis through final evaluation of performance and usability.
 
-\begin{comment}
-\begin{table}[htbp]
-    \centering
-    \caption{Proposed calendar of activities}
-    \label{tab:timetableactivities}
-    \begin{tabular}{l|c|c|c|c|c|c|c|c}
-        \toprule
-        \textbf{Activity} & \textbf{Aug} & \textbf{Sep} & \textbf{Oct} & \textbf{Nov} & \textbf{Dec} & \textbf{Jan} & \textbf{Feb} & \textbf{Mar} \\
-        \midrule
-        Literature review and reference refinement & X & X &  &  &  &  &  & \\
-        Baseline analysis of AnitoPlume renderer &  & X & X &  &  &  &  & \\
-        Environment setup and toolchain preparation &  &  & X & X &  &  &  & \\
-        Rendering architecture design and migration planning &  &  &  & X & X &  &  & \\
-        DirectX 12 implementation and shader porting &  &  &  &  & X & X & X & \\
-        Resource synchronization and debugging &  &  &  &  &  & X & X & \\
-        Performance evaluation and visual comparison &  &  &  &  &  &  & X & X \\
-        Usability testing and thesis writing &  &  &  &  &  & X & X & X \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-\end{comment}
 
 \begin{table}[H]
 \centering
@@ -180,17 +159,16 @@ This study follows a three-phase research workflow, outlined in Table \ref{tab:r
 \hline
 \textbf{Phase} & \textbf{Research Activity} & \textbf{Purpose / Output} \\
 \hline
-\textbf{1} & \textbf{Legacy Pipeline Profiling and Bottleneck Analysis} & Evaluate the existing simulation and rendering architecture to establish baseline performance metrics. Profile CPU-GPU synchronization, draw call overhead, and frame pacing to identify compute and graphics pipeline bottlenecks that impede scalability. \\
+\textbf{1} & \textbf{Legacy Pipeline Profiling and Bottleneck Analysis} & Evaluate the existing simulation and rendering architecture to establish baseline performance metrics. Using industry-recognized profiling tools (e.g., RenderDoc), profile CPU-GPU synchronization, draw call overhead, and frame pacing to identify compute and graphics pipeline bottlenecks that impede scalability. \\
 \hline
-\textbf{2} & \textbf{Architectural Refactoring and Pipeline Optimization} & Design and iteratively implement optimizations within the execution model and rendering pipeline. This involves exploring modern graphics paradigms (e.g., explicit command submission, reducing driver overhead) and evaluating concurrent execution strategies to maximize render throughput, adapting the architecture based on empirical performance gains. \\
+\textbf{2} & \textbf{Architectural Refactoring and Pipeline Optimization} & Design and iteratively implement optimizations within the execution model and rendering pipeline, prioritizing the migration of the simulation loop to the GPU through compute shaders and parallel execution strategies. This involves exploring modern, framework-agnostic graphics API paradigms (e.g., explicit command submission, reducing driver overhead) rather than techniques tied to a single rendering framework, adapting the architecture based on empirical performance gains. \\
 \hline
-\textbf{3} & \textbf{Performance Benchmarking and Interactive Evaluation} & Conduct a comparative analysis between the legacy and refactored pipelines using low-level GPU profiling metrics (e.g., shader execution time, memory bandwidth utilization). Perform user testing to correlate these hardware-level optimizations with perceived interactive responsiveness and visual consistency. \\
+\textbf{3} & \textbf{Performance Benchmarking and Interactive Evaluation} & Conduct a comparative analysis between the legacy and refactored pipelines using low-level GPU profiling metrics (e.g., shader execution time, memory bandwidth utilization) gathered via the same profiling tools established in Phase 1. Perform user testing, following the tiered participant recruitment described in Section \ref{sec:usability-testing} (PHIVOLCS personnel prioritized), to correlate these hardware-level optimizations with perceived interactive responsiveness and visual consistency. \\
 \hline
 \end{tabular}
 \caption{Overview of the Research Phases, Activities, and Objectives}
 \label{tab:research_phases}
 \end{table}
-
 
 \begin{comment}
 
