@@ -2,6 +2,7 @@
 \label{sec:methodology}
 The primary objective of this research is to port and extend AnitoPlume's real-time simulation framework by modernizing its rendering pipeline, optimizing hardware utilization through new, explicit graphics APIs, and refining its underlying physical simulation models. 
 
+\section{Implementation and Migration}
 \subsection{Legacy Simulation}
 The legacy execution architecture relies on a strictly sequential, single-threaded pipeline driven by an iterative time-stepping loop. 
 Within each frame slice, the simulation runs a high-frequency sub-stepping loop (executing ten physics updates per render frame) to remove visual smoke jumping and oscillations due to numerical instability. 
@@ -63,7 +64,7 @@ This concurrent execution is feasible because individual smoke layers operate in
 The mathematical functions executed during the smoke layer update phase do not feature any cross-layer spatial dependencies; instead, the physics equations for any given layer depend strictly on a shared set of initial environmental parameters, vent parameters, and global trackers. Because later simulation stages consume data produced by earlier stages, we propose introducing barrier synchronization between execution phases, as shown in Figure \ref{fig:parralel}. 
 These synchronization points will guarantee that all worker threads complete one phase before subsequent phases begin, ensuring that rendering is performed only after all simulation stages have concluded to maintain visual consistency.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \makebox[\textwidth][c]{
         \includegraphics[width=1\textwidth]{parralel.png}
@@ -116,6 +117,7 @@ Finally, the benchmarking results will be interpreted alongside the User Accepta
 
 To verify that the architectural overhaul maintains or improves the interactive user experience, an exploratory usability test will be conducted with target beneficiaries:
 \begin{itemize}
+    \item Participants: Recruitment will follow a tiered priority order. PHIVOLCS personnel will be the top priority given their domain expertise in volcanology and direct familiarity with Taal Volcano hazard assessment. Should this pool be insufficient, recruitment will expand to, in order: (1) individuals who have witnessed a Taal Volcano eruption firsthand, (2) enthusiasts with experience using volcano/geohazard simulation software, and (3) computer science students with a background in rendering or volcano-related coursework/projects. This staged recruitment reflects the tool's intended end-users while ensuring an adequate sample size, and informs the corresponding participant categories documented in the study's ethics clearance and consent materials.
     \item Setup:  After screening and obtaining consent from the Informed Consent Form (ICF), participants will be given time to explore the interface.
     \item Task:  Participants will use the software to recreate specific Taal Volcano eruption plumes, following a set of predefined scenarios.
     \item Survey: Users will complete the System Usability Scale (SUS) questionnaire to rate the software's ease of use.
