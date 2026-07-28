@@ -75,7 +75,7 @@ These synchronization points will guarantee that all worker threads complete one
 
 Beyond CPU multithreading, the same data-parallel characteristics also make the simulation suitable for execution on modern GPUs using compute shaders. Hence, a further performance optimization for AnitoPlume is to offload the simulation loop to the GPU via dedicated compute workloads.
 
-Adopting the GPU-accelerated design pattern proposed by \citeauthor{madera2022cpu}, the simulation and rendering tasks are decoupled into distinct compute and render stages. As illustrated in Table X, the CPU is relieved of per-layer physics calculations and serves primarily as an orchestrator which loads global parameters and dispatches GPU workloads. Simulation data is stored in GPU resident memory buffers where compute passes execute the numerical update functions for each smoke layer concurrently. Explicit synchronization barriers will enforce that all GPU compute passes complete before the update buffers are read by the rendering pipeline.
+Adopting the GPU-accelerated design pattern proposed by \citeauthor{madera2022cpu}, the simulation and rendering tasks are decoupled into distinct compute and render stages. As illustrated in Figure \ref{fig:GPU}, the CPU is relieved of per-layer physics calculations and serves primarily as an orchestrator which loads global parameters and dispatches GPU workloads. Simulation data is stored in GPU resident memory buffers where compute passes execute the numerical update functions for each smoke layer concurrently. Explicit synchronization barriers will enforce that all GPU compute passes complete before the update buffers are read by the rendering pipeline.
 
 \begin{figure}[H]
     \centering
