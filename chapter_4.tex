@@ -96,9 +96,22 @@ The proposed rendering architecture will enable more advanced rendering techniqu
 Although we will modernize the terrain rendering pipeline, the existing graphical user interface as described in Figure 2 will remain intact. We will preserve user interactions for terrain visualization, simulation control, and parameter configuration, ensuring compatibility with the original application workflow.
 
 \section{Benchmarking Procedure}
-Benchmarking will quantify the performance gains of the proposed architecture relative to the AnitoPlumeV1 baseline, using identical scenarios and hardware. 
-For each scenario, the arithmetic mean of all runs will be used to reduce the effect of system variability, with results compared via absolute values and percentage improvement.
+\subsection{Profiling Tool Selection}
+\label{sec:profiling_tool_selection}
 
+As discussed in Section~\ref{sec:profiling_tools}, profiling tools for explicit graphics API development fall into several categories: real-time CPU-GPU profilers, hardware-level performance analyzers, and frame capture debuggers. Each offers a different scope of instrumentation.
+The selection of a primary profiling instrument for this study requires that the tool satisfy three conditions simultaneously:
+
+\begin{enumerate}
+    \item \textbf{Cross-vendor hardware support.} The benchmarking procedure is designed to produce reproducible results across a range of consumer and workstation GPUs from NVIDIA, AMD, and Intel. A profiling instrument locked to a single GPU vendor would limit the generalizability of the results and introduce hardware-specific reporting biases.
+    \item \textbf{Fair comparison across pipeline backends.} Because this study evaluates both the legacy OpenGL implementation in Phase~1 and the ported Vulkan or DirectX~12 pipeline in Phase~3 under identical hardware and workload conditions, the same profiling tool must capture both runs using the same metric definitions and output formats.
+    \item \textbf{Fine-grained GPU metrics.} The tool must expose per-event GPU execution time, shader-stage latency, and memory bandwidth usage to populate the metrics defined in Table~\ref{tab:performance_metrics}.
+\end{enumerate}
+
+\textbf{RenderDoc} \cite{renderdoc2023} is selected as the primary GPU profiling instrument for this study. 
+While Tracy (Section~\ref{sec:tracy}) identifies multi-frame trends such as thread synchronization and CPU-GPU overlap, it records only aggregated zone-level timing and cannot isolate per-event draw calls or inspect individual pipeline states. RenderDoc's offline frame-capture model provides the per-event granularity that Tracy lacks which is necessary to populate the metrics in Table~\ref{tab:performance_metrics}, particularly Shader Execution Time, Command Recording Time, and GPU Memory Bandwidth. 
+RenderDoc also supports the API used by the original AnitoPlume (OpenGL) and modern graphics APIs such as but not limited to Vulkan and DirectX~12 under an identical capture workflow, ensuring that profiles from Phases~1 and~3 are methodologically compatible and directly comparable, and it operates across NVIDIA, AMD, and Intel GPUs, unlike NVIDIA Nsight Graphics (Section~\ref{sec:nsight}) which is restricted to a single vendor and would limit the generalizability of benchmarking results.
+\subsection{Evaluation Metrics}
 To evaluate scalability, performance metrics will be collected through increasing simulation workloads, using profiling tools such as RenderDoc to capture low-level pipeline data alongside application-level timing instrumentation. 
 The specific metrics utilized for this evaluation, along with their respective descriptions, are detailed in Table~\ref{tab:performance_metrics}.
 
