@@ -104,7 +104,7 @@ The selection of a primary profiling instrument for this study requires that the
 
 \begin{enumerate}
     \item \textbf{Cross-vendor hardware support.} The benchmarking procedure is designed to produce reproducible results across a range of consumer and workstation GPUs from NVIDIA, AMD, and Intel. A profiling instrument locked to a single GPU vendor would limit the generalizability of the results and introduce hardware-specific reporting biases.
-    \item \textbf{Fair comparison across pipeline backends.} Because this study evaluates both the legacy OpenGL implementation in Phase~1 and the ported Vulkan or DirectX~12 pipeline in Phase~3 under identical hardware and workload conditions, the same profiling tool must capture both runs using the same metric definitions and output formats.
+    \item \textbf{Framework-agnostic comparison.} Because this study evaluates both the legacy OpenGL implementation in Phase~1 and the ported explicit API pipeline in Phase~3, the benchmarking methodology must remain independent of any specific rendering framework. Both pipelines will be profiled under identical hardware and workload conditions, and the same profiling tool must capture both runs using the same metric definitions and output formats. This approach ensures that performance comparisons reflect architectural differences rather than artifact of tooling or framework-specific optimizations.
     \item \textbf{Fine-grained GPU metrics.} The tool must expose per-event GPU execution time, shader-stage latency, and memory bandwidth usage to populate the metrics defined in Table~\ref{tab:performance_metrics}.
 \end{enumerate}
 
