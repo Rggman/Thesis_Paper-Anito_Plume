@@ -78,8 +78,9 @@ This shift allows command generation to be safely distributed across multiple CP
 The lightweight driver architecture introduced by explicit graphics APIs minimizes runtime validation and hidden state management, reducing CPU overhead while providing developers with greater control over rendering operations. By enabling application-driven optimization and more efficient utilization of hardware resources, explicit graphics API architectures are better suited for performance-critical rendering workloads \cite{IoannidisC.2020MRFC}.
 
 \section{GPU Parallel Computing}
+\subsection{General Purpose GPU Computing}
 The increasing computational demands of scientific visualization and physically based simulation have driven the adoption of Graphics Processing Units (GPUs) as general-purpose parallel computing devices.
-Unlike Central Processing Units (CPUs), which consist of a relatively small number of complex processing cores optimized for sequential execution, GPUs are designed with hundreds to thousands of lightweight processing elements capable of executing large numbers of concurrent operations.
+Unlike Central Processing Units (CPUs), which consist of a relatively small number of complex processing cores optimized for sequential execution, GPUs consist of many smaller cores organized into parallel execution units designed to maximize throughput for highly parallel workloads.
 As illustrated in Figure \ref{fig:cpuVgpu}, this architecture enables GPUs to efficiently process workloads exhibiting high degrees of data parallelism, where identical computations are repeatedly applied across large collections of independent data elements \cite{OwensJohnD.2008GC}.
 
 \begin{figure}[H]
@@ -93,17 +94,39 @@ As illustrated in Figure \ref{fig:cpuVgpu}, this architecture enables GPUs to ef
 \end{figure}
 
 The emergence of general purpose computing on GPUs transformed graphics hardware from fixed-function rendering accelerators into programmable parallel processors capable of executing scientific and engineering applications.
+
+\subsection{GPU Programming}
 Early GPU computing approaches utilized graphics APIs to express numerical algorithms as rendering operations.
 This paradigm evolved with the introduction of programming models such as NVIDIA's CUDA, which exposed the GPU as a general parallel computing platform through familiar programming abstractions while providing direct access to the device's computational resources \cite{LuebkeD.2008CSpp}.
 
 \citeauthor{HarrisMark2004Mcct} describes GPU programming as a process of mapping computational problems onto massively parallel hardware by identifying operations that can be executed independently across many processing elements.
 Rather than accelerating a single complex computation, GPU applications achieve performance by decomposing a problem into numerous independent tasks that execute simultaneously. Consequently, algorithms exhibiting minimal inter-element dependencies and regular memory access patterns are generally well suited for GPU execution \cite{HarrisMark2004Mcct}.
-Modern graphics APIs extend this capability through compute shaders, programmable execution stages designed specifically for general-purpose computation independent of the traditional graphics pipeline. Compute shaders organize execution into groups of parallel invocations that simultaneously execute the same program on different portions of the input data.
+Compute shaders organize execution into groups of parallel invocations that simultaneously execute the same program on different portions of the input data.
 Unlike vertex or fragment shaders, compute shaders are not directly associated with rendering primitives, allowing applications to perform arbitrary numerical computations while explicitly managing memory resources and synchronization between execution stages \cite{vulkan14spec2024}.
 
 Because many scientific simulations consist of repeatedly updating large collections of independent entities, GPU computing has become widely adopted across computational physics, fluid dynamics, molecular simulation, image processing, and real-time visualization. \citeauthor{OwensJohnD.2008GC} identify data-parallel simulation as one of the primary application domains benefiting from GPU architectures due to their ability to execute thousands of lightweight computational threads concurrently. As GPU hardware and programming models continue to evolve, massively parallel computing has become a fundamental approach for accelerating computationally intensive scientific applications while maintaining interactive performance \cite{OwensJohnD.2008GC}.
 
+\subsection{Application of Compute Shaders in Parallel Computing}
+Data-parallel simulation is one of the primary application domains benefiting from GPU architectures due to their ability to execute thousands of lightweight computational threads concurrently \cite{OwensJohnD.2008GC}. Recent studies demonstrate the use of compute shaders across different simulation and visualization domains, including particle-based simulation, physical deformation models, and large-scale rendering. 
 
+\citeauthor{Va2021RealTimeCloth} further demonstrated the use of compute shaders for iterative physics simulation, where simulation stability and performance depend on repeated updates across discrete time steps. Similarly, \citeauthor{madera2022cpu} applied compute shaders to particle-based sphere simulation by distributing particle updates and collision operations across GPU threads. Their work addressed the increasing computational and memory requirements caused by large particle counts by improving CPU–GPU buffer communication and maintaining a reusable computation buffer. \citeauthor{schutz2021rendering} demonstrated the use of compute shaders for large-scale point cloud rendering. Their approach replaced portions of the traditional graphics pipeline with compute-based processing, allowing independent point data to be processed through GPU parallel execution. Although these works address different applications, they illustrate how compute shaders exploit data parallelism to improve throughput for workloads consisting of many independent elements.
+
+\begin{table}[H]
+\centering
+\caption{Application of compute shaders for optimization}
+\vspace{0.2cm}
+\renewcommand{\arraystretch}{1.5}
+% Note: Requires \usepackage{tabularx} in your preamble
+\begin{tabularx}{\textwidth}{|>{\hsize=0.6\hsize}X|>{\hsize=0.8\hsize}X|>{\hsize=1.3\hsize}X|>{\hsize=1.3\hsize}X|}
+\hline
+\textbf{Study} & \textbf{Domain} & \textbf{Compute Shader Application} & \textbf{Results} \\ \hline
+Va et al. (2021) & Real-time cloth simulation & Implemented a GPU-based parallel cloth simulation using compute shader kernels for mass--spring calculations and constraint enforcement & GPU parallel implementation achieved faster performance than CPU-based implementation while maintaining stable cloth behavior using constraint-based methods. \\ \hline
+Madera-Ramírez et al. (2021) & Particle Simulation & Used compute shaders to parallelize particle updates, collision operations, and GPU buffer communication & Achieved up to $100\times$ speedup over the sequential implementation and enabled processing of larger particle counts. \\ \hline
+Schütz et al. (2021) & Point cloud rendering & Used compute shaders to perform point processing and rendering operations through GPU-based parallel execution & Demonstrated high-throughput rendering of hundreds of millions of points with improved performance over previous approaches. \\ \hline
+\end{tabularx}
+\end{table}
+
+Similar characteristics are present in particle-based plume simulation, where each plume element maintains independent state variables that must be repeatedly updated during each simulation step. Therefore, compute shaders provide a suitable computational model for accelerating both simulation updates and visualization of large numbers of dynamic plume elements. 
 
 \section{Lagrangian and Eulerian Models for Volumetric Plume Dynamics}
 
