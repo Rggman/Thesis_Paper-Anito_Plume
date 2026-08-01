@@ -15,7 +15,7 @@ As shown in Figure \ref{fig:legacy-simulation}, the simulation is organized arou
     \makebox[\textwidth][c]{
         \includegraphics[width=0.9\textwidth]{legacy-sims2.png}
     }
-    \caption{Legacy Physics Simulation Loop.}
+    \caption{Legacy physics simulation loop.}
     \label{fig:legacy-simulation}
 \end{figure}
 
@@ -27,7 +27,7 @@ Textures for the terrain model were made through photobashing of satellite image
     \makebox[\textwidth][c]{
         \includegraphics[width=0.8\textwidth]{photobash.png}
     }
-    \caption{Workflow for texturing the surrounding area of Taal Volcano. From \protect\cite{del2026interactive}.}
+    \caption{Workflow for texturing the surrounding area of Taal Volcano. From \protect\cite{del2026interactive}}
     \label{fig:photobashing}
 \end{figure}
 
@@ -38,7 +38,7 @@ During initialization, the terrain is imported into the rendering pipeline, tran
     \makebox[\textwidth][c]{
         \includegraphics[width=0.9\textwidth]{textureRender.png}
     }
-    \caption{Legacy Terrain Rendering PipeLine.}
+    \caption{Legacy terrain rendering pipeline.}
     \label{fig:texture-rendering}
 \end{figure}
 
@@ -51,7 +51,7 @@ Beyond the core simulation and terrain rendering pipelines, AnitoPlume also prov
     \makebox[\textwidth][c]{
         \includegraphics[width=0.95\textwidth]{UI3.png}
     }
-    \caption{GUI of AnitoPlume for manipulating plume behavior and 3D UI tooltips for displaying taal information to the user. From \protect\cite{del2026interactive}.}
+    \caption{GUI of AnitoPlume for manipulating plume behavior and 3D UI tooltips for displaying Taal Volcano information to the user. From \protect\cite{del2026interactive}}
     \label{fig:uirender}
 \end{figure}
 
@@ -69,7 +69,7 @@ These synchronization points will guarantee that all worker threads complete one
     \makebox[\textwidth][c]{
         \includegraphics[width=1\textwidth]{parralel.png}
     }
-    \caption{Parallelization of Smoke Layer Update Phase.}
+    \caption{Parallelization of smoke layer update phase.}
     \label{fig:parralel}
 \end{figure}
 
@@ -82,7 +82,7 @@ Adopting the GPU-accelerated design pattern proposed by \citeauthor{madera2022cp
     \makebox[\textwidth][c]{
         \includegraphics[width=1\textwidth]{GPU.jpg}
     }
-    \caption{Proposed Parallel Architecture.}
+    \caption{Proposed parallel architecture.}
     \label{fig:GPU}
 \end{figure}
 
@@ -93,7 +93,7 @@ While the terrain geometry will accurately capture the topography of the study a
 
 The proposed rendering architecture will enable more advanced rendering techniques to be incorporated without modifying the underlying physics simulation, since we will manage rendering resources independently through explicit GPU resource management. One promising approach is to utilize this architecture to facilitate the integration of enhancements such as higher-resolution terrain textures, physically based materials, dynamic lighting, normal mapping, shadow mapping, terrain tessellation, and level-of-detail rendering while preserving the existing simulation workflow.
 
-Although we will modernize the terrain rendering pipeline, the existing graphical user interface as described in Figure 2 will remain intact. We will preserve user interactions for terrain visualization, simulation control, and parameter configuration, ensuring compatibility with the original application workflow.
+Although we will modernize the terrain rendering pipeline, the existing graphical user interface as described in Figure~\ref{fig:uirender} will remain intact. We will preserve user interactions for terrain visualization, simulation control, and parameter configuration, ensuring compatibility with the original application workflow.
 
 \section{Benchmarking Procedure}
 \subsection{Profiling Tool Selection}
@@ -155,7 +155,7 @@ To verify that the architectural overhaul maintains or improves the interactive 
 % Changed to [H] to force exact placement before the next section
 \begin{table}[H]
 \centering
-\caption[Sample SUS questionnaire.]{Sample SUS questionnaire implemented by \cite{del2026interactive} 1 --- strongly disagree, 5 --- strongly agree.}\begin{tabular}{lp{12cm}}
+\caption[Sample SUS questionnaire.]{Sample SUS questionnaire implemented by \cite{del2026interactive}. 1 --- strongly disagree, 5 --- strongly agree.}\begin{tabular}{lp{12cm}}
 \hline
 Code & Question \\
 \hline
@@ -194,7 +194,7 @@ This study follows a three-phase research workflow, outlined in Table \ref{tab:r
 \textbf{3} & \textbf{Performance Benchmarking and Interactive Evaluation} & Conduct a comparative analysis between the legacy and refactored pipelines using low-level GPU profiling metrics (e.g., shader execution time, memory bandwidth utilization). Perform user testing to correlate these hardware-level optimizations with perceived interactive responsiveness and visual consistency. \\
 \hline
 \end{tabular}
-\caption{Overview of the Research Phases, Activities, and Objectives}
+\caption{Overview of the research phases, activities, and objectives.}
 \label{tab:research_phases}
 \end{table}
 

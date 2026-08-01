@@ -20,7 +20,7 @@ Throughout this study, these are referred to as implicit graphics APIs, whereas 
 
 \subsection{Overview of Graphics API Architectures}
 Implicit graphics APIs such as OpenGL are based on a state-based programming model where the application modifies global rendering states that are maintained by the graphics implementation \cite{opengl46spec2022}.
-Implicit graphics API architecture relies on a thick driver layer that abstracts graphics pipeline management from the application (Fig. 1).
+Implicit graphics API architecture relies on a thick driver layer that abstracts graphics pipeline management from the application (Fig.~\ref{fig:api_architecture_comparison}).
 Because the driver is responsible for maintaining graphics state, performing runtime validation, tracking resource usage, and managing command execution, significant CPU overhead is introduced during rendering (Ping et al., 2026).
 
 Explicit graphics architectures expose synchronization, resource management, and command submission responsibilities directly to applications \cite{vulkan14spec2024}.
@@ -48,7 +48,7 @@ In-driver GLSL compiler; requires shipping raw shader source. & SPIR-V target en
 High vendor-specific implementation variability. & Simpler API and testing improve cross-vendor compatibility. & Strict Feature Levels (e.g., DX12 Ultimate) ensure vendor consistency. \\ 
 \hline
 \end{tabular}
-\caption[Graphics API Comparison: OpenGL vs. Vulkan vs. DirectX 12]{Graphics API Comparison: OpenGL vs. Vulkan vs. DirectX 12 from \citeauthor{shiraef2016exploratory} and \citeauthor{zoraja2023vanityx}}\label{tab:graphics_api_comparison}
+\caption[Graphics API comparison: OpenGL vs. Vulkan vs. DirectX 12]{Graphics API comparison: OpenGL vs. Vulkan vs. DirectX 12 from \citeauthor{shiraef2016exploratory} and \citeauthor{zoraja2023vanityx}}\label{tab:graphics_api_comparison}
 \label{tab:dif_API}
 \end{table}
 
@@ -66,7 +66,7 @@ As rendering workloads become more complex, these driver-managed operations can 
         \includegraphics[width=1.2\textwidth]{Implicit_Vs_Explicit.png}
     }
     % \protect is mandatory when using apacite inside captions
-    \caption{Comparison of implicit graphics API architecture (left) with explicit graphics API architecture (right). }
+    \caption{Comparison of implicit graphics API architecture (left) with explicit graphics API architecture (right).}
     \label{fig:api_architecture_comparison}
 \end{figure}
 
@@ -89,7 +89,7 @@ As illustrated in Figure \ref{fig:cpuVgpu}, this architecture enables GPUs to ef
         \includegraphics[width=0.9\textwidth]{cpuVgpu.png}
     }
     % \protect is mandatory when using apacite inside captions
-    \caption{CPU vs. GPU Key Differences (from \protect\cite{TecAdmin2025}).}
+    \caption{CPU vs. GPU key differences. From \protect\cite{TecAdmin2025}.}
     \label{fig:cpuVgpu}
 \end{figure}
 
@@ -113,7 +113,7 @@ Data-parallel simulation is one of the primary application domains benefiting fr
 
 \begin{table}[H]
 \centering
-\caption{Application of compute shaders for optimization}
+\caption{Application of compute shaders for optimization.}
 \vspace{0.2cm}
 \renewcommand{\arraystretch}{1.5}
 % Note: Requires \usepackage{tabularx} in your preamble
@@ -156,7 +156,7 @@ Explicit graphics architectures provide mechanisms that support this objective b
         \includegraphics[width=0.85\textwidth]{Langrangian.png}
     }
     % \protect is mandatory when using apacite inside captions
-    \caption{Lagrangian Approach (from \protect\cite{lastic2022interactive}).}
+    \caption{Lagrangian approach. From \protect\cite{lastic2022interactive}.}
     \label{fig:lagrangian}
 \end{figure}
 
@@ -177,7 +177,7 @@ Consequently, Eulerian volcanic transport models are typically designed for offl
         \includegraphics[width=0.6\textwidth]{eulerian.png}
     }
     % \protect is mandatory when using apacite inside captions
-    \caption{Eulerian Approach (from \protect\cite{folch2020fall3d}).}
+    \caption{Eulerian approach. From \protect\cite{folch2020fall3d}.}
     \label{fig:eulerian}
 \end{figure}
 
