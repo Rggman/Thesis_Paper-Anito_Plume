@@ -243,6 +243,16 @@ This integration is significant for evaluating parallelization: the developer ca
 
 Tracy is suited for identifying trends that manifest over multiple frames, such as frame timing spikes, CPU-side bottlenecks in the physics integration pass, and idle gaps caused by thread barriers. It is less suited for per-event GPU-level diagnostics, which require offline inspection of individual frames.
 
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=1\textwidth]{Tracy.png}
+    }
+    % \protect is mandatory when using apacite inside captions
+    \caption{Tracy Profiler.}
+    \label{fig:tracy}
+\end{figure}
+
 \subsection{NVIDIA Nsight Graphics}
 \label{sec:nsight}
 
@@ -253,6 +263,16 @@ These metrics provide resolution that a generic frame-capture profiler cannot of
 For example, identifying that a fragment shaded render pass for volcanic plume billboards is bound by texture memory latency rather than arithmetic throughput suggests specific optimization steps: reducing texture resolution, packing multiple data channels into a single texture, or altering the filtering mode. Each step can be validated against the same hardware counter data.
 
 Because Nsight Graphics is restricted to NVIDIA hardware, it is most appropriate for detailed single-frame profiling on NVIDIA workstations rather than continuous monitoring across diverse hardware. For research groups that deploy NVIDIA GPU workstations, Nsight provides the deepest constituent view of hardware performance available.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=1\textwidth]{Nsight.jpg}
+    }
+    % \protect is mandatory when using apacite inside captions
+    \caption{NVIDIA Nsight Graphics.}
+    \label{fig:nsight}
+\end{figure}
 
 \subsection{RenderDoc}
 \label{sec:renderdoc}
@@ -269,10 +289,21 @@ The capture workflow is straightforward: the application is launched through Ren
     \item \textbf{GPU Timing.} Per-event GPU-side execution time derived from timestamp queries, identifying which draw calls or compute dispatches are the most expensive within a single frame.
 \end{itemize}
 
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=1\textwidth]{RenderDoc.jpg}
+    }
+    % \protect is mandatory when using apacite inside captions
+    \caption{RenderDoc.}
+    \label{fig:renderdoc}
+\end{figure}
+
+
 \subsection{Summary of Profiling Tools}
 \label{sec:profiling_summary}
 
-Each of the profiling tools discussed addresses a distinct layer of graphics performance analysis, and their combined use provides comprehensive instrumentation coverage for projects migrating between graphics APIs.
+Each of the profiling tools discussed addresses a distinct layer of graphics performance analysis, and their combined use provides comprehensive instrumentation coverage for projects migrating between graphics APIs. Figures~\ref{fig:tracy}, \ref{fig:nsight}, and \ref{fig:renderdoc} illustrate the user interface of each profiling tool discussed in this section.
 Table~\ref{tab:profiling-tools} below contrasts them across five dimensions particularly relevant to this study.
 
 \begin{table}[htbp]
