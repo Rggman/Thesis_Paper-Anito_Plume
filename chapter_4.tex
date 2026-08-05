@@ -55,45 +55,44 @@ Beyond the core simulation and terrain rendering pipelines, AnitoPlume also prov
     \label{fig:uirender}
 \end{figure}
 
+\subsection{Initial AnitoPlume V2 Prototype}
 
+Prior to this study, an early prototype of AnitoPlume V2 was developed as an exploratory effort to modernize the visual rendering of the Taal Volcano model. However, the prototype was discontinued before the full implementation of plume simulation, terrain rendering, and user interaction, could be completed. Because the prototype represents the starting point from which this work proceeds, its implemented capabilities and architectural limitations must be clearly established.
 
-\subsection{Parallelization of the Simulation Loop}
-One possible improvement for AnitoPlume's performance is to explore multi-threaded rendering. 
-To achieve this, we propose implementing parallelization to improve the responsiveness of the interactive simulation for multicore CPUs. 
-This concurrent execution is feasible because individual smoke layers operate in complete isolation from one another. 
-The mathematical functions executed during the smoke layer update phase do not feature any cross-layer spatial dependencies; instead, the physics equations for any given layer depend strictly on a shared set of initial environmental parameters, vent parameters, and global trackers. Because later simulation stages consume data produced by earlier stages, we propose introducing barrier synchronization between execution phases, as shown in Figure \ref{fig:parralel}. 
-These synchronization points will guarantee that all worker threads complete one phase before subsequent phases begin, ensuring that rendering is performed only after all simulation stages have concluded to maintain visual consistency.
+In its current initial state, the prototype renders a single textured terrain mesh of Taal Volcano under a ray traced lighting pipeline, navigable through a first person camera interface. No plume simulation, volumetric ash visualization, particle system, interactive GUI, or terrain collision logic has been integrated at this stage. The prototype functions exclusively as a static scene viewer for the volcano model and serves as the starting point that this study will extend into a full simulation and visualization system.
+
+The V2 prototype is built upon NVIDIA Falcor \cite{falcor2024}, a real-time rendering research framework that provides a structured pipeline for high-fidelity scene visualization. The current implementation focuses exclusively on the visual rendering of the volcano surface; no physics-based plume simulation, volumetric ash dispersion, or particle-based eruption dynamics have been implemented at this stage. 
+
+\begin{comment}
+The rendering pipeline is composed of several passes executed in sequence:
+
+\begin{itemize}
+    \item \textbf{Visibility Buffer Ray Tracing (VBufferRT).} This pass leverages shader model 6.5 and raytracing tier 1.1 to generate a packed visibility buffer. For each pixel, the pass stores primitive indices and barycentric coordinates, along with auxiliary data such as depth values, motion vectors, and view-space information. The visibility buffer serves as the geometric foundation for subsequent lighting and accumulation passes.
+    
+    \item \textbf{RTXDI Direct Illumination.} The visibility data is processed using NVIDIA's RTXDI (Ray Tracing eXtensible Direct Illumination) algorithm, which computes diffuse and specular lighting contributions on all visible surfaces. This pass replaces the simple diffuse lighting used in the legacy AnitoPlume V1 with a physically motivated direct illumination model.
+    
+    \item \textbf{Temporal Accumulation (AccumulatePass).} To reduce rendering noise introduced by the stochastic ray tracing process, the AccumulatePass performs temporal frame accumulation. Configurable precision modes allow the integration of per-pixel color values across multiple frames, progressively converging toward a noise-free result.
+    
+    \item \textbf{Tone Mapping.} The final pass converts the accumulated high dynamic range (HDR) color output into displayable low dynamic range (LDR) values, applying configurable parameters for exposure compensation, automatic exposure correction, white balance adjustment, and tone mapping operators.
+\end{itemize}
+\end{comment}
+
+The scene is navigated through a first-person camera interface with configurable movement speed and supports standard scene hierarchy management, including environment map assignment, light source definition, and material property authoring. Figure~\ref{fig:v2-prototype} illustrates the visual output of the prototype, showing the Taal Volcano terrain rendered with the ray tracing and temporal accumulation pipeline described above.
 
 \begin{figure}[H]
     \centering
     \makebox[\textwidth][c]{
-        \includegraphics[width=1\textwidth]{parralel.png}
+        \includegraphics[width=0.95\textwidth]{v2-prototype.png}
     }
-    \caption{Parallelization of smoke layer update phase.}
-    \label{fig:parralel}
+    \caption{Current initial state of the AnitoPlume V2 prototype, showing the Taal Volcano terrain rendered through the VBufferRT and RTXDI passes within the Falcor framework. No plume simulation is present at this stage.}
+    \label{fig:v2-prototype}
 \end{figure}
 
-Beyond CPU multithreading, the same data-parallel characteristics also make the simulation suitable for execution on modern GPUs using compute shaders. Hence, a further performance optimization for AnitoPlume is to offload the simulation loop to the GPU via dedicated compute workloads.
 
-Adopting the GPU-accelerated design pattern proposed by \citeauthor{madera2022cpu}, the simulation and rendering tasks are decoupled into distinct compute and render stages. As illustrated in Figure \ref{fig:GPU}, the CPU is relieved of per-layer physics calculations and serves primarily as an orchestrator which loads global parameters and dispatches GPU workloads. Simulation data is stored in GPU resident memory buffers where compute passes execute the numerical update functions for each smoke layer concurrently. Explicit synchronization barriers will enforce that all GPU compute passes complete before the update buffers are read by the rendering pipeline.
+Despite the visual capabilities of the existing render pipeline, the V2 prototype carries a significant architectural dependency to the NVIDIA ecosystem. 
+The study adopts a framework-agnostic approach, meaning the final architecture must not rely on any single rendering framework such as Falcor. 
 
-\begin{figure}[H]
-    \centering
-    \makebox[\textwidth][c]{
-        \includegraphics[width=1\textwidth]{GPU.jpg}
-    }
-    \caption{Proposed parallel architecture.}
-    \label{fig:GPU}
-\end{figure}
-
-By exploiting both multicore CPUs and GPU parallelism where applicable, the proposed execution architecture aims to reduce the computational bottlenecks of the legacy sequential implementation while preserving the underlying Lagrangian plume model.
-
-\subsection{Terrain Rendering Improvements}
-While the terrain geometry will accurately capture the topography of the study area, the initial rendering implementation will be intentionally simple. We will render the terrain using a single textured mesh with basic diffuse lighting and fixed material properties, without terrain-specific rendering techniques such as multi-layer texture blending, physically based shading, normal mapping, ambient occlusion, or level-of-detail management.
-
-The proposed rendering architecture will enable more advanced rendering techniques to be incorporated without modifying the underlying physics simulation, since we will manage rendering resources independently through explicit GPU resource management. One promising approach is to utilize this architecture to facilitate the integration of enhancements such as higher-resolution terrain textures, physically based materials, dynamic lighting, normal mapping, shadow mapping, terrain tessellation, and level-of-detail rendering while preserving the existing simulation workflow.
-
-Although we will modernize the terrain rendering pipeline, the existing graphical user interface as described in Figure~\ref{fig:uirender} will remain intact. We will preserve user interactions for terrain visualization, simulation control, and parameter configuration, ensuring compatibility with the original application workflow.
+Consequently, the V2 prototype as provided cannot serve as a guaranteed foundation for the final system. The study treats the existing prototype code as a reference implementation of the visibility buffer pipeline and the accumulated RTXDI logic, but reserves the ability to re-implement the full application from scratch using a framework- and GPU-agnostic explicit graphics API if a more suitable rendering architecture is warranted. This design decision ensures that the methodology outlined in this chapter, namely parallel simulation, explicit API resource management, and cross-vendor benchmarking, is not constrained by the dependencies of the discontinued prototype.
 
 \section{Benchmarking Procedure}
 \subsection{Profiling Tool Selection}
