@@ -94,6 +94,45 @@ The study adopts a framework-agnostic approach, meaning the final architecture m
 
 Consequently, the V2 prototype as provided cannot serve as a guaranteed foundation for the final system. The study treats the existing prototype code as a reference implementation of the visibility buffer pipeline and the accumulated RTXDI logic, but reserves the ability to re-implement the full application from scratch using a framework- and GPU-agnostic explicit graphics API if a more suitable rendering architecture is warranted. This design decision ensures that the methodology outlined in this chapter, namely parallel simulation, explicit API resource management, and cross-vendor benchmarking, is not constrained by the dependencies of the discontinued prototype.
 
+\subsection{Parallelization of the Simulation Loop}
+One possible improvement for AnitoPlume's performance is to explore multi-threaded rendering. 
+To achieve this, we propose implementing parallelization to improve the responsiveness of the interactive simulation for multicore CPUs. 
+This concurrent execution is feasible because individual smoke layers operate in complete isolation from one another. 
+The mathematical functions executed during the smoke layer update phase do not feature any cross-layer spatial dependencies; instead, the physics equations for any given layer depend strictly on a shared set of initial environmental parameters, vent parameters, and global trackers. Because later simulation stages consume data produced by earlier stages, we propose introducing barrier synchronization between execution phases, as shown in Figure \ref{fig:parralel}. 
+These synchronization points will guarantee that all worker threads complete one phase before subsequent phases begin, ensuring that rendering is performed only after all simulation stages have concluded to maintain visual consistency.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=1\textwidth]{parralel.png}
+    }
+    \caption{Parallelization of smoke layer update phase.}
+    \label{fig:parralel}
+\end{figure}
+
+Beyond CPU multithreading, the same data-parallel characteristics also make the simulation suitable for execution on modern GPUs using compute shaders. Hence, a further performance optimization for AnitoPlume is to offload the simulation loop to the GPU via dedicated compute workloads.
+
+Adopting the GPU-accelerated design pattern proposed by \citeauthor{madera2022cpu}, the simulation and rendering tasks are decoupled into distinct compute and render stages. As illustrated in Figure \ref{fig:GPU}, the CPU is relieved of per-layer physics calculations and serves primarily as an orchestrator which loads global parameters and dispatches GPU workloads. Simulation data is stored in GPU resident memory buffers where compute passes execute the numerical update functions for each smoke layer concurrently. Explicit synchronization barriers will enforce that all GPU compute passes complete before the update buffers are read by the rendering pipeline.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=1\textwidth]{GPU.jpg}
+    }
+    \caption{Proposed parallel architecture.}
+    \label{fig:GPU}
+\end{figure}
+
+By exploiting both multicore CPUs and GPU parallelism where applicable, the proposed execution architecture aims to reduce the computational bottlenecks of the legacy sequential implementation while preserving the underlying Lagrangian plume model.
+
+\subsection{Terrain Rendering Improvements}
+While the terrain geometry will accurately capture the topography of the study area, the initial rendering implementation will be intentionally simple. We will render the terrain using a single textured mesh with basic diffuse lighting and fixed material properties, without terrain-specific rendering techniques such as multi-layer texture blending, physically based shading, normal mapping, ambient occlusion, or level-of-detail management.
+
+The proposed rendering architecture will enable more advanced rendering techniques to be incorporated without modifying the underlying physics simulation, since we will manage rendering resources independently through explicit GPU resource management. One promising approach is to utilize this architecture to facilitate the integration of enhancements such as higher-resolution terrain textures, physically based materials, dynamic lighting, normal mapping, shadow mapping, terrain tessellation, and level-of-detail rendering while preserving the existing simulation workflow.
+
+Although we will modernize the terrain rendering pipeline, the existing graphical user interface as described in Figure 2 will remain intact. We will preserve user interactions for terrain visualization, simulation control, and parameter configuration, ensuring compatibility with the original application workflow.
+
+
 \section{Benchmarking Procedure}
 \subsection{Profiling Tool Selection}
 \label{sec:profiling_tool_selection}
