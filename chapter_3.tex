@@ -106,6 +106,71 @@ Unlike vertex or fragment shaders, compute shaders are not directly associated w
 
 Because many scientific simulations consist of repeatedly updating large collections of independent entities, GPU computing has become widely adopted across computational physics, fluid dynamics, molecular simulation, image processing, and real-time visualization. \citeauthor{OwensJohnD.2008GC} identify data-parallel simulation as one of the primary application domains benefiting from GPU architectures due to their ability to execute thousands of lightweight computational threads concurrently. As GPU hardware and programming models continue to evolve, massively parallel computing has become a fundamental approach for accelerating computationally intensive scientific applications while maintaining interactive performance \cite{OwensJohnD.2008GC}.
 
+\subsection{CUDA Programming}
+The Compute Unified Device Architecture (CUDA), introduced by NVIDIA in 2006, enables any computational workload to use the capability of GPUs independent of graphics APIs. CUDA is implemented in systems that include both CPUs and GPUs, referred to as the host and device respectively. The host and device have their own respective memory, and can execute code independently. The increased performance of CUDA applications happens by maximizing the utilization of both CPU and GPU resources.
+
+\subsubsection{SIMT and Tile Model}
+A kernel is a function executed by multiple GPU threads simultaneously. Threads are organized into thread blocks, and thread blocks are further organized into a grid. Threads within a grid know its location within its block and the location of the block within its grid. Thus each thread has a unique identity among all other threads, allowing programs to determine what data or operations a thread is responsible for. More importantly, threads within a thread block all have access to the on-chip shared memory, which can be used for exchanging information between each other efficiently. 
+
+CUDA employs the Single Instruction, Multiple Threads (SIMT) execution model, in which multiple GPU threads execute the same instruction sequence concurrently while operating on different data elements. Threads are organized into groups of 32 called warps, allowing the GPU to efficiently process large numbers of similar computations in parallel (Figure~\ref{fig:SIMT}).
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.9\textwidth]{SIMT.png}
+    }
+    % \protect is mandatory when using apacite inside captions
+    \caption{Programmer’s view in the SIMT and tile programming models. In SIMT, the programmer writes per-thread code and controls how each thread accesses data. In tile programming, the programmer writes per-block code that operates on tiles; the compiler maps operations to the threads of the block. From \protect\cite{nvidia_tile_simt_figure}.}
+    \label{fig:SIMT}
+\end{figure}
+
+Tile kernels, which are functions operating on tiles, are launched on a grid of blocks. Tile programming is one way of utilizing CUDA in an application, allowing programs to describe operations on multidimensional collections of data called tiles. Tile kernels work on arrays and tiles, and may create and operate on many tiles of different shapes and data types (Figure~\ref{fig:TileSpace}). 
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.9\textwidth]{Tile.png}
+    }
+    % \protect is mandatory when using apacite inside captions
+    \caption{Tile space and data movement. A two-dimensional array of shape (M, N) is conceptually partitioned into a grid of tiles with shape (tm, tn). A load at tile-space index (i, j) returns the corresponding tile. At the array boundary, elements that fall outside the array can be filled with zeros. A store writes a tile back to the array at a given tile-space index. From \protect\cite{nvidia_tile_space_data_movement_figure}.}
+    \label{fig:TileSpace}
+\end{figure}
+
+Figure \ref{fig:Code} demonstrates how a tile kernel can be used to perform parallel operations on an array. The kernel calculates the sum of multiple tiles stored in an input array and produces a single output tile. The input array is partitioned into tiles containing eight floating-point values. The kernel creates a view of the input array where each tile can be accessed using a tile index. An accumulator tile is initialized with zero values, and the kernel iterates through all input tiles, loading each tile and performing element-wise addition with the accumulator. After all tiles have been processed, the accumulated result is stored as the output tile. Although the example performs a reduction operation, the same tile-based approach can be applied to simulation workloads where large arrays must be updated repeatedly. Instead of summing tiles, each tile can represent a section of a simulation domain, such as a group of cells in a two-dimensional grid. A tile kernel can load a section of the array, perform computations on the values within that region, and store the updated tile back into memory.
+
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{
+        \includegraphics[width=0.9\textwidth]{Code.png}
+    }
+    % \protect is mandatory when using apacite inside captions
+    \caption{CUDA tile kernel execution for summing multiple input tiles into an output tile. From \protect\cite{nvidia_cuda_programming_guide_13_3_tile_sum}.}
+    \label{fig:Code}
+\end{figure}
+
+\subsubsection{CUDA Memory Types}
+
+CUDA provides a hierarchical memory system designed to optimize data access during parallel execution. For tile-based computation, global memory and shared memory are particularly important. Global memory stores large datasets accessible across the GPU, while shared memory provides fast temporary storage for threads within a block. By loading data into shared memory and processing it locally, tile-based approaches can reduce memory access overhead and improve computational efficiency. 
+
+\begin{table}[H]
+\centering
+\caption{Global vs Shared Memory in CUDA}
+\label{tab:cuda_memory_types}
+\begin{tabular}{p{2.2cm} p{2cm} p{2cm} p{2cm} p{4cm}}
+\toprule
+\textbf{Memory Type} & \textbf{Scope} & \textbf{Lifetime} & \textbf{Location} & \textbf{Purpose} \\
+\midrule
+Global Memory & Grid & Application & Device & Primary memory space for storing data used by threads \\
+\midrule
+Shared Memory & Block & Kernel & SM & Memory space accessible by all threads within a thread block \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+There is no guarantee of scheduling between thread blocks, so a thread block cannot rely on results from other thread blocks, as they may not be able to be scheduled until that thread block has completed. Synchronization ensures that concurrent threads execute correctly when accessing shared resources. In CUDA, threads within the same thread block can synchronize their execution and coordinate access to shared memory, while thread blocks execute independently without guaranteed scheduling order. CUDA provides mechanisms such as barrier synchronization and atomic operations to prevent race conditions during parallel execution.
+
+However, CUDA programs must also guarantee synchronization within the host code. Mutexes, locks, and semaphores are commonly used in CPU-based multithreaded systems to control access to shared resources and coordinate concurrent tasks. These synchronization concepts are used in GPU-accelerated rendering systems where CPU-side processes and GPU computations must coordinate efficiently. 
+
 \subsection{Application of Compute Shaders in Parallel Computing}
 Data-parallel simulation is one of the primary application domains benefiting from GPU architectures due to their ability to execute thousands of lightweight computational threads concurrently \cite{OwensJohnD.2008GC}. Recent studies demonstrate the use of compute shaders across different simulation and visualization domains, including particle-based simulation, physical deformation models, and large-scale rendering. 
 
